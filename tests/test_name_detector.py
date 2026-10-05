@@ -76,9 +76,9 @@ class PlausibleNameFilterTest(unittest.TestCase):
                          ["Karim Benali", "Emily O'Connor", "DUPONT"])
 
     def test_drops_what_cannot_be_a_name(self):
-        text = "drwxr-xr-x 1 saida  see huggingface.co/Fastino/model, GLiNER2 and ONNX"
+        text = "drwxr-xr-x 1 devuser  see huggingface.co/Fastino/model, GLiNER2 and ONNX"
 
-        self.assertEqual(self.kept(text, "saida", "Fastino", "GLiNER2", "ONNX"), [])
+        self.assertEqual(self.kept(text, "devuser", "Fastino", "GLiNER2", "ONNX"), [])
 
 
 if __name__ == "__main__":

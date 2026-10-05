@@ -33,7 +33,7 @@ release/
 dist/
 build/
 *.egg-info/
-CLAUDE/
+CLAUDE.md
 # Private captures and tool receipts may contain machine paths.
 .archify/
 .local-review/

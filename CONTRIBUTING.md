@@ -24,6 +24,8 @@ Tests use temporary directories. The full baseline currently has three shell-lau
 
 Keep synthetic Stripe keys compatible with push protection: assemble full-length keys from separate string literals in Python (see `tests/fakes.py`). Static corpus examples use a 16-character suffix, the detector's minimum, instead of a full-length credential-shaped value. Adding `FAKE` alone does not prevent a source scanner from flagging a key.
 
+Before pushing, scan the complete history with Gitleaks and the repository's configuration. See the [history audit](docs/security/history-audit-2026-10-05.md) for the command and the four reviewed false positives. Any new exception must identify the exact synthetic value and its file; keep the default detection rules enabled.
+
 For detection changes, run before and after with the **same corpus and mode**, add a synthetic fixture first, and compare category recall and precision. The benchmark's successful exit code alone does not gate metric regressions. Record its scores and review any drop explicitly.
 
 For model-enabled evaluation, use the model environment's Python. `--spaced` exists because the corpus is synthetic and guard hooks may transform displayed values; it is never a technique for printing real private data. Model build/validation scripts require their dedicated build dependencies and are not part of a routine docs change.

@@ -38,4 +38,4 @@ Agent Privacy Guard is licensed under the [MIT License](LICENSE), copyright 2026
 
 A private vulnerability-reporting channel still needs to be established before opening external contributions; see [governance](GOVERNANCE.md).
 
-The earlier French [PRD](PRD.md) is retained as a vision document. The [product brief](docs/product.md) defines the current delivery scope. Technical conventions live in [CLAUDE.md](CLAUDE.md) and [Contributing](CONTRIBUTING.md).
+The earlier French [PRD](PRD.md) is retained as a vision document. The [product brief](docs/product.md) defines the current delivery scope. Technical conventions live in [Contributing](CONTRIBUTING.md).

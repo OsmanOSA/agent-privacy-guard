@@ -1,0 +1,21 @@
+title = "Agent Privacy Guard secret scanning"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+
+[[rules.allowlists]]
+description = "Three exact synthetic values used by the assignment detector tests"
+condition = "AND"
+paths = ['''(^|/)tests/test_secret_detector\.py$''']
+regexTarget = "secret"
+regexes = ['''^(abcd1234efgh|a1b2c3d4e5f6|Lyon-2026-secret)$''']
+
+[[rules.allowlists]]
+description = "The pinned SHA-256 of tokenizer.json, not an authentication token"
+condition = "AND"
+paths = ['''(^|/)privacy_guard/service/model_files\.py$''']
+regexTarget = "secret"
+regexes = ['''^f6df10ec83bea993035b2dd7c39345a3d4fcf23421c2adb6cb4ffc1e6d1bc4b5$''']
