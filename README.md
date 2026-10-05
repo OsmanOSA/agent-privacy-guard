@@ -34,6 +34,8 @@ Use only synthetic data while evaluating this prototype. Installation changes lo
 
 ## Community and licensing
 
-The project is being prepared for an open source community. No public repository, release or commercial offer is created by this groundwork. The project license and a private vulnerability-reporting channel must be selected before opening external contributions. No license grant is implied by this README; see [governance](GOVERNANCE.md).
+Agent Privacy Guard is licensed under the [MIT License](LICENSE), copyright 2026 OsmanOSA. Keep the copyright and license notice with copies of the code.
+
+A private vulnerability-reporting channel still needs to be established before opening external contributions; see [governance](GOVERNANCE.md).
 
 The earlier French [PRD](PRD.md) is retained as a vision document. The [product brief](docs/product.md) defines the current delivery scope. Technical conventions live in [CLAUDE.md](CLAUDE.md) and [Contributing](CONTRIBUTING.md).

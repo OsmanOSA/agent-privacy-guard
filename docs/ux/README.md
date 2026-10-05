@@ -28,4 +28,4 @@ Use a browser-capable environment for the full gate. Local receipts/captures rem
 
 ## Third-party material
 
-The generated diagram includes Archify's viewer, licensed under MIT: preserve [ARCHIFY-LICENSE.txt](ARCHIFY-LICENSE.txt). It includes the JetBrains Mono font under SIL OFL 1.1: preserve [JetBrainsMono-OFL.txt](JetBrainsMono-OFL.txt). Keep [upstream third-party notices](ARCHIFY-THIRD-PARTY-NOTICES.md) with a redistributed diagram. These notices apply to the generated viewer assets, not the still-undecided project license.
+The generated diagram includes Archify's viewer, licensed under MIT: preserve [ARCHIFY-LICENSE.txt](ARCHIFY-LICENSE.txt). It includes the JetBrains Mono font under SIL OFL 1.1: preserve [JetBrainsMono-OFL.txt](JetBrainsMono-OFL.txt). Keep [upstream third-party notices](ARCHIFY-THIRD-PARTY-NOTICES.md) with a redistributed diagram. These notices apply to the generated viewer assets; the project's MIT license is in [LICENSE](../../LICENSE).

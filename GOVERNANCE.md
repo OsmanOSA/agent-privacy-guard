@@ -21,7 +21,7 @@ Security claims need evidence, not a vote. An unresolved release blocker prevent
 
 The intention is a community-developed privacy core with possible paid distribution, UX, integration maintenance and support. No commercial entitlement, pricing or closed component is established by this document. Keep decisions about the core's essential behavior and security fixes explicit.
 
-The project currently has no selected license. Before external contributions: select a license, add its exact text and attribution, verify model/tokenizer/dataset redistribution terms, document contribution licensing and revisit the commercial packaging. Do not accept contributions under an invented license or introduce a CLA/DCO requirement without an explicit project decision.
+Project code and contributions use the [MIT License](LICENSE). Model, tokenizer, dataset and other third-party redistribution terms must be checked separately before distributing those assets. Introducing a CLA or DCO requires an explicit project decision.
 
 ## Community stewardship
 

@@ -53,4 +53,4 @@ A change is ready when its scoped behavior is demonstrated, relevant checks are 
 
 Two-person review for security-sensitive changes is the target once a second maintainer exists. Until then, do not describe a single-maintainer review as independent auditing; public alpha readiness requires an independent reviewer.
 
-Use [PR template](.github/pull_request_template.md) and [release guide](docs/releasing.md). No commit, push, deployment or publication is implied by contributing a local draft. External contributions should open only after a license and private vulnerability channel exist.
+Contributions to project code use the [MIT License](LICENSE). Use [PR template](.github/pull_request_template.md) and [release guide](docs/releasing.md). No commit, push, deployment or publication is implied by contributing a local draft. External contributions should open only after a private vulnerability channel exists.

@@ -1120,9 +1120,7 @@ Updater              COMMERCIAL
 Premium adapters     éventuellement COMMERCIAL
 ```
 
-Une licence comme MPL-2.0 pourrait être étudiée pour le cœur : elle permet une utilisation commerciale tout en demandant que les modifications apportées aux fichiers couverts restent disponibles sous la même licence.
-
-Le choix définitif de licence devra être validé séparément avant publication.
+Le code du dépôt est sous [licence MIT](LICENSE), avec le copyright 2026 OsmanOSA. Toute copie doit conserver la mention de copyright et le texte de la licence.
 
 ---
 

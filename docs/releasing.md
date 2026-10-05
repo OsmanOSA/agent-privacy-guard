@@ -6,7 +6,7 @@ Status: a local preparation procedure. It creates neither a repository nor a rel
 
 Before publication, a maintainer records evidence for each item:
 
-- [ ] Select the project license and add the exact license text, notices and contribution terms.
+- [x] Select the project license and add the exact license text, notices and contribution terms: [MIT](../LICENSE), copyright 2026 OsmanOSA; see [Contributing](../CONTRIBUTING.md).
 - [ ] Verify runtime/build dependency, model, tokenizer and dataset provenance and redistribution rights. The existing generated model card is an input to review, not completed legal verification.
 - [ ] Establish a private vulnerability-reporting route and a conduct contact; update SECURITY.md and CODE_OF_CONDUCT.md.
 - [ ] Make the README state prototype status, supported scope and known gaps. Public source may precede a stable product only with those limits prominent.

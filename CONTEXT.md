@@ -23,7 +23,7 @@ The authoritative reading order is product brief → threat model → architectu
 1. Enforcement mechanism for shell/network effects and hook failures.
 2. Which destinations can receive restored personal data, and whether any secret can be restored at all.
 3. Required behavior when the name model is unavailable.
-4. Project license; model/tokenizer/data redistribution rights; commercial offering.
+4. MIT attribution; model/tokenizer/data redistribution rights; commercial offering.
 5. Vulnerability-reporting channel and first public maintainers.
 6. First supported Claude Code version and tested shell/platform combination.
 
