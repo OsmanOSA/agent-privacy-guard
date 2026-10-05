@@ -1,0 +1,26 @@
+app:
+  name: invoice-forge
+  port: 8080
+  timezone: Europe/Paris
+  max_upload_mb: 25
+
+database:
+  url: postgres://forge:⟪secret:F0rge-Db-Pass⟫@db.internal:5432/forge
+  pool_size: 10
+
+smtp:
+  host: smtp.example.com
+  port: 587
+  username: ⟪email:billing@acme-labs.example⟫
+  password: ⟪secret:Mailer-Secret-2026⟫
+
+stripe:
+  secret_key: ⟪secret:sk_live_FAKEforgeKEY0000⟫
+  publishable_key: pk_live_FAKEforgeKEY000000000000
+
+admin:
+  contact: ⟪name:Camille Fontaine⟫ <⟪email:camille.fontaine@example.org⟫>
+
+features:
+  pdf_cache_ttl: 3600
+  enable_vat_rounding: true

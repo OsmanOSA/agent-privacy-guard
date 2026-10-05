@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Agent Privacy Guard — UX simulation</title>
+<style>
+:root{color-scheme:light;--ink:#182c2b;--muted:#526a67;--line:#cbd7d1;--paper:#f5f6ef;--accent:#145e50;--soft:#e1ede3;--amber:#74520f;--danger:#9b3634;font:16px/1.55 system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink)}button,select,input{font:inherit}button,select{border:1px solid var(--line);border-radius:8px;background:white;padding:10px 14px;color:var(--ink)}button{cursor:pointer}button:hover{border-color:var(--accent)}button:disabled{cursor:default;opacity:.5}button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #bd7405;outline-offset:3px}a{color:var(--accent)}.notice{background:#182c2b;color:#f5f6ef;padding:12px 24px;font-size:14px}.shell{max-width:1220px;margin:0 auto;padding:34px 28px}header{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:30px}h1{margin:0;font-size:32px;letter-spacing:-1px}h2{font-size:22px;margin:0 0 14px}h3{font-size:17px;margin:0 0 8px}.eyebrow{font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);font-weight:700}.muted{color:var(--muted)}.layout{display:grid;grid-template-columns:210px 1fr;gap:28px}nav{display:flex;flex-direction:column;gap:8px}nav button{text-align:left;background:transparent;border-color:transparent}nav button[aria-selected="true"]{background:var(--soft);border-color:var(--line);font-weight:700}.panel{background:white;border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:18px}.status{display:inline-block;border-radius:6px;background:var(--soft);padding:6px 10px;font-weight:650;font-size:14px}.status[data-tone="warn"]{background:#fff0cf;color:var(--amber)}.status[data-tone="error"]{background:#fbe5e1;color:var(--danger)}.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}.controls{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.primary{background:var(--accent);color:white;border-color:var(--accent)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.metric{font-size:27px;font-weight:650;margin:8px 0}.small{font-size:14px}.scope{border-left:3px solid var(--accent);padding-left:14px}.sample{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--paper);padding:16px;border-radius:9px;font:14px/1.65 ui-monospace,monospace;min-height:130px}table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line)}.table-wrap{overflow:auto}label{display:block;margin:14px 0}select{width:100%;max-width:460px}footer{margin-top:25px;font-size:13px;color:var(--muted)}[hidden]{display:none!important}@media(max-width:760px){.shell{padding:24px 16px}.layout{grid-template-columns:1fr}nav{flex-direction:row;flex-wrap:wrap}.grid{grid-template-columns:1fr}header{align-items:flex-start;flex-direction:column}h1{font-size:28px}.panel{padding:18px}}
+</style>
+</head>
+<body>
+<div class="notice"><strong>Design simulation.</strong> Synthetic data only. No agent connection, document access, persistence or network requests.</div>
+<div class="shell">
+<header><div><div class="eyebrow">Local privacy / Claude Code first</div><h1>Agent Privacy Guard</h1><div class="muted">Know what is covered. Keep control of restoration.</div></div><button id="reset">Reset simulation</button></header>
+<div class="layout">
+<nav role="tablist" aria-label="Prototype screens">
+<button role="tab" id="tab-setup" aria-controls="setup" aria-selected="true" data-tab="setup">01 &nbsp; Set up</button>
+<button role="tab" id="tab-work" aria-controls="work" aria-selected="false" data-tab="work" tabindex="-1">02 &nbsp; Work with a file</button>
+<button role="tab" id="tab-events" aria-controls="events" aria-selected="false" data-tab="events" tabindex="-1">03 &nbsp; Event journal</button>
+</nav>
+<main>
+<section class="panel" aria-label="Simulated capability status">
+<div class="row between"><div class="eyebrow">Simulation status / no live checks</div><span id="status" class="status" data-tone="warn">Hooks registered · unverified</span></div>
+<p id="message" role="status" aria-live="polite">Hooks are configured in this scenario. The supported paths have not been verified.</p>
+<div class="scope small"><strong>Proposed first scope:</strong> one tested Claude Code / native Windows / shell combination. Codex and other platforms are future adapters.</div>
+</section>
+<section id="setup" role="tabpanel" aria-labelledby="tab-setup">
+<div class="panel"><h2>Installation is only the first step</h2><p class="muted">A status check must explain detector availability, protocol compatibility and unsupported paths. Choose a scenario to explore that experience.</p>
+<div class="controls" aria-label="Simulated scenarios">
+<button data-state="checking">Checking</button><button data-state="ready">Checks pass (future)</button><button data-state="degraded">Name model missing</button><button data-state="blocked">Invalid tool result</button><button data-state="unsupported">Image payload</button><button data-state="uninstalled">Not installed</button>
+</div>
+<p class="small muted">“Checks pass” is a hypothetical future build with evidence. Today's CLI does not establish this status.</p></div>
+<div class="grid"><div class="panel"><h3>On your machine</h3><p class="small">Detection and encrypted mappings stay local in the target design. A useful document's remaining text can still enter model context.</p></div><div class="panel"><h3>What remains unverified</h3><p class="small">Timeouts, competing hooks, unsupported payloads and safe restoration need real-agent evidence. This mockup proves none of them.</p></div></div>
+<button class="primary" data-open="work">Explore a synthetic workflow</button>
+</section>
+<section id="work" role="tabpanel" aria-labelledby="tab-work" hidden>
+<div class="panel"><h2>A useful document, fewer exposed values</h2><p class="muted">Use a fictional customer note to explore inspection and an authorized local output. No file is opened.</p>
+<label id="reduced-label" hidden><input type="checkbox" id="reduced"> Allow reduced detection for this synthetic simulation</label>
+<button class="primary" id="inspect" disabled>Inspect fictional note</button><p id="action-feedback" class="small" role="status" aria-live="polite">Select a capability scenario in Set up first.</p>
+<div class="grid"><div><h3>Illustrative model context</h3><pre id="model-output" class="sample">Waiting for a simulated inspection.</pre></div><div><h3>Local output preview</h3><pre id="local-output" class="sample">No restoration requested.</pre></div></div>
+<p class="small muted">The fixtures and tokens are hard-coded examples. The actual detector, vault and cipher are not called.</p>
+<label for="destination">Proposed restoration destination</label><select id="destination"><option value="local">Approved local artifact (fictional output)</option><option value="remote">Remote or delegated destination (deny)</option></select>
+<div class="controls"><button id="restore" disabled>Request restoration</button></div><p class="small scope">Target policy: authorize the destination and operation before restoring. Today's local-tool allowlist does not enforce this policy.</p>
+</div></section>
+<section id="events" role="tabpanel" aria-labelledby="tab-events" hidden>
+<div class="panel"><h2>Events without inspected content</h2><p class="muted">This proposed journal shows action classes and outcomes. It never lists original values or vault mappings.</p><div class="grid"><div><div class="eyebrow">Simulated inspections</div><div class="metric" id="inspection-count">0</div></div><div><div class="eyebrow">Simulated denied requests</div><div class="metric" id="denial-count">0</div></div></div>
+<div class="table-wrap"><table><thead><tr><th>Sequence</th><th>Action class</th><th>Outcome</th><th>Mode</th></tr></thead><tbody id="journal"></tbody></table></div><p id="empty" class="small muted">No simulated events yet.</p><p class="small">Today's runtime journal records timestamp, event and tool name. Counters and outcomes here are a proposal.</p></div>
+</section>
+<footer>Local design artifact · 2026-10-05 · <a href="flows.md">UX specification</a> · <a href="../security/baseline-2026-10-05.md">Actual development baseline</a></footer>
+</main></div></div>
+<script>
+'use strict';
+const states = {
+  registered: ['Hooks registered · unverified', 'Hooks are configured in this scenario. The supported paths have not been verified.', 'warn'],
+  checking: ['Checking · simulation', 'The hypothetical capability checks are in progress. Required inspection is not ready.', 'warn'],
+  ready: ['Listed paths checked · simulation', 'Future scenario: compatibility evidence exists for the listed paths. Detection can still miss values.', 'ok'],
+  degraded: ['Reduced detection · simulation', 'The name model is unavailable. Stop or repair the workflow; reduced mode requires an explicit policy choice.', 'warn'],
+  blocked: ['Covered action blocked · simulation', 'Required inspection cannot produce a valid result. Repair the integration before retrying.', 'error'],
+  unsupported: ['Unsupported path · simulation', 'This image payload has no verified extraction path. Use a supported text fixture or stop.', 'error'],
+  uninstalled: ['Not installed · simulation', 'The agent integration is not installed in this scenario. Review scope before setup.', 'warn']
+};
+let current = 'registered', inspected = false, inspections = 0, denials = 0, sequence = 0;
+const get = id => document.getElementById(id);
+function openTab(name) {
+  document.querySelectorAll('[data-tab]').forEach(button => {
+    const active = button.dataset.tab === name;
+    button.setAttribute('aria-selected', String(active));
+    button.tabIndex = active ? 0 : -1;
+    get(button.dataset.tab).hidden = !active;
+  });
+}
+function permitted() { return current === 'ready' || (current === 'degraded' && get('reduced').checked); }
+function update() {
+  const [label, message, tone] = states[current];
+  get('status').textContent = label; get('status').dataset.tone = tone;
+  get('message').textContent = message; get('reduced-label').hidden = current !== 'degraded';
+  get('inspect').disabled = !permitted(); get('restore').disabled = !inspected || !permitted();
+  get('inspection-count').textContent = inspections; get('denial-count').textContent = denials;
+}
+function event(action, outcome) {
+  const row = document.createElement('tr');
+  [++sequence, action, outcome, current === 'degraded' ? 'Reduced (synthetic)' : 'Future policy (synthetic)'].forEach(value => {
+    const cell = document.createElement('td'); cell.textContent = value; row.appendChild(cell);
+  });
+  get('journal').appendChild(row); get('empty').hidden = true; update();
+}
+document.querySelectorAll('[data-tab]').forEach(button => button.addEventListener('click', () => openTab(button.dataset.tab)));
+document.querySelector('[role="tablist"]').addEventListener('keydown', e => {
+  const tabs = [...document.querySelectorAll('[data-tab]')]; const index = tabs.indexOf(document.activeElement);
+  if (index < 0 || !['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) return;
+  e.preventDefault();
+  const next = e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : (index + (['ArrowRight', 'ArrowDown'].includes(e.key) ? 1 : -1) + tabs.length) % tabs.length;
+  openTab(tabs[next].dataset.tab); tabs[next].focus();
+});
+document.querySelectorAll('[data-open]').forEach(button => button.addEventListener('click', () => {openTab(button.dataset.open); get('tab-' + button.dataset.open).focus();}));
+document.querySelectorAll('[data-state]').forEach(button => button.addEventListener('click', () => {
+  current = button.dataset.state; inspected = false; get('reduced').checked = false;
+  get('model-output').textContent = 'Waiting for a simulated inspection.';
+  get('local-output').textContent = 'No restoration requested.';
+  get('action-feedback').textContent = permitted() ? 'Synthetic inspection is available.' : 'Review the scenario status before proceeding.';
+  update();
+}));
+get('reduced').addEventListener('change', () => {
+  inspected = false; get('local-output').textContent = 'No restoration requested.';
+  get('model-output').textContent = 'Waiting for a simulated inspection.';
+  get('action-feedback').textContent = permitted() ? 'Reduced detection explicitly selected for synthetic data only.' : 'Reduced detection is not authorized.';
+  update();
+});
+get('inspect').addEventListener('click', () => {
+  if (!permitted()) return;
+  inspected = true; inspections++;
+  get('model-output').textContent = current === 'degraded'
+    ? 'Customer: Fictional Person\nEmail: ⟦EMAIL:ABCDEF01⟧\nRequest: Update the test invoice layout.\n\nIllustrative miss: a fictional name remains visible.'
+    : 'Customer: ⟦PERSON_NAME:1234ABCD⟧\nEmail: ⟦EMAIL:ABCDEF01⟧\nRequest: Update the test invoice layout.';
+  get('local-output').textContent = 'No restoration requested.';
+  get('action-feedback').textContent = 'Simulation complete. A destination decision is still required.';
+  event('Document inspection', current === 'degraded' ? 'Illustrative name miss' : 'Illustrative tokens');
+});
+get('restore').addEventListener('click', () => {
+  if (!inspected || !permitted()) return;
+  if (get('destination').value === 'remote') {
+    denials++; get('local-output').textContent = 'Denied: remote/delegated destination.\nOriginal values were not restored by this simulation.';
+    event('Restoration request', 'Denied destination');
+  } else {
+    get('local-output').textContent = 'FICTIONAL LOCAL ARTIFACT\nCustomer: Fictional Person\nEmail: example@example.invalid\nRequest: Update the test invoice layout.';
+    event('Restoration request', 'Approved fictional artifact');
+  }
+});
+get('reset').addEventListener('click', () => {
+  current = 'registered'; inspected = false; inspections = denials = sequence = 0;
+  get('journal').replaceChildren(); get('empty').hidden = false; get('reduced').checked = false; get('destination').value = 'local';
+  get('model-output').textContent = 'Waiting for a simulated inspection.'; get('local-output').textContent = 'No restoration requested.';
+  get('action-feedback').textContent = 'Select a capability scenario in Set up first.'; openTab('setup'); update();
+});
+update();
+</script>
+</body>
+</html>

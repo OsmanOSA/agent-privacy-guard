@@ -1,0 +1,21 @@
+name: Agent adapter research
+description: Map a future agent integration before implementation.
+title: "[Adapter] "
+body:
+  - type: markdown
+    attributes:
+      value: "Start from docs/templates/adapter.md. Claude Code remains the first delivery target; a proposal does not establish support."
+  - type: textarea
+    id: scope
+    attributes:
+      label: Agent, versions and supported interception points
+      description: Link primary protocol documentation and list known/unknown paths.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence plan
+      description: Synthetic model-boundary, failure, timeout and restoration checks.
+    validations:
+      required: true

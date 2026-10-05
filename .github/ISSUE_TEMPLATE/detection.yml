@@ -1,0 +1,21 @@
+name: Detection improvement
+description: Propose a synthetic missed-value or false-positive fixture.
+title: "[Detection] "
+body:
+  - type: markdown
+    attributes:
+      value: "Use docs/templates/detector-change.md. Reports involving exploitable disclosure belong in the private security channel described in SECURITY.md."
+  - type: textarea
+    id: case
+    attributes:
+      label: Fictional case and expected findings
+      description: Category, language, format, expected offsets and ordinary-value traps.
+    validations:
+      required: true
+  - type: textarea
+    id: mode
+    attributes:
+      label: Mode and comparison
+      description: Exact rule/model mode, corpus identity and scores if measured.
+    validations:
+      required: true

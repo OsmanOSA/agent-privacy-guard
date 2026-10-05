@@ -1,0 +1,24 @@
+FICHE CLIENT - DONNÉES FICTIVES (jeu de test Privacy Guard)
+
+Nom : Jean Dupont
+Adresse : 12 rue de la Paix, 75002 Paris
+Téléphone : 06 12 34 56 78
+Email : jean.dupont@example.com
+N° de sécurité sociale : 1 85 05 78 006 084 91
+N° fiscal : 1234567890066
+Passeport : 12AB34567
+Véhicule : AB-123-CD
+IBAN : FR76 3000 6000 0112 3456 7890 189
+Carte bancaire : 4111 1111 1111 1111 (exp. 12/28)
+Cryptogramme : 737
+Date de naissance : 15/03/1985
+N° CNI : X4RTBPFW4
+Permis de conduire n° 123456789012
+Permis : B
+Pièce d'identité : PASSEPORT
+
+Entreprise : SIRET 123 456 782 00010 (SIREN 123456782)
+
+Commande n° 2026-000451 du 02/10/2026, montant 1 249,90 €
+Référence dossier : 20261002191407
+Code postal de livraison : 69003

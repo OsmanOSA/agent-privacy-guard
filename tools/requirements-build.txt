@@ -1,0 +1,23 @@
+# Environment that builds and validates the name model (tools/build_name_model.py,
+# tools/validate_name_model.py). Not needed to run Privacy Guard.
+# Exact versions of the build validated on 2026-10-02 (Python 3.12.4).
+#
+#   python -m venv build-env
+#   build-env/Scripts/python -m pip install -r tools/requirements-build.txt     (Windows)
+#   build-env/bin/python -m pip install -r tools/requirements-build.txt         (macOS, Linux)
+
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.14.1
+gliner2[local]==2.0.0
+transformers==4.57.6
+peft==0.21.2
+accelerate==1.15.0
+safetensors==0.8.0
+huggingface_hub==0.36.2
+tokenizers==0.22.2
+sentencepiece==0.2.2
+protobuf==7.36.2
+numpy==2.5.3
+onnx==1.23.1
+onnxscript==0.7.2
+onnxruntime==1.30.0

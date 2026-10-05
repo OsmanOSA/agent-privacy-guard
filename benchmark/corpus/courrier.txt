@@ -1,0 +1,22 @@
+⟪name:Amélie Rousseau⟫
+⟪address:27 avenue Jean Jaurès
+69007 Lyon⟫
+⟪phone:07 12 34 98 76⟫
+
+Lyon, le 2 octobre 2026
+
+Objet : réclamation sur la facture INV-2026-00451
+
+Madame, Monsieur,
+
+Le 30 septembre, j'ai reçu la facture INV-2026-00451 d'un montant de 1 249,90 €, alors que le devis
+signé prévoyait 1 049,90 €. Je vous remercie de rembourser la différence sur mon compte
+⟪banking:FR14 2004 1010 0505 0001 3M02 606⟫.
+
+Mon conseiller, ⟪name:Karim Benali⟫, m'a indiqué que l'erreur venait d'un arrondi de TVA.
+
+Je reste joignable par courriel à ⟪email:amelie.rousseau@example.fr⟫.
+
+Veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
+
+⟪name:Amélie Rousseau⟫

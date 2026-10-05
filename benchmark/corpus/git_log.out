@@ -1,0 +1,18 @@
+commit 3f9a1c7e2b8d4f60a5c1e9b7d2f4a8c6e0b1d3f5
+Author: ⟪name:Camille Fontaine⟫ <⟪email:camille.fontaine@example.org⟫>
+Date:   Tue Sep 29 18:42:07 2026 +0200
+
+    Fix VAT rounding for invoices over 10 000 EUR
+
+commit 8b2e4d6f0a1c3e5b7d9f1a3c5e7b9d0f2a4c6e8b
+Author: ⟪name:Rahul Mehta⟫ <⟪email:rahul.mehta@example.net⟫>
+Date:   Mon Sep 28 09:15:33 2026 +0200
+
+    Add retry on SMTP failures (reported by ⟪name:Lucas Morel⟫)
+
+commit c4a6e8b0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2
+Merge: 1a2b3c4 5d6e7f8
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Sun Sep 27 03:00:12 2026 +0000
+
+    Bump weasyprint from 62.3 to 63.0

@@ -1,0 +1,48 @@
+# Local credentials and settings; synthetic fixtures need explicit review.
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+*.pem
+*.key
+*.pfx
+*.p12
+.claude/settings.local.json
+*.privacy-guard-backup-*
+
+# Python environments and generated files.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Guard runtime data, model weights and local exports.
+.privacy-guard/
+vault/
+models/
+*.onnx
+*.safetensors
+*.pt
+*.pth
+*.bin
+release/
+dist/
+build/
+*.egg-info/
+CLAUDE/
+# Private captures and tool receipts may contain machine paths.
+.archify/
+.local-review/
+docs/ux/*.delivery.json
+docs/ux/*.finalize-summary.json
+
+# Local logs are ignored; only reviewed synthetic benchmark fixtures are eligible.
+*.log
+!benchmark/corpus/*.log
+node_modules/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,18 @@
+{
+  "name": "invoice-forge-web",
+  "version": "2.4.1",
+  "description": "Web UI for invoice-forge",
+  "author": "⟪name:Camille Fontaine⟫ <⟪email:camille.fontaine@example.org⟫>",
+  "contributors": ["⟪name:Rahul Mehta⟫ <⟪email:rahul.mehta@example.net⟫>"],
+  "license": "MIT",
+  "repository": "github:acme-labs/invoice-forge",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "@tanstack/react-query": "^5.59.0"
+  }
+}

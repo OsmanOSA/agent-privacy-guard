@@ -1,0 +1,13 @@
+2026-09-30 14:02:11,384 INFO  [request_id=7f3a9c2e-41b8-4d6e-9a0b-2c5e8f1d3a77] POST /api/v1/invoices from 10.0.4.17
+2026-09-30 14:02:11,402 DEBUG Authorization: Bearer ⟪secret:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MiJ9.ZmFrZXNpZ25hdHVyZQ⟫
+2026-09-30 14:02:11,415 INFO  Creating invoice for customer ⟪email:lucas.morel@example.com⟫ (customer_id=88412)
+2026-09-30 14:02:11,890 ERROR Failed to render invoice INV-2026-00451
+Traceback (most recent call last):
+  File "C:\Users\dev\projects\invoice-forge\invoice_forge\render.py", line 88, in render_invoice
+    pdf = HTML(string=html).write_pdf()
+  File "C:\Users\dev\projects\invoice-forge\.venv\Lib\site-packages\weasyprint\__init__.py", line 252, in write_pdf
+    return self.render(font_config, counter_style).write_pdf(target, zoom)
+weasyprint.urls.URLFetchingError: could not fetch https://cdn.example.com/logo.png (timeout after 10.0 s)
+2026-09-30 14:02:12,003 WARNING Retrying with SMTP user=⟪email:billing@acme-labs.example⟫ password=⟪secret:Smtp-Pass-2026!⟫
+2026-09-30 14:02:12,551 INFO  Invoice INV-2026-00451 sent to ⟪name:Lucas Morel⟫, phone ⟪phone:+33 6 45 12 78 90⟫
+2026-09-30 14:02:13,004 INFO  Health check OK (db latency 12 ms, version 2.4.1, uptime 0.9981234567812345)

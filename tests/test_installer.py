@@ -1,0 +1,120 @@
+import json
+import os
+import shutil
+import subprocess
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+from privacy_guard.claude_code import registration
+from privacy_guard.claude_code.installer import ClaudeCodeInstaller, ClaudeCodeNotFoundError
+from tests.fakes import STRIPE_KEY
+
+ORIGINAL_SETTINGS = {"model": "opus", "enabledPlugins": {"some-plugin": True}}
+
+
+class InstallerTest(unittest.TestCase):
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.home = Path(self._tmp.name)
+        self.claude_dir = self.home / ".claude"
+        self.claude_dir.mkdir()
+        self.settings_path = self.claude_dir / "settings.json"
+        self.settings_path.write_text(json.dumps(ORIGINAL_SETTINGS), encoding="utf-8")
+        self.installer = ClaudeCodeInstaller(self.claude_dir, self.home / ".privacy-guard", Path(sys.executable))
+
+    def tearDown(self):
+        # Stops the background service the installed hook may have started.
+        self.installer.uninstall()
+        self._tmp.cleanup()
+
+    def test_install_protects_every_event(self):
+        self.installer.install()
+
+        self.assertEqual(self.installer.status(), {event: True for event in registration.HOOK_EVENTS})
+
+    def test_installed_hook_runs_end_to_end(self):
+        self.installer.install()
+
+        result = self._run_installed_hook({"hook_event_name": "PreToolUse", "tool_name": "Read"})
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_installed_hook_reads_non_latin_content(self):
+        # "Ё" contains byte 0x81, unreadable in cp1252 (the Windows default encoding).
+        self.installer.install()
+
+        result = self._run_installed_hook(
+            {"hook_event_name": "PostToolUse", "tool_name": "Read", "tool_response": "Ёlise, café"}
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, "", "the tool output must not be masked")
+
+    def test_installed_hook_protects_secrets(self):
+        self.installer.install()
+
+        result = self._run_installed_hook(
+            {
+                "hook_event_name": "PostToolUse",
+                "tool_name": "Read",
+                "tool_response": f"STRIPE_SECRET_KEY={STRIPE_KEY}",
+            }
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertNotIn("sk_live_", result.stdout)
+        self.assertIn("⟦STRIPE_SECRET_KEY:", result.stdout)
+
+    def test_uninstall_restores_original_settings(self):
+        self.installer.install()
+
+        self.installer.uninstall()
+
+        self.assertEqual(json.loads(self.settings_path.read_text(encoding="utf-8")), ORIGINAL_SETTINGS)
+        self.assertFalse((self.home / ".privacy-guard" / "app").exists())
+
+    def test_install_and_uninstall_purge_vaults(self):
+        stale_vault = self.home / ".privacy-guard" / "vault" / "old-session"
+        stale_vault.mkdir(parents=True)
+
+        self.installer.install()
+        self.assertFalse(stale_vault.exists())
+
+        stale_vault.mkdir(parents=True)
+        self.installer.uninstall()
+        self.assertFalse(stale_vault.exists())
+
+    def test_consecutive_changes_keep_every_backup(self):
+        first = self.installer.install()
+
+        second = self.installer.uninstall()
+
+        self.assertNotEqual(first, second)
+        self.assertTrue(first.exists() and second.exists())
+
+    def test_install_fails_without_claude_code(self):
+        installer = ClaudeCodeInstaller(self.home / "absent", self.home / ".privacy-guard", Path(sys.executable))
+
+        with self.assertRaises(ClaudeCodeNotFoundError):
+            installer.install()
+
+    def _run_installed_hook(self, payload):
+        settings = json.loads(self.settings_path.read_text(encoding="utf-8"))
+        command = settings["hooks"]["PreToolUse"][0]["hooks"][0]["command"]
+        # HOME and USERPROFILE point to the temp dir so the journal never writes to the real home.
+        env = {**os.environ, "HOME": str(self.home), "USERPROFILE": str(self.home)}
+        # Claude Code runs hooks through bash; on Windows that is Git's bash, found via PATH.
+        return subprocess.run(
+            [shutil.which("bash"), "-c", command],
+            input=json.dumps({"session_id": "test-session", **payload}),
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            env=env,
+        )
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,0 +1,26 @@
+name: Reproducible bug
+description: Report a non-security bug using synthetic data.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: "For vulnerabilities, follow SECURITY.md. Never attach real personal data, keys, vaults or raw transcripts."
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Agent/version, OS, shell, Python and heuristic/model mode.
+    validations:
+      required: true
+  - type: textarea
+    id: reproducer
+    attributes:
+      label: Synthetic reproducer
+      description: Steps, expected behavior and observed behavior; use fictional inputs.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Fixture IDs, test counts and error types; omit values and personal machine paths.

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Tool-result privacy — proposed target contract",
+    "output": ".archify/architecture-privacy-target-20261005-164328/privacy-target.html",
+    "locale": "en",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {"id":"tool-result","type":"backend","label":"Tool result","sublabel":"Uninspected text","pos":[40,300],"size":[150,70]},
+    {"id":"privacy-module","type":"security","label":"Privacy module","sublabel":"Detect + pseudonymize","pos":[320,300],"size":[180,70]},
+    {"id":"protocol-gate","type":"security","label":"Disclosure gate","sublabel":"Covered schemas only","pos":[650,300],"size":[180,70]},
+    {"id":"model-context","type":"external","label":"Model context","sublabel":"Outside local trust","pos":[990,300],"size":[180,70]},
+    {"id":"session-vault","type":"database","label":"Session vault","sublabel":"OS-encrypted mappings","pos":[320,80],"size":[180,70]},
+    {"id":"event-journal","type":"database","label":"Event journal","sublabel":"Bounded metadata only","pos":[650,80],"size":[180,70]}
+  ],
+  "boundaries": [
+    {"kind":"region","label":"Local target modules — proposed controls, not isolation evidence","wraps":["tool-result","privacy-module","protocol-gate","session-vault","event-journal"],"pad":24}
+  ],
+  "connections": [
+    {"id":"inspect-results","from":"tool-result","to":"privacy-module","label":"inspect text","variant":"emphasis"},
+    {"id":"emit-tokens","from":"privacy-module","to":"protocol-gate","label":"tokens","variant":"security"},
+    {"id":"release-checked","from":"protocol-gate","to":"model-context","label":"valid only","variant":"security"},
+    {"id":"persist-mapping","from":"privacy-module","to":"session-vault","label":"OS cipher"},
+    {"id":"journal-decision","from":"protocol-gate","to":"event-journal","label":"event only"}
+  ],
+  "cards": [
+    {"dot":"amber","title":"Target, not a verified build","items":["Required inspection failures must stop covered disclosure paths.","Timeouts, malformed output and competing hooks need real-agent evidence."]},
+    {"dot":"emerald","title":"Scope of this view","items":["Detected values become session tokens; useful remaining text may reach the model.","This view covers incoming tool results, not filesystem access prevention."]},
+    {"dot":"rose","title":"Separate restoration contract","items":["Restoration needs destination and operation authorization before local execution.","A local shell can cause network effects; tool names alone are insufficient."]}
+  ]
+}
