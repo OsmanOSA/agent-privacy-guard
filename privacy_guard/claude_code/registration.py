@@ -26,10 +26,10 @@ import copy
 
 MARKER = ".privacy-guard"
 HOOK_EVENTS = ("PreToolUse", "PostToolUse", "PostToolUseFailure", "SessionStart", "SessionEnd")
-# Above the 25 s the hook may wait for the NER model's first load, so a slow
-# start can stop in our code before the hook is killed. A platform-level timeout
-# still discards our response; registration alone is not mandatory enforcement.
-HOOK_TIMEOUT_SECONDS = 30
+# Claude Code discards the answer of a hook that reaches this timeout and sends the
+# original result. The name service may take 8 s to connect plus 25 s to answer on a
+# cold start; the hook answers by itself at 40 s (claude_code/deadline.py).
+HOOK_TIMEOUT_SECONDS = 45
 
 
 def command_handler(executable: str, app: str) -> dict:

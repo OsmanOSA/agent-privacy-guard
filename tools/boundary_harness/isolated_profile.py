@@ -4,6 +4,7 @@ Interface:
     profile = IsolatedProfile.install(setup_exe, root)
     profile.env                    environment where HOME/USERPROFILE/CLAUDE_CONFIG_DIR point inside root
     profile.use_hooks(mode)        installed | absent | powershell | timeout | launch_error
+    with profile.hooks(mode):      the same, plus stalled_service for one scenario
     profile.use_engine(package, launcher)   test a source tree with the bundled runtime and model
     profile.use_handler(handler)   register the source tree's hook handler instead of the setup's
     profile.uninstall()
@@ -21,7 +22,10 @@ import shutil
 import subprocess
 import tempfile
 import time
+from contextlib import contextmanager
 from pathlib import Path
+
+from boundary_harness.service_control import resume, service_pids, suspend
 
 FAULT_TIMEOUT_SECONDS = 3
 
@@ -79,6 +83,24 @@ class IsolatedProfile:
         for groups in self._installed.get("hooks", {}).values():
             for group in groups:
                 group["hooks"] = [dict(handler) for _ in group["hooks"]]
+
+    @contextmanager
+    def hooks(self, mode: str):
+        """Hook mode for one scenario; `stalled_service` suspends a running name service."""
+        if mode != "stalled_service":
+            self.use_hooks(mode)
+            yield
+            return
+        self.use_hooks("installed")
+        self._run([self.python, "-m", "privacy_guard.setup", "status"])  # Starts the service.
+        pids = service_pids(self.home)
+        if not pids:
+            raise RuntimeError("No name service to stall")
+        suspend(pids)
+        try:
+            yield
+        finally:
+            resume(pids)
 
     def use_hooks(self, mode: str) -> None:
         settings = json.loads(json.dumps(self._installed))

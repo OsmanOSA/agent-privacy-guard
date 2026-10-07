@@ -16,6 +16,7 @@ from __future__ import annotations
 import json
 from typing import Protocol, TextIO
 
+from privacy_guard.claude_code.deadline import ANSWER_DEADLINE_SECONDS, AnswerGate
 from privacy_guard.claude_code.document_scope import is_document_read
 from privacy_guard.claude_code.edit_policy import before_edit
 from privacy_guard.claude_code.failed_tool import protect_failed_tool
@@ -63,7 +64,8 @@ def run(stdin: TextIO,
         stderr: TextIO,
         journal: Journal,
         vaults: VaultStore,
-        names: NameService) -> int:
+        names: NameService,
+        deadline_seconds: float = ANSWER_DEADLINE_SECONDS) -> int:
     """Handles a full call (read, decide, write)
     and returns the exit code."""
 
@@ -73,16 +75,41 @@ def run(stdin: TextIO,
     except Exception as error:
         record_failure(journal, None, None, error)
         raw = ''  # Invalid input produces the existing conservative block response.
-    result = _handle_safely(raw, journal, vaults, names)
+    gate = AnswerGate(lambda answer: _write(answer, stdout, stderr, journal))
+    timer = gate.deadline(deadline_seconds, lambda: _expired(raw, journal))
+    try:
+        result = _handle_safely(raw, journal, vaults, names)
+    finally:
+        timer.cancel()
+    gate.answer(result)
+    return gate.written.exit_code
+
+
+def _write(result: HookResult, stdout: TextIO, stderr: TextIO, journal: Journal) -> None:
     try:
         with stage('output_write'):
             stdout.write(result.stdout)
             stderr.write(result.stderr)
+            # The deadline path ends with os._exit, which does not flush buffers.
+            stdout.flush()
+            stderr.flush()
     except Exception as error:
         record_failure(journal, None, None, error)
         raise  # A broken output pipe cannot carry a guaranteed replacement.
 
-    return result.exit_code
+
+def _expired(raw: str, journal: Journal) -> HookResult:
+    """The fail-closed answer for this event when the deadline comes first."""
+    event, payload = PRE_TOOL_USE, None
+    try:
+        payload = json.loads(raw)
+        candidate = payload.get("hook_event_name")
+        event = candidate if isinstance(candidate, str) else event
+    except Exception:
+        pass  # Unreadable input keeps the most cautious assumption.
+    tool = payload.get("tool_name") if isinstance(payload, dict) else None
+    record_failure(journal, event, tool, at='answer_deadline', category='timeout')
+    return fail_closed(event, payload)
 
 
 def handle(payload: dict,

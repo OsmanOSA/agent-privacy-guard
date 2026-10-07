@@ -4,12 +4,13 @@ import sqlite3
 from contextlib import contextmanager
 
 EVENTS = frozenset({'PreToolUse', 'PostToolUse', 'PostToolUseFailure', 'SessionStart', 'SessionEnd'})
-TOOLS = frozenset({'Read', 'Write', 'Edit', 'Bash', 'Grep', 'Glob', 'NotebookEdit', 'MCP'})
+TOOLS = frozenset({'Read', 'Write', 'Edit', 'Bash', 'Grep', 'Glob', 'NotebookEdit', 'MCP', 'PowerShell'})
 STAGES = frozenset({
     'payload_parse', 'event_journal', 'session_open', 'session_names', 'session_close',
     'service_start', 'detection', 'vault_write', 'vault_commit', 'restoration',
     'output_mapping', 'output_response', 'protection_journal', 'tool_policy',
     'model_loading', 'model_inference', 'failed_tool', 'launcher_init', 'input_read', 'output_write',
+    'answer_deadline',
 })
 CATEGORIES = frozenset({
     'timeout', 'permission', 'missing_file', 'sqlite_locked', 'sqlite_corrupt',

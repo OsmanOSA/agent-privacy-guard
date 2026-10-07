@@ -11,12 +11,15 @@ import json
 import os
 import shutil
 import subprocess
+import time
 from pathlib import Path
 
 from boundary_harness.fake_model import FINAL_TEXT, FakeModel
 from boundary_harness.scenarios import CANARIES, TOKEN, write_workspace
 
 PROMPT = "Run the scripted fixture check."
+# The hook's fail-closed replacement (claude_code/tool_failures.py).
+MASKED = "[Privacy Guard: Output masked; inspection failed.]"
 SESSION_TIMEOUT_SECONDS = 300
 
 
@@ -60,20 +63,21 @@ def leaked_ids(texts: list[str]) -> list[str]:
 def run_scenario(scenario, profile, workspace: Path, record_dir: Path, claude: str) -> dict:
     shutil.rmtree(workspace, ignore_errors=True)
     write_workspace(workspace)
-    profile.use_hooks(scenario.hook)
     record = record_dir / f"{scenario.id}.jsonl"
-    with FakeModel(scenario.script, record) as model:
+    started = time.monotonic()
+    with profile.hooks(scenario.hook), FakeModel(scenario.script, record) as model:
         command = [claude, "-p", PROMPT, "--output-format", "json",
                    "--dangerously-skip-permissions", "--max-turns", "8"]
         result = subprocess.run(command, cwd=workspace, env=agent_env(profile.env, model.base_url),
                                 capture_output=True, timeout=SESSION_TIMEOUT_SECONDS)
+    elapsed = round(time.monotonic() - started, 1)
     (record_dir / f"{scenario.id}.agent.json").write_bytes(result.stdout + b"\n" + result.stderr)
     texts = observed_strings(record)
     leaked = leaked_ids(texts)
     outcome = {"scenario": scenario.id, "hook": scenario.hook, "expect_leak": scenario.expect_leak,
                "agent_exit": result.returncode, "requests": _count_lines(record) if record.exists() else 0,
                "completed": _completed(result.stdout), "tokens_seen": len(set(TOKEN.findall("\n".join(texts)))),
-               "leaked": leaked}
+               "masked": any(MASKED in text for text in texts), "seconds": elapsed, "leaked": leaked}
     if scenario.restored_file:
         restored = (workspace / scenario.restored_file)
         content = restored.read_text(encoding="utf-8") if restored.exists() else ""
@@ -89,7 +93,10 @@ def _verdict(scenario, outcome: dict) -> str:
         return "as expected (leak observed)" if outcome["leaked"] else "unexpected: no leak observed"
     if outcome["leaked"]:
         return "FAIL: canary reached the model"
-    if not outcome["tokens_seen"]:
+    if not outcome["tokens_seen"] and not outcome["masked"]:
+        # The hook may stop the session before the result is sent: nothing reached the model.
+        if not outcome["completed"]:
+            return "pass: session stopped before the result was sent"
         return "inconclusive: no protected token observed"
     if scenario.restored_file and not outcome.get("restored_on_disk"):
         return "FAIL: local file not restored"
