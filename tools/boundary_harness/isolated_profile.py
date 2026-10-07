@@ -50,7 +50,6 @@ class IsolatedProfile:
         notifications = home / ".privacy-guard/notifications/settings.json"
         notifications.write_text('{"version":1,"mode":"off","style":"card"}')
         profile._installed = json.loads(profile.settings.read_text(encoding="utf-8"))
-        profile._setup_settings = json.loads(json.dumps(profile._installed))
         profile._run([profile.python, "-m", "privacy_guard.setup", "status"])  # Loads the model once.
         return profile
 
@@ -157,8 +156,9 @@ class IsolatedProfile:
         self.settings.write_text(json.dumps(settings, indent=2), encoding="utf-8")
 
     def uninstall(self) -> None:
-        # The setup under test removes only the entries it wrote itself.
-        self.settings.write_text(json.dumps(self._setup_settings, indent=2), encoding="utf-8")
+        # The uninstaller only removes entries its own code registers. With use_engine,
+        # that code is the source tree's, so the source handlers are what it owns.
+        self.settings.write_text(json.dumps(self._installed, indent=2), encoding="utf-8")
         self._setup(self._app / "Uninstall.exe", "/S", f"_?={self._app}")
         receipt = self.home / ".privacy-guard/windows-setup.json"
         deadline = time.monotonic() + 15
@@ -171,10 +171,11 @@ class IsolatedProfile:
         self._run(command)
 
     def _run(self, command) -> None:
+        log = Path(tempfile.gettempdir()) / "PrivacyGuardSetupTest-setup-error.txt"
+        log.unlink(missing_ok=True)  # A message left by an earlier run would mislead.
         result = subprocess.run(command if isinstance(command, str) else list(map(str, command)),
                                 env=self.env, capture_output=True, timeout=300)
         if result.returncode:
-            log = Path(tempfile.gettempdir()) / "PrivacyGuardSetupTest-setup-error.txt"
             detail = (log.read_text(encoding="utf-16-le") if log.exists()
                       else result.stderr.decode("utf-8", errors="replace"))
             raise RuntimeError(f"Setup step failed ({result.returncode}): {detail}")

@@ -13,7 +13,10 @@ from pathlib import PurePath
 
 DOCUMENT_EXTENSIONS = frozenset(
     {".txt", ".md", ".markdown", ".rst", ".csv", ".tsv", ".rtf", ".html", ".htm",
-     ".eml", ".msg", ".pdf", ".doc", ".docx", ".odt"}
+     ".eml", ".msg", ".pdf", ".doc", ".docx", ".odt",
+     # Logs and Claude Code's background-command output files carry free text that
+     # mentions people (benchmark: traceback.log; boundary scenario background-command).
+     ".log", ".output"}
 )
 # A shell command that names a document file: cat cv.txt, head notes.md, ...
 _DOCUMENT_IN_COMMAND = re.compile(
@@ -39,7 +42,10 @@ def is_document_read(payload: dict) -> bool:
         return _DOCUMENT_IN_COMMAND.search(tool_input.get("command", "")) is not None
     if payload.get("tool_name") == "Grep":
         return _searches_documents(tool_input, payload.get("tool_response"))
-    return False
+    # MCP servers return records from external systems (CRM, tickets, mail): names
+    # there are data, as in a document (boundary scenario mcp-result).
+    tool = payload.get("tool_name")
+    return isinstance(tool, str) and tool.startswith("mcp__")
 
 
 def _searches_documents(tool_input: dict, response: object) -> bool:

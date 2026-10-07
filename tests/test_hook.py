@@ -5,10 +5,10 @@ import unittest
 from pathlib import Path
 
 from privacy_guard.claude_code import hook
-from privacy_guard.claude_code.responses import EXIT_ALLOW, EXIT_BLOCK
+from privacy_guard.claude_code.responses import EXIT_ALLOW
 from privacy_guard.core.bound_values import BoundValues
 from privacy_guard.core.vault import VaultStore
-from tests.fakes import STRIPE_KEY, RecordingNameService, ReversingCipher
+from tests.fakes import STRIPE_KEY, RecordingNameService, ReversingCipher, refusal
 
 SESSION = "test-session"
 EMAIL = "jean.dupont@example.com"
@@ -182,10 +182,9 @@ class HookTest(unittest.TestCase):
         self.assertNotIn("Dupont", stdout)
 
     def test_blocks_when_payload_is_unreadable(self):
-        exit_code, _, stderr = self.run_hook("not json")
+        exit_code, stdout, stderr = self.run_hook("not json")
 
-        self.assertEqual(exit_code, EXIT_BLOCK)
-        self.assertIn("Privacy Guard", stderr)
+        self.assertIn("Privacy Guard", refusal(exit_code, stdout, stderr))
 
     def test_masks_tool_output_when_post_tool_use_fails(self):
         exit_code, stdout, _ = self.run_hook(
@@ -198,9 +197,9 @@ class HookTest(unittest.TestCase):
         self.assertFalse(json.loads(stdout)["continue"])
 
     def test_fails_closed_without_session_id(self):
-        exit_code, _, _ = self.run_hook(json.dumps({"hook_event_name": "PreToolUse", "tool_name": "Bash"}))
+        exit_code, stdout, stderr = self.run_hook(json.dumps({"hook_event_name": "PreToolUse", "tool_name": "Bash"}))
 
-        self.assertEqual(exit_code, EXIT_BLOCK)
+        self.assertIsNotNone(refusal(exit_code, stdout, stderr))
 
 
 if __name__ == "__main__":

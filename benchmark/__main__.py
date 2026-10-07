@@ -21,7 +21,8 @@ from benchmark.annotation import load_corpus
 from benchmark.scoring import Mistake, Report
 from privacy_guard.claude_code.document_scope import DOCUMENT_EXTENSIONS
 from privacy_guard.core.detector import SensitiveDataDetector
-from privacy_guard.core.name_detector import CombinedNameDetector, HeuristicNameDetector
+from privacy_guard.core.insee_names import local_name_detector
+from privacy_guard.core.name_detector import CombinedNameDetector
 
 CORPUS = Path(__file__).resolve().parent / "corpus"
 
@@ -32,7 +33,9 @@ def main() -> int:
     parser.add_argument("--spaced", action="store_true", help="print values with separators")
     args = parser.parse_args()
 
-    quick = SensitiveDataDetector(HeuristicNameDetector())
+    # Same composition as the hook (quick names) and the service (documents), including
+    # the optional INSEE index when it is installed locally.
+    quick = SensitiveDataDetector(local_name_detector())
     documents_detector, model_label = _documents_detector()
     report = Report()
     started = time.perf_counter()
@@ -50,7 +53,7 @@ def main() -> int:
 
 
 def _documents_detector() -> tuple[SensitiveDataDetector, str]:
-    heuristic = HeuristicNameDetector()
+    heuristic = local_name_detector()
     try:
         from privacy_guard.service.distil_name_detector import DistilNameDetector
 

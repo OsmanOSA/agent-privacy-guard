@@ -18,6 +18,7 @@ from privacy_guard.service.distil_files import DISTIL_DIRECTORY, MANIFEST
 from privacy_guard.service.model_files import ModelFiles
 from privacy_guard.service.ner_policy import record_model
 from privacy_guard.setup.bundle import check_runtime, verify_bundle
+from privacy_guard.setup.errors import SetupError
 from privacy_guard.setup.transaction import installation_transaction
 
 
@@ -33,10 +34,10 @@ def preflight(bundle: Path, user_home: Path):
                  (user_home / '.local/bin/claude.exe').is_file() or
                  any((user_home / '.vscode/extensions').glob('anthropic.claude-code-*')))
     if not available:
-        raise RuntimeError('Install and open Claude Code once, then run Privacy Guard setup again')
+        raise SetupError('Installez Claude Code et ouvrez-le une fois, puis relancez l’installation de Privacy Guard.')
     settings = SettingsFile(directory / 'settings.json').load()
     if not isinstance(settings, dict) or settings.get('disableAllHooks'):
-        raise RuntimeError('Claude Code settings disable hooks or have an invalid structure')
+        raise SetupError('Les réglages de Claude Code désactivent les hooks ou sont invalides (disableAllHooks).')
     default_cipher()
     VaultCompatibility(user_home / '.privacy-guard', PACKAGE_DIR).check()
     return manifest, directory
@@ -66,7 +67,7 @@ def install(bundle: Path, user_home: Path):
         if not preferences.exists():
             configure(home / 'notifications', 'background', 'card')
         if not all(installer.status().values()):
-            raise RuntimeError('Hook registration did not complete')
+            raise SetupError('L’enregistrement des hooks dans Claude Code n’a pas abouti.')
         receipt = {'schema': 1, 'version': manifest['version'], 'bundle': str(bundle),
                    'claude_directory': str(directory), 'python': str(python)}
         (home / 'windows-setup.json').write_text(json.dumps(receipt, indent=2), encoding='utf-8')
@@ -79,7 +80,7 @@ def uninstall(bundle: Path, user_home: Path):
         return
     receipt = json.loads(receipt_path.read_text(encoding='utf-8'))
     if Path(receipt['bundle']).resolve() != bundle.resolve():
-        raise RuntimeError('A different installed version owns the active integration')
+        raise SetupError('Une autre version installée de Privacy Guard gère la protection : désinstallez-la d’abord.')
     settings = SettingsFile(Path(receipt['claude_directory']) / 'settings.json')
     current = settings.load()
     python, app = (bundle / 'runtime/python.exe').as_posix(), (home / 'app').as_posix()
@@ -88,7 +89,7 @@ def uninstall(bundle: Path, user_home: Path):
             for handler in registration.hook_handlers(python, app).values()}
     ours.add((f'"{python}" "{app}"', ()))
     if not registration.owned_targets(current) <= ours:
-        raise RuntimeError('Another Privacy Guard installation now owns the hooks')
+        raise SetupError('Une autre installation de Privacy Guard gère maintenant les hooks.')
     # Only remove this product's hooks. Other settings and retained mappings survive.
     ServiceClient(ServiceChannel(home / 'run')).stop()
     stop_worker(home / 'notifications')
@@ -103,10 +104,10 @@ def status(user_home: Path):
     receipt = json.loads((home / 'windows-setup.json').read_text(encoding='utf-8'))
     settings = SettingsFile(Path(receipt['claude_directory']) / 'settings.json').load()
     if not all(registration.registered_events(settings).values()) or settings.get('disableAllHooks'):
-        raise RuntimeError('Hook registration is incomplete or disabled')
+        raise SetupError('Les hooks de Privacy Guard sont absents ou désactivés dans Claude Code.')
     if not ModelFiles(home / 'models' / DISTIL_DIRECTORY, MANIFEST).is_ready():
-        raise RuntimeError('The installed name model is missing or corrupted')
+        raise SetupError('Le modèle de noms installé est absent ou abîmé : réinstallez Privacy Guard.')
     client = ServiceClient(ServiceChannel(home / 'run'), python=Path(receipt['python']))
     if not client.find_names('Madame Sophie Martin habite Paris.'):
-        raise RuntimeError('The installed name detector did not answer the status check')
+        raise SetupError('Le détecteur de noms installé n’a pas répondu.')
     return receipt['version']

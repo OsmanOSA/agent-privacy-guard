@@ -31,9 +31,10 @@ class LauncherFailureTest(unittest.TestCase):
 
     def test_broken_pretool_installation_blocks_before_execution(self):
         reply = self.call({"hook_event_name": "PreToolUse"})
-        self.assertEqual(reply.returncode, 2)
-        self.assertEqual(reply.stdout, "")
-        self.assertIn("Privacy Guard", reply.stderr)
+        self.assertEqual(reply.returncode, 0)
+        output = json.loads(reply.stdout)["hookSpecificOutput"]
+        self.assertEqual(output["permissionDecision"], "deny")
+        self.assertIn("Privacy Guard", output["permissionDecisionReason"])
 
     def test_broken_posttool_installation_uses_native_stop(self):
         for event in ("PostToolUse", "PostToolUseFailure"):

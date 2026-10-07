@@ -37,9 +37,9 @@ class EditFallbackTest(WrittenFileTestCase):
         self.assertEqual(path.read_text(encoding="utf-8").count(masked), 0,
                          "The token-containing old string cannot match the restored file")
         args = {"file_path": str(path), "old_string": masked, "new_string": changed}
-        code, result, reason = self.call("PreToolUse", "Edit", args)
-        self.assertEqual((code, result), (2, {}))
-        self.assertIn("Write", reason)
+        code, result, _ = self.call("PreToolUse", "Edit", args)
+        self.assertEqual((code, result["permissionDecision"]), (0, "deny"))
+        self.assertIn("Write", result["permissionDecisionReason"])
         self.assertEqual(path.read_text(encoding="utf-8"), ORIGINAL, "Refusal must not touch the file")
         write_args = {"file_path": str(path), "content": changed}
         self.assertEqual(self.call("PreToolUse", "Write", write_args), (0, {}, ""))

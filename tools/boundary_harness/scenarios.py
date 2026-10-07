@@ -16,6 +16,8 @@ import string
 from dataclasses import dataclass
 from pathlib import Path
 
+from boundary_harness.fake_model import MAIN
+
 # Pseudonyms carry an id; secrets are masked without one.
 TOKEN = re.compile(r"⟦[A-Z_]+:(?:[0-9A-F]{8}|REDACTED)⟧")
 
@@ -40,6 +42,8 @@ CANARIES = {
     "phone-1": "06 41 27 85 93",
     "iban-1": _iban("FR", "30006000011234567890189"),
     "secret-1": _github_token(),
+    # A person's name as file names spell it (cv_camille_lefebvre.md).
+    "name-file": "camille_lefebvre",
 }
 
 FILES = {
@@ -49,6 +53,7 @@ FILES = {
     "notes.md": "# Suivi client\n\n"
                 f"Rendez-vous avec {CANARIES['name-3']} mardi. Contact : {CANARIES['email-2']}.\n",
     ".env": f"APP_ENV=staging\nGITHUB_TOKEN={CANARIES['secret-1']}\n",
+    f"cv_{CANARIES['name-file']}.md": "# CV\n\nExpérience : développement Python.\n",
 }
 
 
@@ -74,6 +79,26 @@ def _report_from_last_result(workspace: Path):
     return step
 
 
+def _read_masked_file(workspace: Path):
+    """Step that opens the file whose masked name the agent was shown, as an agent would."""
+    def step(messages: list) -> list:
+        results = [text for message in messages for text in _tool_results(message)]
+        listed = (results[-1] if results else "").splitlines()
+        masked = next((line.strip() for line in listed if TOKEN.search(line)), "missing.md")
+        path = Path(masked) if Path(masked).is_absolute() else workspace / masked
+        return [("Read", {"file_path": str(path)})]
+    return step
+
+
+def _read_background_output(messages: list) -> list:
+    """Step that reads the output file Claude Code named for a background command."""
+    for text in reversed([text for message in messages for text in _tool_results(message)]):
+        match = re.search(r"(?:written to|Output file|output file)[^:]*:\s*(\S+)", text)
+        if match:
+            return [("Read", {"file_path": match.group(1).rstrip(".")})]
+    return [("Bash", {"command": "echo no background output file"})]
+
+
 def _tool_results(message: dict) -> list:
     texts = []
     for block in message.get("content") or ():
@@ -92,6 +117,10 @@ class Scenario:
     script: list
     restored_file: str | None = None
     notes: str = ""
+    mcp: bool = False                 # connect the fixture MCP server (mcp_fixture.py)
+    resume: list | None = None        # script of a second session resuming the first
+    resume_prompt: str | None = None  # its prompt, e.g. "/compact"; the default prompt otherwise
+    parallel: int = 1                 # sessions run at the same time in the same profile
 
 
 def scenarios(workspace: Path) -> list[Scenario]:
@@ -133,6 +162,39 @@ def scenarios(workspace: Path) -> list[Scenario]:
                   [("Read", {"file_path": str(workspace / "report.md")})]],
                  restored_file="report.md",
                  notes="Restored originals on disk; agent context must still hold tokens only."),
+        Scenario("subagent-read", "installed", False,
+                 {MAIN: [[("Agent", {"description": "Read the notes", "subagent_type": "general-purpose",
+                                     "prompt": "SUBAGENT-TASK: read notes.md and report."})]],
+                  "SUBAGENT-TASK": [[("Read", {"file_path": notes})]]},
+                 notes="The subagent's own conversation and its report to the main agent."),
+        Scenario("mcp-result", "installed", False, [[("mcp__fixture__customer_card", {})]], mcp=True),
+        # Documented V1 limit (README, Known limits): PostToolUseFailure cannot replace the
+        # error and an MCP call cannot be rewritten to succeed. A local MCP relay is V2.
+        Scenario("mcp-error", "installed", True, [[("mcp__fixture__customer_lookup_error", {})]], mcp=True,
+                 notes="An MCP error takes PostToolUseFailure, like a failing command."),
+        Scenario("glob-filenames", "installed", False,
+                 [[("Glob", {"pattern": "**/*.md", "path": str(workspace)})]],
+                 notes="A person's name inside a file name."),
+        Scenario("glob-then-read", "installed", False,
+                 [[("Glob", {"pattern": "**/cv_*.md", "path": str(workspace)})], _read_masked_file(workspace)],
+                 notes="The agent opens the masked path; file tools get the real one locally."),
+        Scenario("edit-document", "installed", False,
+                 [[("Read", {"file_path": notes})],
+                  [("Edit", {"file_path": notes, "old_string": "mardi", "new_string": "jeudi"})]],
+                 notes="Edit returns a snippet of the edited document."),
+        Scenario("resume-history", "installed", False, [[("Read", {"file_path": csv})]],
+                 resume=[[("Read", {"file_path": csv})], [("Bash", {"command": "echo resumed"})]],
+                 notes="A resumed session sends the earlier tool results again."),
+        Scenario("background-command", "installed", False,
+                 [[("Bash", {"command": "cat notes.md", "run_in_background": True})],
+                  [("Bash", {"command": "sleep 2"})], _read_background_output],
+                 notes="Output of a background command, read back from its output file."),
+        Scenario("compaction", "installed", False, [[("Read", {"file_path": csv})]],
+                 resume=[[("Read", {"file_path": csv})]], resume_prompt="/compact",
+                 notes="Compaction sends the whole history to the model to summarize it."),
+        Scenario("parallel-sessions", "installed", False,
+                 [[("Read", {"file_path": csv})], [("Read", {"file_path": notes})]], parallel=3,
+                 notes="Three sessions at once share the vault, the journal and the name service."),
         Scenario("hook-in-powershell", "powershell", False, [[("Read", {"file_path": csv})]],
                  notes="No Git Bash: Claude Code runs hooks in PowerShell."),
         Scenario("stalled-name-service", "stalled_service", False, [[("Read", {"file_path": notes})]],

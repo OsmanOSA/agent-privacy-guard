@@ -25,7 +25,7 @@ Interface:
 
 from __future__ import annotations
 
-from privacy_guard.claude_code.responses import HookResult, allow, block, replace_tool_input
+from privacy_guard.claude_code.responses import HookResult, allow, deny, replace_tool_input
 from privacy_guard.claude_code.shell_exits import ends_shell_early
 
 BASH, POWERSHELL = "Bash", "PowerShell"
@@ -50,7 +50,7 @@ def before_shell(payload: dict) -> HookResult:
     tool_input = payload.get("tool_input")
     command = tool_input.get("command") if isinstance(tool_input, dict) else None
     if isinstance(command, str) and ends_shell_early(command, payload.get("tool_name")):
-        return block(EARLY_EXIT_GUIDANCE)
+        return deny(EARLY_EXIT_GUIDANCE)
     updated = route_shell_failures(tool_input, payload.get("tool_name"))
     return allow() if updated is None else replace_tool_input(updated)
 

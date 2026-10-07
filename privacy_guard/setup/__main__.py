@@ -5,6 +5,7 @@ import ctypes
 import sys
 from pathlib import Path
 
+from privacy_guard.setup.errors import user_message
 from privacy_guard.setup.installation import install, preflight, status, uninstall
 
 
@@ -30,11 +31,12 @@ def main():
             print(message)
         return 0
     except Exception as error:
-        message = f'Privacy Guard : installation incomplète.\n\n{error}'
+        # The installer frames this text itself ("Installation incomplète. … Vos coffres
+        # existants sont conservés."): stderr carries the French sentence only.
         if args.dialog:
-            ctypes.windll.user32.MessageBoxW(None, message, 'Privacy Guard', 0x10)
+            ctypes.windll.user32.MessageBoxW(None, f'Privacy Guard\n\n{user_message(error)}', 'Privacy Guard', 0x10)
         elif sys.stderr:
-            print(message, file=sys.stderr)
+            print(user_message(error), file=sys.stderr)
         return 1
 
 

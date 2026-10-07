@@ -34,8 +34,21 @@ def allow() -> HookResult:
     return HookResult(EXIT_ALLOW)
 
 
+def deny(message: str) -> HookResult:
+    """Refuses a tool before it runs (PreToolUse); the message is shown to the model.
+
+    Exit code 2 also refuses, but Claude Code then prefixes the message with the hook
+    command, whose paths carry the Windows user name into model context. A JSON deny
+    reaches the model without it and holds in every permission mode, bypass included
+    (observed with Claude Code 2.1.292).
+    """
+    response = {"hookSpecificOutput": {"hookEventName": PRE_TOOL_USE, "permissionDecision": "deny",
+                                       "permissionDecisionReason": message}}
+    return HookResult(EXIT_ALLOW, stdout=json.dumps(response, ensure_ascii=False))
+
+
 def block(message: str) -> HookResult:
-    """Stops the tool before it runs; the message is shown to the model."""
+    """Exit code 2 for events without a tool decision (SessionStart, unknown input)."""
     return HookResult(EXIT_BLOCK, stderr=message)
 
 

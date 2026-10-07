@@ -20,6 +20,7 @@ from privacy_guard.claude_code.deadline import ANSWER_DEADLINE_SECONDS, AnswerGa
 from privacy_guard.claude_code.document_scope import is_document_read
 from privacy_guard.claude_code.edit_policy import before_edit
 from privacy_guard.claude_code.failed_tool import protect_failed_tool
+from privacy_guard.claude_code.path_restoration import restore_file_paths
 from privacy_guard.claude_code.protection import protect_tool_output
 from privacy_guard.claude_code.shell_failures import SHELL_TOOLS, before_shell
 from privacy_guard.claude_code.tool_failures import inspection_failed
@@ -33,6 +34,7 @@ from privacy_guard.claude_code.responses import (
     HookResult,
     allow,
     block,
+    deny,
 )
 from privacy_guard.core.insee_names import local_name_detector
 from privacy_guard.core.privacy_core import PrivacyCore
@@ -143,7 +145,11 @@ def handle(payload: dict,
         with stage('tool_policy'):
             if payload.get("tool_name") in SHELL_TOOLS:
                 return before_shell(payload)
-            return before_edit(payload)
+            refusal = before_edit(payload)
+            if refusal.stdout:
+                return refusal
+        with stage('restoration'):
+            return restore_file_paths(payload, lambda: PrivacyCore(vaults.session(session_id), QUICK_NAMES))
 
     document = is_document_read(payload)
     with stage('session_open'):
@@ -166,7 +172,7 @@ def fail_closed(event: str, payload: object = None) -> HookResult:
     """Stop post-tool processing; mask recognized schemas without guessing others."""
     if event in {POST_TOOL_USE, POST_TOOL_USE_FAILURE}:
         return inspection_failed(event, payload)
-    return block(FAILURE_MESSAGE)
+    return deny(FAILURE_MESSAGE) if event == PRE_TOOL_USE else block(FAILURE_MESSAGE)
 
 
 def _handle_safely(raw_payload: str,

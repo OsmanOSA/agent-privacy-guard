@@ -10,7 +10,7 @@ from pathlib import Path
 PROJECT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT))
 
-from windows_payload import build_payload, extract, fetch
+from windows_payload import build_payload, extract, fetch, longest_install_directory
 
 
 def main():
@@ -34,8 +34,9 @@ def main():
     args.out.mkdir(parents=True, exist_ok=True)
     stem = 'PrivacyGuard-Test' if args.test_build else 'PrivacyGuard'
     output = args.out.resolve() / f'{stem}-{args.version}-windows-x64.exe'
+    max_directory = longest_install_directory(payload, args.version)
     command = [str(compiler), '/V2', f'/DVERSION={args.version}', f'/DPAYLOAD={payload}',
-               f'/DOUTPUT={output}']
+               f'/DOUTPUT={output}', f'/DMAX_INSTDIR={max_directory}']
     if args.test_build:
         command.append('/DTEST_BUILD')
     command.append(str(PROJECT / 'packaging/windows/setup.nsi'))
@@ -43,7 +44,8 @@ def main():
     with output.open('rb') as stream:
         digest = hashlib.file_digest(stream, 'sha256').hexdigest()
     output.with_suffix('.exe.sha256').write_text(f'{digest}  {output.name}\n', encoding='ascii')
-    print(json.dumps({'setup': str(output), 'sha256': digest, 'bytes': output.stat().st_size}))
+    print(json.dumps({'setup': str(output), 'sha256': digest, 'bytes': output.stat().st_size,
+                      'max_install_directory': max_directory}))
 
 
 if __name__ == '__main__':

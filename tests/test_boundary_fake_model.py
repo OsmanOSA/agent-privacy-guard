@@ -8,7 +8,7 @@ from pathlib import Path
 # The harness lives with the other maintainer tools, outside the package.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
-from boundary_harness.fake_model import FINAL_TEXT, FakeModel, next_step, stream_events  # noqa: E402
+from boundary_harness.fake_model import FINAL_TEXT, MAIN, FakeModel, next_step, stream_events  # noqa: E402
 from boundary_harness.session import leaked_ids, observed_strings  # noqa: E402
 from boundary_harness.scenarios import CANARIES  # noqa: E402
 
@@ -34,6 +34,14 @@ class NextStepTest(unittest.TestCase):
         merged = {"role": "assistant", "content": tool_turn(0)["content"] + tool_turn(1)["content"]}
         body = {"tools": TOOLS, "messages": [merged]}
         self.assertEqual(next_step([[READ], [READ], [READ]], body), (2, [READ]))
+
+    def test_subagent_conversation_follows_its_own_script(self):
+        script = {MAIN: [[("Agent", {"prompt": "SUBAGENT-TASK read"})]], "SUBAGENT-TASK": [[READ]]}
+        tools = TOOLS + [{"name": "Agent"}]
+        sub = {"tools": tools, "messages": [{"role": "user", "content": [{"type": "text", "text": "SUBAGENT-TASK read"}]}]}
+        main = {"tools": tools, "messages": [{"role": "user", "content": "go"}]}
+        self.assertEqual(next_step(script, sub), (0, [READ]))
+        self.assertEqual(next_step(script, main)[1][0][0], "Agent")
 
     def test_side_request_without_scripted_tools_gets_text(self):
         self.assertEqual(next_step([[READ]], {"messages": [{"role": "user", "content": "title"}]}), (-1, []))

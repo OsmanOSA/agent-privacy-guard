@@ -105,4 +105,4 @@ class HookFailureTest(unittest.TestCase):
 
     def test_malformed_event_name_does_not_break_the_failure_handler(self):
         code, reply = self.call({"hook_event_name": {"unexpected": VALUE}})
-        self.assertEqual((code, reply), (2, {}))
+        self.assertEqual((code, reply["hookSpecificOutput"]["permissionDecision"]), (0, "deny"))

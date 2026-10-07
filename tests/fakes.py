@@ -1,9 +1,25 @@
 """Synthetic values and test doubles shared by the test modules."""
 
+import json
+
 from privacy_guard.core.name_detector import HeuristicNameDetector
 
 # Assemble the synthetic key so source scanners do not flag a credential literal.
 STRIPE_KEY = "sk_live_" + "FAKEFAKEFAKE00000000000000"
+
+
+def refusal(code, stdout, stderr):
+    """The refusal message when the hook refused the tool, else None.
+
+    Tool refusals are a JSON deny (exit 0); other events still use exit code 2.
+    """
+    if code == 2:
+        return stderr
+    if code == 0 and stdout:
+        output = json.loads(stdout).get("hookSpecificOutput", {})
+        if output.get("permissionDecision") == "deny":
+            return output["permissionDecisionReason"]
+    return None
 
 
 class RecordingNameService:

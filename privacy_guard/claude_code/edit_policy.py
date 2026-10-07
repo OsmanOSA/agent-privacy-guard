@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from pathlib import PureWindowsPath
 
-from privacy_guard.claude_code.responses import HookResult, allow, block
+from privacy_guard.claude_code.responses import HookResult, allow, deny
 from privacy_guard.core.tokens import PLACEHOLDER_PATTERN
 
 _DOCUMENTS = frozenset({".txt", ".md", ".markdown", ".csv"})
@@ -29,5 +29,5 @@ def before_edit(payload: dict) -> HookResult:
         return allow()
     if any(isinstance(value, str) and PLACEHOLDER_PATTERN.search(value)
            for value in (arguments.get("old_string"), arguments.get("new_string"))):
-        return block(_WRITE_GUIDANCE)
+        return deny(_WRITE_GUIDANCE)
     return allow()

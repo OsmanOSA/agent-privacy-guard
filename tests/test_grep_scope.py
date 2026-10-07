@@ -38,5 +38,15 @@ class GrepScopeTest(unittest.TestCase):
         self.assertFalse(is_document_read({"tool_name": "Grep", "tool_input": None, "tool_response": "x"}))
 
 
+class McpScopeTest(unittest.TestCase):
+    def test_mcp_results_are_documents(self):
+        self.assertTrue(is_document_read({"tool_name": "mcp__crm__customer_card", "tool_input": {}}))
+
+    def test_other_tool_names_are_not(self):
+        for tool in ("WebSearch", "Agent", "mcp", None):
+            with self.subTest(tool=tool):
+                self.assertFalse(is_document_read({"tool_name": tool, "tool_input": {}}))
+
+
 if __name__ == "__main__":
     unittest.main()
