@@ -5,6 +5,7 @@ contrat-⟪name:dupont-marie⟫.pdf
 Facture_⟪name:Julien_Moreau⟫_2026-03.pdf
 notes_reunion.md
 planning_equipe.xlsx
+devis_⟪name:thomas_girard⟫.pdf
 
 src:
 main.py
@@ -22,3 +23,15 @@ test_main.py
 test_read_write.py
 report_test.py
 fixtures_data.json
+
+issues:
+01-tool-name-false-positives.md
+02-hook-without-git-bash.md
+
+third_party:
+per_channel.py
+copy_native.cpp
+loss_meta.py
+native_layer.h
+unique_dim.py
+with_noise.py
