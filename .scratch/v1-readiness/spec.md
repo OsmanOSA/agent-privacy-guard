@@ -43,8 +43,8 @@ Get the unit suite green before any redeploy.
 
 ## Code freeze (founder, 2026-10-07)
 
-`0.1.0-preview.4` (commit `19cf405`, receipt `docs/windows-setup-checks-2026-10-07-preview-4.md`)
-is frozen for real-use tests ([real-use-tests.md](real-use-tests.md)). From now on, only
+`0.1.0-preview.5` (commit `263cd41`, receipt `docs/windows-setup-checks-2026-10-07-preview-5.md`;
+preview.4 plus the founder's SQL and Excel requests, items 14 and 15) is frozen for real-use tests ([real-use-tests.md](real-use-tests.md)). From now on, only
 blocking findings are fixed before the V1:
 
 - a value reaching the model unmasked;

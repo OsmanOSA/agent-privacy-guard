@@ -1,7 +1,7 @@
-# Real-use tests of 0.1.0-preview.4
+# Real-use tests of 0.1.0-preview.5
 
-Build: `dist/PrivacyGuard-0.1.0-preview.4-windows-x64.exe`, SHA-256
-`aab2cc984c68704ed94b39ad3feaadf728b0c0dcbdc7e21b052eb578e267996f`.
+Build: `dist/PrivacyGuard-0.1.0-preview.5-windows-x64.exe`, SHA-256
+`0a9366ac70023968f700a2ee42377f9dd7831cc0e9cc0483d863bfb541e27ed3`.
 
 Record each finding below with its date, what was done, what happened, and whether it
 is blocking (leak, damaged file, work prevented) or V1.1. Never paste real personal
@@ -20,6 +20,8 @@ Install: close every Claude Code session, run the setup over the development ins
       e-mail on disk afterwards.
 - [ ] Asking the agent to rewrite a `.env` holding a key: refused, key intact.
 - [ ] `ls`, Glob and `git status` on a code project: no technical name masked.
+- [ ] Asking the agent to read and update a `.sql` seed and an `.xlsx` workbook: tokens in
+      the answer, real values in the files afterwards.
 - [ ] A failing command (`git push` without network, a missing file): the agent
       still sees a readable error.
 - [ ] A subagent task and a long session with `/compact`: nothing unusual.
