@@ -8,6 +8,7 @@ spans with tokens, and the quality benchmark (benchmark/) measures them.
 
 from __future__ import annotations
 
+from privacy_guard.core.file_names import has_file_name
 from privacy_guard.core.findings import Finding, excluding, without_overlaps
 from privacy_guard.core.external_markers import preserve_markers
 from privacy_guard.core.insee_names import has_person_context
@@ -55,7 +56,8 @@ class SensitiveDataDetector:
     def _find_names(self, text: str) -> list[Finding]:
         # Ordinary lowercase output skips the service; explicit personal fields
         # must also support lowercase names when the optional lexicon is enabled.
-        if not any(character.isupper() for character in text) and not has_person_context(text):
+        if (not any(character.isupper() for character in text) and not has_person_context(text)
+                and not has_file_name(text)):
             return []
         return [finding for finding in complete(text, self._names.find_names(text))
                 if not is_tool_vocabulary(text[finding.start:finding.end])]

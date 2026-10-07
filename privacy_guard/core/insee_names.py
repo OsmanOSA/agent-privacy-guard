@@ -9,6 +9,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from privacy_guard.core.file_names import FileNameDetector
 from privacy_guard.core.findings import Finding
 from privacy_guard.core.name_detector import CombinedNameDetector, HeuristicNameDetector
 from privacy_guard.core.name_lexicon import LEXICON_FILE, NameLexicon
@@ -64,4 +65,4 @@ def local_name_detector(guard_home: Path | None = None):
     heuristic = HeuristicNameDetector()
     if not path.is_file():
         return heuristic
-    return CombinedNameDetector([heuristic, InseeNameDetector(path)])
+    return CombinedNameDetector([heuristic, InseeNameDetector(path), FileNameDetector(NameLexicon(path))])

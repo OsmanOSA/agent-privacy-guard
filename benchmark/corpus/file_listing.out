@@ -1,0 +1,24 @@
+$ ls documents src tests
+documents:
+cv_⟪name:camille_lefebvre⟫.md
+contrat-⟪name:dupont-marie⟫.pdf
+Facture_⟪name:Julien_Moreau⟫_2026-03.pdf
+notes_reunion.md
+planning_equipe.xlsx
+
+src:
+main.py
+read_data.py
+test_data.py
+main_report.html
+data_loader.py
+user_service.py
+rose_theme.css
+martin_tools.py
+report_builder.py
+
+tests:
+test_main.py
+test_read_write.py
+report_test.py
+fixtures_data.json

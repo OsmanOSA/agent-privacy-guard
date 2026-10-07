@@ -9,7 +9,9 @@ Interface:
     with FakeModel(script, record_path) as model:
         model.base_url            # value for ANTHROPIC_BASE_URL
     script: list of steps. A step is a list of (tool_name, tool_input) calls issued
-    in one assistant turn, or a callable(messages) returning that list.
+    in one assistant turn, or a callable(messages) returning that list. A dict maps a
+    marker found in a conversation's first user message to its steps, with MAIN for
+    the rest: a subagent runs its own conversation, hence its own script.
 
 Progress is read back from tool_use ids, which encode their step: Claude Code may
 merge assistant turns or append system messages, so counting messages is unreliable.
@@ -24,6 +26,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 FINAL_TEXT = "Scripted session finished."
+MAIN = "main"
 STEP_ID = re.compile(r"^toolu_s(\d+)_")
 USAGE = {"input_tokens": 1, "output_tokens": 1,
          "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0}
@@ -37,6 +40,7 @@ def next_step(script: list, body: dict) -> tuple[int, list]:
     """
     names = {tool.get("name") for tool in body.get("tools") or ()}
     messages = body.get("messages") or []
+    script = _conversation_script(script, messages)
     wanted = {name for step in script if not callable(step) for name, _ in step}
     if not names or not wanted <= names:
         return -1, []
@@ -45,6 +49,16 @@ def next_step(script: list, body: dict) -> tuple[int, list]:
         return done, []
     step = script[done]
     return done, step(messages) if callable(step) else step
+
+
+def _conversation_script(script, messages: list) -> list:
+    if not isinstance(script, dict):
+        return script
+    first = next((message for message in messages if message.get("role") == "user"), {})
+    content = first.get("content")
+    text = content if isinstance(content, str) else " ".join(
+        block.get("text", "") for block in content or () if isinstance(block, dict))
+    return next((steps for marker, steps in script.items() if marker != MAIN and marker in text), script[MAIN])
 
 
 def assistant_blocks(calls: list, step: int) -> list:

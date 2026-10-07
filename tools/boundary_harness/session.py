@@ -11,6 +11,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 import time
 from pathlib import Path
 
@@ -69,11 +70,16 @@ def run_scenario(scenario, profile, workspace: Path, record_dir: Path, claude: s
     journal = profile.home / ".privacy-guard/logs/protection.jsonl"
     journal_start = journal.stat().st_size if journal.exists() else 0
     started = time.monotonic()
-    with profile.hooks(scenario.hook), FakeModel(scenario.script, record) as model:
-        command = [claude, "-p", PROMPT, "--output-format", "json",
-                   "--dangerously-skip-permissions", "--max-turns", "8"]
-        result = subprocess.run(command, cwd=workspace, env=agent_env(profile.env, model.base_url),
-                                capture_output=True, timeout=SESSION_TIMEOUT_SECONDS)
+    extra = _mcp_arguments(record_dir) if scenario.mcp else []
+    with profile.hooks(scenario.hook):
+        with FakeModel(scenario.script, record) as model:
+            result = _agent(claude, workspace, agent_env(profile.env, model.base_url), extra)
+        if scenario.resume is not None:
+            # The resumed history is sent to the model again: it must hold tokens only.
+            session_id = json.loads(result.stdout)["session_id"]
+            with FakeModel(scenario.resume, record) as model:
+                result = _agent(claude, workspace, agent_env(profile.env, model.base_url),
+                                extra + ["--resume", session_id])
     elapsed = round(time.monotonic() - started, 1)
     (record_dir / f"{scenario.id}.agent.json").write_bytes(result.stdout + b"\n" + result.stderr)
     texts = observed_strings(record)
@@ -114,6 +120,20 @@ def _verdict(scenario, outcome: dict) -> str:
     if scenario.restored_file and not outcome.get("restored_on_disk"):
         return "FAIL: local file not restored"
     return "pass"
+
+
+def _agent(claude: str, workspace: Path, env: dict, extra: list) -> subprocess.CompletedProcess:
+    command = [claude, "-p", PROMPT, "--output-format", "json",
+               "--dangerously-skip-permissions", "--max-turns", "8", *extra]
+    return subprocess.run(command, cwd=workspace, env=env, capture_output=True, timeout=SESSION_TIMEOUT_SECONDS)
+
+
+def _mcp_arguments(record_dir: Path) -> list:
+    server = Path(__file__).with_name("mcp_fixture.py")
+    config = record_dir / "mcp-config.json"
+    config.write_text(json.dumps({"mcpServers": {"fixture": {
+        "command": Path(sys.executable).as_posix(), "args": [server.as_posix()]}}}), encoding="utf-8")
+    return ["--mcp-config", str(config), "--strict-mcp-config"]
 
 
 def _reduced_reported(journal: Path, start: int) -> bool:

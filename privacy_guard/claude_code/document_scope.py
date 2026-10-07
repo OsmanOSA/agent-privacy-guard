@@ -39,7 +39,10 @@ def is_document_read(payload: dict) -> bool:
         return _DOCUMENT_IN_COMMAND.search(tool_input.get("command", "")) is not None
     if payload.get("tool_name") == "Grep":
         return _searches_documents(tool_input, payload.get("tool_response"))
-    return False
+    # MCP servers return records from external systems (CRM, tickets, mail): names
+    # there are data, as in a document (boundary scenario mcp-result).
+    tool = payload.get("tool_name")
+    return isinstance(tool, str) and tool.startswith("mcp__")
 
 
 def _searches_documents(tool_input: dict, response: object) -> bool:
