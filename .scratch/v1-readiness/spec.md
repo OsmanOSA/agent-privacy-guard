@@ -39,6 +39,18 @@ Get the unit suite green before any redeploy.
 | 13 | [Rewriting code and configuration files damages them](issues/13-code-file-writes.md) | P1 | done |
 | 10 | [End-of-work summary notification](issues/10-end-of-work-summary.md) | later | blocked |
 
+## Code freeze (founder, 2026-10-07)
+
+`0.1.0-preview.4` (commit `19cf405`, receipt `docs/windows-setup-checks-2026-10-07-preview-4.md`)
+is frozen for real-use tests ([real-use-tests.md](real-use-tests.md)). From now on, only
+blocking findings are fixed before the V1:
+
+- a value reaching the model unmasked;
+- a user file damaged;
+- work prevented (a tool refused or blinded for no reason).
+
+Everything else goes to the [V1.1 backlog](v1.1-backlog.md) without a fix.
+
 ## Already fixed (branch `fix/model-boundary-leaks`, commit 8018c89)
 
 Failing Bash and PowerShell commands, Grep content, PowerShell document reads,
