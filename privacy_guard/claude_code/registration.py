@@ -30,6 +30,7 @@ never modified.
 from __future__ import annotations
 
 import copy
+import json
 
 MARKER = ".privacy-guard"
 HOOK_EVENTS = ("PreToolUse", "PostToolUse", "PostToolUseFailure", "SessionStart", "SessionEnd")
@@ -55,9 +56,17 @@ def command_handler(executable: str, app: str) -> dict:
 
 
 def guard_handler(executable: str, app: str) -> dict:
-    """PowerShell runs the app and turns a missing interpreter or a crash into exit 2."""
+    """PowerShell runs the app; a missing interpreter is refused, a failing hook exits 2.
+
+    A missing interpreter wrote nothing, so the guard answers with a JSON deny, which
+    keeps the hook command out of model context (responses.deny). A hook that fails
+    mid-way may have written part of its answer: appending JSON would make the output
+    unreadable, which Claude Code treats as non-blocking, so exit 2 refuses instead.
+    """
+    refusal = json.dumps({"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "deny",
+                                                 "permissionDecisionReason": UNAVAILABLE_MESSAGE}})
     command = (f"try {{ & {_quoted(executable)} {_quoted(app)} }} "
-               f"catch {{ [Console]::Error.WriteLine({_quoted(UNAVAILABLE_MESSAGE)}); exit 2 }}; "
+               f"catch {{ [Console]::Out.WriteLine({_quoted(refusal)}); exit 0 }}; "
                "if ($LASTEXITCODE -ne 0) { exit 2 }")
     return {"type": "command", "shell": "powershell", "command": command, "timeout": HOOK_TIMEOUT_SECONDS}
 

@@ -6,6 +6,7 @@ import unittest
 from unittest.mock import Mock
 
 from privacy_guard.claude_code.hook import run
+from tests.fakes import refusal
 
 TOKEN = "\u27e6EMAIL:1234ABCD\u27e7"
 REDACTION = "\u27e6STRIPE_KEY:REDACTED\u27e7"
@@ -20,6 +21,9 @@ class EditPolicyTest(unittest.TestCase):
         code = run(io.StringIO(json.dumps(payload)), stdout, stderr, journal, vaults, names)
         vaults.session.assert_not_called()
         names.find_names.assert_not_called()
+        reason = refusal(code, stdout.getvalue(), stderr.getvalue())
+        if reason is not None:
+            return 2, reason  # Refused: the answer carries the reason only.
         self.assertEqual(stdout.getvalue(), "", "Never return originals or changed arguments")
         return code, stderr.getvalue()
 

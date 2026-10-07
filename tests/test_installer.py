@@ -9,7 +9,7 @@ from pathlib import Path
 
 from privacy_guard.claude_code import registration
 from privacy_guard.claude_code.installer import ClaudeCodeInstaller, ClaudeCodeNotFoundError
-from tests.fakes import STRIPE_KEY
+from tests.fakes import STRIPE_KEY, refusal
 
 ORIGINAL_SETTINGS = {"model": "opus", "enabledPlugins": {"some-plugin": True}}
 
@@ -137,8 +137,9 @@ class InstallerTest(unittest.TestCase):
         result = self._run_installed_hook({"hook_event_name": "PreToolUse", "tool_name": "Read",
                                            "tool_input": {"file_path": "notes.md"}})
 
-        self.assertEqual(result.returncode, 2)
-        self.assertIn("Privacy Guard: protection unavailable", result.stderr)
+        self.assertIn("Privacy Guard: protection unavailable",
+                      refusal(result.returncode, result.stdout, result.stderr))
+        self.assertNotIn("missing", result.stdout)  # No hook path reaches the model.
 
     def _run_installed_hook(self, payload):
         settings = json.loads(self.settings_path.read_text(encoding="utf-8"))

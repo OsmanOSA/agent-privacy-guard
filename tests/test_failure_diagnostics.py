@@ -10,7 +10,7 @@ from unittest.mock import Mock
 from privacy_guard.claude_code.hook import run
 from privacy_guard.core.vault import VaultStore
 from privacy_guard.journal import EventJournal
-from tests.fakes import RecordingNameService, ReversingCipher
+from tests.fakes import RecordingNameService, ReversingCipher, refusal
 
 PRIVATE = 'alice.private@example.org'
 
@@ -48,7 +48,8 @@ class FailureDiagnosticsTest(unittest.TestCase):
         self.assertEqual(self.row()['stage'], 'detection')
 
     def test_parsing_failure_is_identified(self):
-        self.assertEqual(self.call('{invalid ' + PRIVATE), (2, {}))
+        code, reply = self.call('{invalid ' + PRIVATE)
+        self.assertEqual((code, reply['hookSpecificOutput']['permissionDecision']), (0, 'deny'))
         self.assertEqual(self.row()['stage'], 'payload_parse')
 
     def test_event_journal_error_is_identified(self):
@@ -111,7 +112,9 @@ class FailureDiagnosticsTest(unittest.TestCase):
     def test_input_read_failure_is_logged_and_blocks(self):
         source = Mock()
         source.read.side_effect = OSError(PRIVATE)
-        self.assertEqual(run(source, io.StringIO(), io.StringIO(), self.journal, self.vaults, self.names), 2)
+        stdout, stderr = io.StringIO(), io.StringIO()
+        code = run(source, stdout, stderr, self.journal, self.vaults, self.names)
+        self.assertIsNotNone(refusal(code, stdout.getvalue(), stderr.getvalue()))
         rows = [json.loads(line) for line in (self.root / 'logs/failures.jsonl').read_text().splitlines()]
         self.assertIn('input_read', [row['stage'] for row in rows])
 

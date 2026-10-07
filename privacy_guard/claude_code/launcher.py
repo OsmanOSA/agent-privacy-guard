@@ -67,6 +67,12 @@ def _unavailable() -> int:
         message = "Privacy Guard : installation indisponible, traitement interrompu. Réparez-la avant de reprendre."
         print(json.dumps({"continue": False, "stopReason": message, "systemMessage": message}, ensure_ascii=False))
         return 0
+    if event == "PreToolUse":
+        # A JSON deny keeps the hook command, and the user name in its paths, out of
+        # model context (responses.deny).
+        print(json.dumps({"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "deny",
+                                                 "permissionDecisionReason": CORRUPTED_MESSAGE}}))
+        return 0
     print(CORRUPTED_MESSAGE, file=sys.stderr)
     return EXIT_BLOCK
 

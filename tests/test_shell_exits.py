@@ -1,7 +1,6 @@
 import json
 import unittest
 
-from privacy_guard.claude_code.responses import EXIT_BLOCK
 from privacy_guard.claude_code.shell_exits import ends_shell_early
 from privacy_guard.claude_code.shell_failures import before_shell
 
@@ -41,8 +40,9 @@ class PowerShellEarlyExitTest(unittest.TestCase):
 class BeforeShellBlockTest(unittest.TestCase):
     def test_early_exit_is_refused_with_a_rewrite_instruction(self):
         result = before_shell({"tool_name": "Bash", "tool_input": {"command": "cat notes.md; exit 3"}})
-        self.assertEqual(result.exit_code, EXIT_BLOCK)
-        self.assertIn("|| true", result.stderr)
+        output = json.loads(result.stdout)["hookSpecificOutput"]
+        self.assertEqual((result.exit_code, output["permissionDecision"]), (0, "deny"))
+        self.assertIn("|| true", output["permissionDecisionReason"])
 
     def test_ordinary_command_is_still_rewritten(self):
         result = before_shell({"tool_name": "PowerShell", "tool_input": {"command": "Get-Content a"}})

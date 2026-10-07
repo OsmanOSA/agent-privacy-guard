@@ -33,6 +33,7 @@ from privacy_guard.claude_code.responses import (
     HookResult,
     allow,
     block,
+    deny,
 )
 from privacy_guard.core.insee_names import local_name_detector
 from privacy_guard.core.privacy_core import PrivacyCore
@@ -166,7 +167,7 @@ def fail_closed(event: str, payload: object = None) -> HookResult:
     """Stop post-tool processing; mask recognized schemas without guessing others."""
     if event in {POST_TOOL_USE, POST_TOOL_USE_FAILURE}:
         return inspection_failed(event, payload)
-    return block(FAILURE_MESSAGE)
+    return deny(FAILURE_MESSAGE) if event == PRE_TOOL_USE else block(FAILURE_MESSAGE)
 
 
 def _handle_safely(raw_payload: str,
