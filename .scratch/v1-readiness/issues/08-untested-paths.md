@@ -72,3 +72,8 @@ VS Code, clean machine, WebFetch.
   The corpus holds few logs: precision on large technical logs needs real-use evidence.
 - Left for a joint session with the founder: an interactive VS Code session and a clean
   Windows account.
+
+2026-10-07, every automated scenario rerun on the `0.1.0-preview.3` TEST executable
+(receipt `docs/windows-setup-checks-2026-10-07-preview-3.md`): all pass; mcp-error is now
+marked as an expected leak (documented limit). Install `PrivacyGuard-0.1.0-preview.3`
+for the joint VS Code and clean-machine sessions.

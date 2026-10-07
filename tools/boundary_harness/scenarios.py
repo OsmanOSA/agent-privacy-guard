@@ -168,7 +168,9 @@ def scenarios(workspace: Path) -> list[Scenario]:
                   "SUBAGENT-TASK": [[("Read", {"file_path": notes})]]},
                  notes="The subagent's own conversation and its report to the main agent."),
         Scenario("mcp-result", "installed", False, [[("mcp__fixture__customer_card", {})]], mcp=True),
-        Scenario("mcp-error", "installed", False, [[("mcp__fixture__customer_lookup_error", {})]], mcp=True,
+        # Documented V1 limit (README, Known limits): PostToolUseFailure cannot replace the
+        # error and an MCP call cannot be rewritten to succeed. A local MCP relay is V2.
+        Scenario("mcp-error", "installed", True, [[("mcp__fixture__customer_lookup_error", {})]], mcp=True,
                  notes="An MCP error takes PostToolUseFailure, like a failing command."),
         Scenario("glob-filenames", "installed", False,
                  [[("Glob", {"pattern": "**/*.md", "path": str(workspace)})]],
