@@ -21,6 +21,7 @@ import privacy_guard
 from privacy_guard.core.findings import Finding
 from privacy_guard.service.channel import ServiceChannel
 from privacy_guard.service.model_environment import ModelEnvironment
+from privacy_guard.service.runtime_python import bundled_python
 from privacy_guard.diagnostics import CATEGORIES, STAGES, fixed
 
 # The directory that contains the privacy_guard package: `python -m` must run from there.
@@ -45,7 +46,8 @@ class ServiceClient:
     def __init__(self, channel: ServiceChannel,
                  python: Path | None = None) -> None:
         self._channel = channel
-        self._python = python or (MODEL_PYTHON if MODEL_PYTHON.exists() else Path(sys.executable))
+        self._python = python or bundled_python(sys.executable) or (
+            MODEL_PYTHON if MODEL_PYTHON.exists() else Path(sys.executable))
 
     def ensure_running(self) -> None:
         connection = self._connect()
@@ -78,6 +80,8 @@ class ServiceClient:
             return False
         with connection:
             connection.send_bytes(b'{"op": "stop"}')
+            if not connection.poll(ANSWER_TIMEOUT_SECONDS):
+                raise ServiceError("The background name service did not stop in time")
             connection.recv_bytes()
         return True
 

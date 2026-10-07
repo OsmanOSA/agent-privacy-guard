@@ -6,6 +6,10 @@ Progress on 2026-10-05: the source is published under MIT and the three publishe
 
 ## M0 — Reproducible foundation
 
+Windows packaging has a self-contained setup preview with a bundled runtime,
+model and optional INSEE index. See [installation and remaining release checks](windows-installation.md).
+OCR and binary extraction are deferred to [issue #1](https://github.com/OsmanOSA/agent-privacy-guard/issues/1).
+
 Update on 2026-10-06: the selected DistilCamemBERT is integrated, exact-text detection caching and transactional DPAPI-encrypted vault storage are deployed, and CPU window batching was evaluated and rejected. Handled post-tool failures now request a native stop and recognized result replacements; native user notices and sensitive-error stopping are deployed. Notices now include category occurrence counts and document basenames, with a local metadata summary journal. The suite runs 296 tests with no failures and two skips. M1 still requires actual model-boundary and hook-absence/timeout evidence; local emission checks do not close those gates. See the [current architecture and receipts](architecture.md#handled-failures-and-native-user-notices).
 
 Deliver: supported scope and exclusions, source map, glossary, threat model, UX simulation, contribution templates and a local backlog.

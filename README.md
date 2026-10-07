@@ -30,6 +30,12 @@ Implemented flow on native Windows. Every covered read is inspected, including r
 
 ## Try the development checks
 
+A self-contained **Windows setup preview** can now be built from this repository.
+It includes Python, the French name model and an optional INSEE index, and registers
+the Claude Code hooks for the current user. No public installer release is advertised
+yet. See [Windows installation](docs/windows-installation.md) for the workflow,
+unsigned-build status and remaining validation.
+
 From the project root, with Python 3.12 (the baseline environment):
 
 ```powershell
@@ -41,7 +47,7 @@ These checks use synthetic fixtures and temporary directories. They do not prove
 
 Use only synthetic data while evaluating this prototype. Installation changes local Claude Code settings, copies the engine outside this folder and may download model dependencies. Read [Contributing](CONTRIBUTING.md#installation-is-a-separate-action) before installing.
 
-Compatible updates keep the session vaults and their tokens. If an existing vault format is unknown or incompatible, installation stops without deleting it. Uninstall still removes session vaults.
+Compatible updates keep the session vaults and their tokens. If an existing vault format is unknown or incompatible, installation stops without deleting it. The development CLI's uninstall removes session vaults; the Windows setup uninstaller retains them.
 
 Python reads use rules and contextual name heuristics, without a NER call. Document reads use the selected French DistilCamemBERT ONNX FP32 detector when installed. The background process reuses exact-text detections in a bounded memory cache, while every read still applies the current session's pseudonymization. See the [integration and measured limits](docs/architecture.md#distilcamembert-integration).
 
@@ -55,7 +61,7 @@ An optional INSEE lexicon now complements rules and NER in explicit personal fie
 
 ## Optional Windows desktop notifications
 
-Desktop notifications default to off on a new installation. A detached local worker groups successful protection summaries by session and checks the originating window at delivery. The selected presentation is a dark, rounded Privacy Guard card inspired by Driftlight. A native Windows banner is the fallback. The card prepares invisibly and checks foreground and quiet state again before display; Windows owns native banner delivery.
+Desktop notifications default to off with the development CLI; a fresh Windows setup enables background delivery. A detached local worker groups successful protection summaries by session and checks the originating window at delivery. The selected presentation is a dark, rounded Privacy Guard card inspired by Driftlight. A native Windows banner is the fallback. The card prepares invisibly and checks foreground and quiet state again before display; Windows owns native banner delivery.
 
 After explicitly deploying the updated hook, enable background-only delivery:
 
