@@ -20,6 +20,7 @@ from privacy_guard.claude_code.document_scope import is_document_read
 from privacy_guard.claude_code.edit_policy import before_edit
 from privacy_guard.claude_code.failed_tool import protect_failed_tool
 from privacy_guard.claude_code.protection import protect_tool_output
+from privacy_guard.claude_code.shell_failures import SHELL_TOOLS, before_shell
 from privacy_guard.claude_code.tool_failures import inspection_failed
 from privacy_guard.claude_code.write_restoration import process_write_result
 from privacy_guard.claude_code.responses import (
@@ -113,6 +114,8 @@ def handle(payload: dict,
 
     if event == PRE_TOOL_USE:
         with stage('tool_policy'):
+            if payload.get("tool_name") in SHELL_TOOLS:
+                return before_shell(payload)
             return before_edit(payload)
 
     with stage('session_open'):

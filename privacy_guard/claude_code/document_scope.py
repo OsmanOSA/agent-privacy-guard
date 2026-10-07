@@ -19,6 +19,13 @@ DOCUMENT_EXTENSIONS = frozenset(
 _DOCUMENT_IN_COMMAND = re.compile(
     r"\.(?:" + "|".join(extension[1:] for extension in DOCUMENT_EXTENSIONS) + r")\b", re.IGNORECASE
 )
+# A Grep output line from a document: notes.md:3:..., C:\docs\cv.txt-4-... (context line).
+_DOCUMENT_LINE = re.compile(
+    r"^(?:[A-Za-z]:)?[^\n:]*\.(?:" + "|".join(extension[1:] for extension in DOCUMENT_EXTENSIONS) + r")[:-]",
+    re.IGNORECASE | re.MULTILINE,
+)
+# ripgrep file types that select documents (Grep's `type` argument).
+_DOCUMENT_TYPES = frozenset(extension[1:] for extension in DOCUMENT_EXTENSIONS)
 
 
 def is_document_read(payload: dict) -> bool:
@@ -28,4 +35,20 @@ def is_document_read(payload: dict) -> bool:
         return PurePath(tool_input.get("file_path", "")).suffix.lower() in DOCUMENT_EXTENSIONS
     if payload.get("tool_name") == "Bash":
         return _DOCUMENT_IN_COMMAND.search(tool_input.get("command", "")) is not None
+    if payload.get("tool_name") == "PowerShell":  # Get-Content notes.md, type cv.txt, ...
+        return _DOCUMENT_IN_COMMAND.search(tool_input.get("command", "")) is not None
+    if payload.get("tool_name") == "Grep":
+        return _searches_documents(tool_input, payload.get("tool_response"))
     return False
+
+
+def _searches_documents(tool_input: dict, response: object) -> bool:
+    """Grep prints matched lines, often of documents: its target or line prefixes tell."""
+    targets = (tool_input.get("path"), tool_input.get("glob"))
+    if any(isinstance(target, str) and _DOCUMENT_IN_COMMAND.search(target) for target in targets):
+        return True
+    if tool_input.get("type") in _DOCUMENT_TYPES:
+        return True
+    # Claude Code leaves `filenames` empty in content mode; each line starts with its file.
+    content = response.get("content") if isinstance(response, dict) else None
+    return isinstance(content, str) and _DOCUMENT_LINE.search(content) is not None

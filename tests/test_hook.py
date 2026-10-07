@@ -94,7 +94,10 @@ class HookTest(unittest.TestCase):
                     {"hook_event_name": "PreToolUse", "tool_name": tool,
                      "tool_input": {"command": f"echo {token}", "content": token}}
                 )
-                self.assertEqual((exit_code, stdout), (EXIT_ALLOW, ""))
+                # Shell commands are rewritten to keep failures maskable, never restored.
+                self.assertEqual(exit_code, EXIT_ALLOW)
+                self.assertNotIn(EMAIL, stdout)
+                self.assertEqual(stdout == "", tool != "Bash")
 
     def test_outside_write_keeps_personal_tokens(self):
         token = self.protect(EMAIL)
@@ -131,7 +134,10 @@ class HookTest(unittest.TestCase):
             {"hook_event_name": "PreToolUse", "tool_name": "Bash", "tool_input": {"command": f"echo {marker}"}}
         )
 
-        self.assertEqual((exit_code, stdout), (EXIT_ALLOW, ""))
+        command = json.loads(stdout)["hookSpecificOutput"]["updatedInput"]["command"]
+        self.assertEqual(exit_code, EXIT_ALLOW)
+        self.assertTrue(command.startswith(f"echo {marker}"))
+        self.assertNotIn(STRIPE_KEY, command)
         self.assertEqual(marker, "⟦STRIPE_SECRET_KEY:REDACTED⟧")
 
     def test_session_end_forgets_the_session_values(self):
