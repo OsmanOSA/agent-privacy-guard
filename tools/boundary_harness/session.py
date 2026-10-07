@@ -20,6 +20,8 @@ from boundary_harness.scenarios import CANARIES, TOKEN, write_workspace
 PROMPT = "Run the scripted fixture check."
 # The hook's fail-closed replacement (claude_code/tool_failures.py).
 MASKED = "[Privacy Guard: Output masked; inspection failed.]"
+# How Claude Code reports a PreToolUse refusal to the model (2.1.292).
+REFUSED = "PreToolUse:"
 SESSION_TIMEOUT_SECONDS = 300
 
 
@@ -77,7 +79,8 @@ def run_scenario(scenario, profile, workspace: Path, record_dir: Path, claude: s
     outcome = {"scenario": scenario.id, "hook": scenario.hook, "expect_leak": scenario.expect_leak,
                "agent_exit": result.returncode, "requests": _count_lines(record) if record.exists() else 0,
                "completed": _completed(result.stdout), "tokens_seen": len(set(TOKEN.findall("\n".join(texts)))),
-               "masked": any(MASKED in text for text in texts), "seconds": elapsed, "leaked": leaked}
+               "masked": any(MASKED in text for text in texts), "seconds": elapsed, "leaked": leaked,
+               "refused": any(REFUSED in text for text in texts)}
     if scenario.restored_file:
         restored = (workspace / scenario.restored_file)
         content = restored.read_text(encoding="utf-8") if restored.exists() else ""
@@ -97,6 +100,8 @@ def _verdict(scenario, outcome: dict) -> str:
         # The hook may stop the session before the result is sent: nothing reached the model.
         if not outcome["completed"]:
             return "pass: session stopped before the result was sent"
+        if outcome["refused"]:
+            return "pass: tool refused before it ran"
         return "inconclusive: no protected token observed"
     if scenario.restored_file and not outcome.get("restored_on_disk"):
         return "FAIL: local file not restored"

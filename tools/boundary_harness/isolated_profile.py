@@ -6,7 +6,7 @@ Interface:
     profile.use_hooks(mode)        installed | absent | powershell | timeout | launch_error
     with profile.hooks(mode):      the same, plus stalled_service for one scenario
     profile.use_engine(package, launcher)   test a source tree with the bundled runtime and model
-    profile.use_handler(handler)   register the source tree's hook handler instead of the setup's
+    profile.use_handlers(handlers) register the source tree's hook handlers instead of the setup's
     profile.uninstall()
 
 USERPROFILE redirects every ~/.privacy-guard and ~/.claude path of the hook, the
@@ -78,11 +78,11 @@ class IsolatedProfile:
                 "ServiceClient(ServiceChannel(DEFAULT_RUN_DIR)).stop()")
         subprocess.run([str(self.python), "-c", stop], cwd=app, env=self.env, capture_output=True, timeout=60)
 
-    def use_handler(self, handler: dict) -> None:
-        """Register a source handler in place of the setup's own entries (fresh profile: all ours)."""
-        for groups in self._installed.get("hooks", {}).values():
+    def use_handlers(self, handlers: dict) -> None:
+        """Register source handlers in place of the setup's own entries (fresh profile: all ours)."""
+        for event, groups in self._installed.get("hooks", {}).items():
             for group in groups:
-                group["hooks"] = [dict(handler) for _ in group["hooks"]]
+                group["hooks"] = [dict(handlers[event]) for _ in group["hooks"]]
 
     @contextmanager
     def hooks(self, mode: str):
@@ -111,11 +111,20 @@ class IsolatedProfile:
             # Without Git Bash, Claude Code runs hooks in PowerShell.
             for hook in handlers:
                 hook["shell"] = "powershell"
-        elif mode in {"timeout", "launch_error"}:
-            command, args = ((self.python.as_posix(), ["-c", "import time; time.sleep(60)"]) if mode == "timeout"
-                             else ((self.root / "missing/python.exe").as_posix(), ["app"]))
+        elif mode == "timeout":
+            # A stall before our code runs: the handler is a sleeping process.
             for hook in handlers:
-                hook.update(command=command, args=args, timeout=FAULT_TIMEOUT_SECONDS)
+                hook.pop("shell", None)
+                hook.update(command=self.python.as_posix(), args=["-c", "import time; time.sleep(60)"],
+                            timeout=FAULT_TIMEOUT_SECONDS)
+        elif mode == "launch_error":
+            # The runtime was removed: every form of handler points to a missing interpreter.
+            missing = (self.root / "missing/python.exe").as_posix()
+            for hook in handlers:
+                hook["command"] = hook["command"].replace(self.python.as_posix(), missing)
+                # An `args` key, even empty, turns a shell handler into exec form: keep it absent.
+                if "args" in hook:
+                    hook["args"] = [arg.replace(self.python.as_posix(), missing) for arg in hook["args"]]
         elif mode != "installed":
             raise ValueError(f"Unknown hook mode: {mode}")
         self.settings.write_text(json.dumps(settings, indent=2), encoding="utf-8")

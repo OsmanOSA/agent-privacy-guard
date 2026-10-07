@@ -83,8 +83,10 @@ def uninstall(bundle: Path, user_home: Path):
     settings = SettingsFile(Path(receipt['claude_directory']) / 'settings.json')
     current = settings.load()
     python, app = (bundle / 'runtime/python.exe').as_posix(), (home / 'app').as_posix()
-    # This bundle's exec form, or the shell string written by 0.1.0-preview.1.
-    ours = {(python, (app,)), (f'"{python}" "{app}"', ())}
+    # This bundle's handlers, or the shell string written by 0.1.0-preview.1.
+    ours = {(handler['command'], tuple(handler.get('args') or ()))
+            for handler in registration.hook_handlers(python, app).values()}
+    ours.add((f'"{python}" "{app}"', ()))
     if not registration.owned_targets(current) <= ours:
         raise RuntimeError('Another Privacy Guard installation now owns the hooks')
     # Only remove this product's hooks. Other settings and retained mappings survive.

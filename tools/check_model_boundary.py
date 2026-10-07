@@ -44,7 +44,7 @@ def main():
         if args.source:
             profile.use_engine(REPOSITORY / "privacy_guard",
                                REPOSITORY / "privacy_guard/claude_code/launcher.py")
-            profile.use_handler(source_handler(profile))
+            profile.use_handlers(source_handlers(profile))
         outcomes = [run_scenario(s, profile, workspace, records, args.claude) for s in selected]
     finally:
         profile.uninstall()
@@ -59,11 +59,11 @@ def environment(claude: str, setup: Path) -> dict:
     return {"claude_code": version, "windows": platform.version(), "setup": setup.name}
 
 
-def source_handler(profile: IsolatedProfile) -> dict:
-    """The hook handler this checkout's installer would register for the profile."""
+def source_handlers(profile: IsolatedProfile) -> dict:
+    """The hook handlers this checkout's installer would register for the profile."""
     sys.path.insert(0, str(REPOSITORY))
-    from privacy_guard.claude_code.registration import command_handler
-    return command_handler(profile.python.as_posix(), (profile.home / ".privacy-guard/app").as_posix())
+    from privacy_guard.claude_code.registration import hook_handlers
+    return hook_handlers(profile.python.as_posix(), (profile.home / ".privacy-guard/app").as_posix())
 
 
 def engine(source: bool) -> str:

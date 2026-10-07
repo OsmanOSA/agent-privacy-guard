@@ -126,14 +126,30 @@ class InstallerTest(unittest.TestCase):
         with self.assertRaises(ClaudeCodeNotFoundError):
             installer.install()
 
+    @unittest.skipUnless(sys.platform == "win32", "PowerShell guard")
+    def test_guard_refuses_tools_when_the_runtime_is_missing(self):
+        self.installer.install()
+        settings = json.loads(self.settings_path.read_text(encoding="utf-8"))
+        guard = settings["hooks"]["PreToolUse"][0]["hooks"][0]
+        guard["command"] = guard["command"].replace(Path(sys.executable).as_posix(), "C:/missing/python.exe")
+        self.settings_path.write_text(json.dumps(settings), encoding="utf-8")
+
+        result = self._run_installed_hook({"hook_event_name": "PreToolUse", "tool_name": "Read",
+                                           "tool_input": {"file_path": "notes.md"}})
+
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("Privacy Guard: protection unavailable", result.stderr)
+
     def _run_installed_hook(self, payload):
         settings = json.loads(self.settings_path.read_text(encoding="utf-8"))
-        handler = settings["hooks"]["PreToolUse"][0]["hooks"][0]
+        handler = settings["hooks"][payload["hook_event_name"]][0]["hooks"][0]
         # HOME and USERPROFILE point to the temp dir so the journal never writes to the real home.
         env = {**os.environ, "HOME": str(self.home), "USERPROFILE": str(self.home)}
-        # Exec form: Claude Code starts the interpreter directly, with no shell in between.
+        # As Claude Code runs it: the PowerShell guard, or the exec form with no shell.
+        command = (["powershell.exe", "-NoProfile", "-NonInteractive", "-Command", handler["command"]]
+                   if handler.get("shell") == "powershell" else [handler["command"], *handler["args"]])
         return subprocess.run(
-            [handler["command"], *handler["args"]],
+            command,
             input=json.dumps({"session_id": "test-session", **payload}),
             capture_output=True,
             text=True,

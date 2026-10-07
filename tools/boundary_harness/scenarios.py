@@ -139,6 +139,6 @@ def scenarios(workspace: Path) -> list[Scenario]:
                  notes="Suspended detector: the hook must answer masked before Claude Code's timeout."),
         Scenario("hook-timeout", "timeout", True, [[("Read", {"file_path": csv})]],
                  notes="Known platform limit: a timed-out hook's output is discarded."),
-        Scenario("hook-launch-error", "launch_error", True, [[("Read", {"file_path": csv})]],
-                 notes="Hook command cannot start (missing runtime)."),
+        Scenario("hook-launch-error", "launch_error", False, [[("Read", {"file_path": csv})]],
+                 notes="Runtime removed: the PreToolUse guard refuses every tool."),
     ]

@@ -19,3 +19,8 @@ name (`C:/Users/<name>/...`), so every refusal puts it in model context.
 - If it does, route every refusal (`responses.block`) through it; otherwise record the
   limit and consider an install path without the user name.
 - Boundary check: no user-name canary in any request after a refusal.
+
+## Comments
+
+2026-10-07: with the PreToolUse guard (item 05), the prefix now carries the guard's
+PowerShell script, which contains both paths. Same fix applies.
