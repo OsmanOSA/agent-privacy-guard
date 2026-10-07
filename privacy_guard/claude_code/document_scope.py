@@ -13,7 +13,10 @@ from pathlib import PurePath
 
 DOCUMENT_EXTENSIONS = frozenset(
     {".txt", ".md", ".markdown", ".rst", ".csv", ".tsv", ".rtf", ".html", ".htm",
-     ".eml", ".msg", ".pdf", ".doc", ".docx", ".odt"}
+     ".eml", ".msg", ".pdf", ".doc", ".docx", ".odt",
+     # Logs and Claude Code's background-command output files carry free text that
+     # mentions people (benchmark: traceback.log; boundary scenario background-command).
+     ".log", ".output"}
 )
 # A shell command that names a document file: cat cv.txt, head notes.md, ...
 _DOCUMENT_IN_COMMAND = re.compile(

@@ -52,3 +52,23 @@ VS Code, clean machine, WebFetch.
   98% recall, precision 100%, 0 false alarm; heuristic-only 55% / 100%.
 - Boundary: glob-filenames and glob-then-read (the agent opens the masked path and
   reads the file) pass; mcp-result passes.
+
+2026-10-07, founder's scope decisions for the rest of this item:
+
+- WebFetch removed: it fetches public web data, nothing to mask.
+- Background commands, compaction and concurrent sessions: measured next.
+- Interactive VS Code session and clean Windows machine: run together with the founder.
+
+2026-10-07, remaining automated paths:
+
+| Scenario | Outcome |
+| --- | --- |
+| parallel-sessions (3 sessions at once, one profile) | pass: 21 tokens, no leak, shared vault and name service hold |
+| compaction (`--resume` with `/compact`) | pass: the summarization request ("create a detailed summary of the conversation so far") carries tokens only |
+| background-command (`run_in_background`, output file read back) | was: a free-text name passed, since `.output` files got quick detection only; fixed |
+
+- `.log` and `.output` now count as documents (name model). Benchmark: names 98% ->
+  100% recall (the known `traceback.log` miss is gone), precision 100%, 0 false alarm.
+  The corpus holds few logs: precision on large technical logs needs real-use evidence.
+- Left for a joint session with the founder: an interactive VS Code session and a clean
+  Windows account.

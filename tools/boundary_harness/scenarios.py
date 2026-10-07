@@ -90,6 +90,15 @@ def _read_masked_file(workspace: Path):
     return step
 
 
+def _read_background_output(messages: list) -> list:
+    """Step that reads the output file Claude Code named for a background command."""
+    for text in reversed([text for message in messages for text in _tool_results(message)]):
+        match = re.search(r"(?:written to|Output file|output file)[^:]*:\s*(\S+)", text)
+        if match:
+            return [("Read", {"file_path": match.group(1).rstrip(".")})]
+    return [("Bash", {"command": "echo no background output file"})]
+
+
 def _tool_results(message: dict) -> list:
     texts = []
     for block in message.get("content") or ():
@@ -110,6 +119,8 @@ class Scenario:
     notes: str = ""
     mcp: bool = False                 # connect the fixture MCP server (mcp_fixture.py)
     resume: list | None = None        # script of a second session resuming the first
+    resume_prompt: str | None = None  # its prompt, e.g. "/compact"; the default prompt otherwise
+    parallel: int = 1                 # sessions run at the same time in the same profile
 
 
 def scenarios(workspace: Path) -> list[Scenario]:
@@ -172,6 +183,16 @@ def scenarios(workspace: Path) -> list[Scenario]:
         Scenario("resume-history", "installed", False, [[("Read", {"file_path": csv})]],
                  resume=[[("Read", {"file_path": csv})], [("Bash", {"command": "echo resumed"})]],
                  notes="A resumed session sends the earlier tool results again."),
+        Scenario("background-command", "installed", False,
+                 [[("Bash", {"command": "cat notes.md", "run_in_background": True})],
+                  [("Bash", {"command": "sleep 2"})], _read_background_output],
+                 notes="Output of a background command, read back from its output file."),
+        Scenario("compaction", "installed", False, [[("Read", {"file_path": csv})]],
+                 resume=[[("Read", {"file_path": csv})]], resume_prompt="/compact",
+                 notes="Compaction sends the whole history to the model to summarize it."),
+        Scenario("parallel-sessions", "installed", False,
+                 [[("Read", {"file_path": csv})], [("Read", {"file_path": notes})]], parallel=3,
+                 notes="Three sessions at once share the vault, the journal and the name service."),
         Scenario("hook-in-powershell", "powershell", False, [[("Read", {"file_path": csv})]],
                  notes="No Git Bash: Claude Code runs hooks in PowerShell."),
         Scenario("stalled-name-service", "stalled_service", False, [[("Read", {"file_path": notes})]],

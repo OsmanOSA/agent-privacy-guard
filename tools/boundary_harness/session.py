@@ -13,6 +13,7 @@ import shutil
 import subprocess
 import sys
 import time
+from contextlib import ExitStack
 from pathlib import Path
 
 from boundary_harness.fake_model import FINAL_TEXT, FakeModel
@@ -72,14 +73,17 @@ def run_scenario(scenario, profile, workspace: Path, record_dir: Path, claude: s
     started = time.monotonic()
     extra = _mcp_arguments(record_dir) if scenario.mcp else []
     with profile.hooks(scenario.hook):
-        with FakeModel(scenario.script, record) as model:
-            result = _agent(claude, workspace, agent_env(profile.env, model.base_url), extra)
+        if scenario.parallel > 1:
+            result = _parallel_agents(scenario, claude, workspace, profile.env, record, extra)
+        else:
+            with FakeModel(scenario.script, record) as model:
+                result = _agent(claude, workspace, agent_env(profile.env, model.base_url), extra)
         if scenario.resume is not None:
             # The resumed history is sent to the model again: it must hold tokens only.
             session_id = json.loads(result.stdout)["session_id"]
             with FakeModel(scenario.resume, record) as model:
                 result = _agent(claude, workspace, agent_env(profile.env, model.base_url),
-                                extra + ["--resume", session_id])
+                                extra + ["--resume", session_id], scenario.resume_prompt or PROMPT)
     elapsed = round(time.monotonic() - started, 1)
     (record_dir / f"{scenario.id}.agent.json").write_bytes(result.stdout + b"\n" + result.stderr)
     texts = observed_strings(record)
@@ -122,10 +126,30 @@ def _verdict(scenario, outcome: dict) -> str:
     return "pass"
 
 
-def _agent(claude: str, workspace: Path, env: dict, extra: list) -> subprocess.CompletedProcess:
-    command = [claude, "-p", PROMPT, "--output-format", "json",
-               "--dangerously-skip-permissions", "--max-turns", "8", *extra]
-    return subprocess.run(command, cwd=workspace, env=env, capture_output=True, timeout=SESSION_TIMEOUT_SECONDS)
+def _agent(claude: str, workspace: Path, env: dict, extra: list, prompt: str = PROMPT) -> subprocess.CompletedProcess:
+    return subprocess.run(_command(claude, extra, prompt), cwd=workspace, env=env, capture_output=True,
+                          timeout=SESSION_TIMEOUT_SECONDS)
+
+
+def _command(claude: str, extra: list, prompt: str = PROMPT) -> list:
+    return [claude, "-p", prompt, "--output-format", "json", "--dangerously-skip-permissions",
+            "--max-turns", "8", *extra]
+
+
+def _parallel_agents(scenario, claude, workspace, profile_env, record, extra) -> subprocess.CompletedProcess:
+    """Sessions started together in one profile: they share the vault, journal and name service."""
+    records = [record.with_name(f"{record.stem}.{index}.jsonl") for index in range(scenario.parallel)]
+    with ExitStack() as stack:
+        models = [stack.enter_context(FakeModel(scenario.script, path)) for path in records]
+        processes = [subprocess.Popen(_command(claude, extra), cwd=workspace,
+                                      env=agent_env(profile_env, model.base_url),
+                                      stdout=subprocess.PIPE, stderr=subprocess.PIPE) for model in models]
+        outputs = [process.communicate(timeout=SESSION_TIMEOUT_SECONDS) for process in processes]
+    record.write_text("".join(path.read_text(encoding="utf-8") for path in records if path.exists()),
+                      encoding="utf-8")
+    # Report the first session that did not finish its script, if any.
+    worst = next((index for index, (stdout, _) in enumerate(outputs) if not _completed(stdout)), 0)
+    return subprocess.CompletedProcess(processes[worst].args, processes[worst].returncode, *outputs[worst])
 
 
 def _mcp_arguments(record_dir: Path) -> list:
