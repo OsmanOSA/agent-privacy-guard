@@ -14,7 +14,8 @@ the rewritten command. Observed with 2.1.292:
   `if` prompts; a final `Write-Output ''` line does not. PowerShell prints its own
   error records, so the failure stays visible without the exit status.
 
-Residual risk: `exit` (and Bash `set -e`) end the shell before the trailer runs.
+`exit`, `set -e` and similar end the shell before the trailer runs: `shell_exits`
+spots them and such commands are refused with an instruction to rewrite them.
 
 Interface:
     SHELL_TOOLS                                   tool names handled here
@@ -24,7 +25,8 @@ Interface:
 
 from __future__ import annotations
 
-from privacy_guard.claude_code.responses import HookResult, allow, replace_tool_input
+from privacy_guard.claude_code.responses import HookResult, allow, block, replace_tool_input
+from privacy_guard.claude_code.shell_exits import ends_shell_early
 
 BASH, POWERSHELL = "Bash", "PowerShell"
 SHELL_TOOLS = frozenset({BASH, POWERSHELL})
@@ -35,11 +37,21 @@ _POWERSHELL_TRAILER = "\nWrite-Output ''"
 # Endings that leave a command incomplete: anything appended would complete it with
 # a different meaning (npm test | true), so such a command is left to fail as it is.
 _INCOMPLETE_ENDINGS = {BASH: ("\\", "|", "&&"), POWERSHELL: ("`", "|", "&&")}
+EARLY_EXIT_GUIDANCE = (
+    "Privacy Guard: this command can end the shell before a failure is masked "
+    "(exit, set -e, exec, throw or -ErrorAction Stop), so its error text would reach "
+    "the model unprotected. Run it again without them, for example with `|| true` "
+    "or an `if` test."
+)
 
 
 def before_shell(payload: dict) -> HookResult:
-    """Rewrite the shell command so that its failure stays maskable."""
-    updated = route_shell_failures(payload.get("tool_input"), payload.get("tool_name"))
+    """Refuse commands that would escape the trailer; rewrite the others."""
+    tool_input = payload.get("tool_input")
+    command = tool_input.get("command") if isinstance(tool_input, dict) else None
+    if isinstance(command, str) and ends_shell_early(command, payload.get("tool_name")):
+        return block(EARLY_EXIT_GUIDANCE)
+    updated = route_shell_failures(tool_input, payload.get("tool_name"))
     return allow() if updated is None else replace_tool_input(updated)
 
 
