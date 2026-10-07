@@ -7,12 +7,10 @@ Add content-free guidance before Edit validation; never inspect or modify disk.
 from __future__ import annotations
 
 import json
-from pathlib import PureWindowsPath
-
 from privacy_guard.claude_code.responses import POST_TOOL_USE, HookResult
+from privacy_guard.core.restorable_files import is_restorable
 from privacy_guard.core.tokens import PLACEHOLDER_PATTERN
 
-_DOCUMENTS = frozenset({".txt", ".md", ".markdown", ".csv"})
 _GUIDANCE = (
     "Privacy Guard: for changes spanning privacy placeholders, use Write with session tokens. "
     "Before rewriting, read the complete file and preserve unrelated content. "
@@ -26,7 +24,7 @@ def guide_document_read(payload: dict, protected: object, result: HookResult) ->
     arguments = payload.get("tool_input")
     if (payload.get("hook_event_name") != POST_TOOL_USE or payload.get("tool_name") != "Read"
             or not isinstance(arguments, dict) or not isinstance(arguments.get("file_path"), str)
-            or PureWindowsPath(arguments["file_path"]).suffix.lower() not in _DOCUMENTS):
+            or not is_restorable(arguments["file_path"])):
         return result
     cached = isinstance(protected, dict) and protected.get("type") == "file_unchanged"
     if not cached and not _has_placeholders(protected):

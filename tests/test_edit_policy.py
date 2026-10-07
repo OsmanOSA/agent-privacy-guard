@@ -49,18 +49,32 @@ class EditPolicyTest(unittest.TestCase):
             with self.subTest(extension=extension):
                 self.assertEqual(self.call(self.args(old=TOKEN, extension=extension))[0], 2)
 
+    def test_source_code_and_configuration_take_the_write_route_too(self):
+        token = "\u27e6EMAIL:ABCDEF12\u27e7"
+        for extension in (".py", ".sql", ".json", ".yaml", ".ts", "/.env", "/.env.local"):
+            with self.subTest(extension=extension):
+                self.assertEqual(self.call(self.args(new=f'CONTACT = "{token}"', extension=extension))[0], 2)
+
+    def test_multiedit_steps_take_the_same_route(self):
+        args = {"file_path": "C:/fictional/settings.py",
+                "edits": [{"old_string": "pending", "new_string": "paid"},
+                          {"old_string": "x", "new_string": "\u27e6PERSON_NAME:ABCDEF12\u27e7"}]}
+        self.assertEqual(self.call(args, "MultiEdit")[0], 2)
+        args["edits"].pop()
+        self.assertEqual(self.call(args, "MultiEdit"), (0, ""))
+
     def test_nonpersonal_status_amount_and_prose_edits_have_no_permission_decision(self):
         for old, new in (("pending", "paid"), ("1200 EUR", "1300 EUR"), ("## Total", "## Summary")):
             with self.subTest(old=old):
                 self.assertEqual(self.call(self.args(old, new)), (0, ""))
 
     def test_write_and_other_tools_are_unchanged(self):
-        for tool in ("Write", "Bash", "MultiEdit", "mcp__remote__Edit"):
+        for tool in ("Write", "Bash", "mcp__remote__Edit"):
             with self.subTest(tool=tool):
                 self.assertEqual(self.call(self.args(old=TOKEN), tool), (0, ""))
 
     def test_formats_without_automatic_restoration_are_unchanged(self):
-        for extension in (".py", ".json", ".tsv", ".html"):
+        for extension in (".pdf", ".docx", ".xlsx", ".tsv", ".ipynb"):
             with self.subTest(extension=extension):
                 self.assertEqual(self.call(self.args(old=TOKEN, extension=extension)), (0, ""))
 

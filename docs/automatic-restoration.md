@@ -8,27 +8,40 @@ export directory is needed for this operation.
 ## Supported operation
 
 - Native Windows, successful `PostToolUse` for `Write` only.
-- UTF-8 TXT, Markdown (`.md` or `.markdown`) and comma-separated CSV files.
+- UTF-8 text files listed in `core/restorable_files.py`: documents (TXT, Markdown,
+  reStructuredText, comma-separated CSV), source code (Python, SQL, JavaScript and
+  TypeScript, Java, C#, Go, shell and PowerShell scripts, HTML, CSS…) and configuration
+  (JSON, YAML, TOML, INI, XML, `.env` files). Values go back exactly as they were read,
+  without escaping for the host language.
 - An absolute path on a fixed local drive, with existing plain directory ancestry.
 - One regular file, with no reparse point or additional hard link.
 - At most 2 MiB for both the masked and restored file.
 
-Other formats and operations keep tokens. This includes JSON, shell writes,
-`Edit`, remote/MCP operations and the chat display. It is a deliberately bounded
-first implementation, not coverage for every output channel. Relative, network,
-device, alternate-stream and traversal paths do not restore. Paths are not
-detokenized. A fixed local drive can still be cloud-synchronized.
+Other formats and operations keep tokens. This includes spreadsheets other than
+CSV, binary formats, shell writes, `Edit`, remote/MCP operations and the chat display.
+It is a deliberately bounded implementation, not coverage for every output channel.
+Relative, network, device, alternate-stream and traversal paths do not restore. Only
+file tools get their path arguments detokenized (`claude_code/path_restoration.py`).
+A fixed local drive can still be cloud-synchronized.
+
+### Redacted secrets are never written
+
+Secrets reach Claude as redaction markers (the secret's kind followed by `REDACTED`)
+and their value is never kept, so nothing can restore them. A `Write`, `Edit`,
+`MultiEdit` or `NotebookEdit` whose new content holds such a marker is refused before
+it runs, for every file type: rewriting a `.env` or a settings file would otherwise
+replace the user's real key with the marker for good. The refusal asks Claude to leave
+those lines untouched and edit the others, or to let the user make the change.
 
 External placeholders such as `PERSON_001` and `[EMAIL_001]` are retained literally
 on reads, including when an older session had learned them as names. They need no
 Privacy Guard restoration. Adjacent real personal values still receive this
-session's tokens; this does not extend automatic restoration to Python or other
-source-code files.
+session's tokens.
 
 ### Editing a restored document
 
-For protected TXT, Markdown and CSV reads, the hook gives Claude generic guidance
-to read the complete document and use `Write` for changes spanning placeholders.
+For protected reads of restorable files, the hook gives Claude generic guidance
+to read the complete file and use `Write` for changes spanning placeholders.
 The same guidance accompanies a structured `file_unchanged` Read result without
 inventing a document body. Plain reads without placeholders need no guidance.
 

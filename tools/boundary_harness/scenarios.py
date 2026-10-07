@@ -53,6 +53,7 @@ FILES = {
     "notes.md": "# Suivi client\n\n"
                 f"Rendez-vous avec {CANARIES['name-3']} mardi. Contact : {CANARIES['email-2']}.\n",
     ".env": f"APP_ENV=staging\nGITHUB_TOKEN={CANARIES['secret-1']}\n",
+    "contacts.py": f'OWNER = "{CANARIES["name-3"]}"\nSUPPORT_EMAIL = "{CANARIES["email-2"]}"\n',
     f"cv_{CANARIES['name-file']}.md": "# CV\n\nExpérience : développement Python.\n",
 }
 
@@ -70,12 +71,16 @@ def write_workspace(path: Path) -> None:
 
 def _report_from_last_result(workspace: Path):
     """Step that writes the tokens the agent received into a new local document."""
+    return _write_received_tokens(workspace / "report.md", lambda tokens: "Contacts : " + ", ".join(tokens) + "\n")
+
+
+def _write_received_tokens(path: Path, render):
+    """Step that writes `render(tokens)`, the tokens of the last tool result, to `path`."""
     def step(messages: list) -> list:
         results = [text for message in messages for text in _tool_results(message)]
         received = results[-1] if results else ""
         tokens = list(dict.fromkeys(TOKEN.findall(received)))
-        content = "Contacts : " + ", ".join(tokens) + "\n"
-        return [("Write", {"file_path": str(workspace / "report.md"), "content": content})]
+        return [("Write", {"file_path": str(path), "content": render(tokens)})]
     return step
 
 
@@ -116,6 +121,7 @@ class Scenario:
     expect_leak: bool    # True for the sensitivity control and known platform limits
     script: list
     restored_file: str | None = None
+    preserved_file: str | None = None  # must still hold its original canaries after the session
     notes: str = ""
     mcp: bool = False                 # connect the fixture MCP server (mcp_fixture.py)
     resume: list | None = None        # script of a second session resuming the first
@@ -124,7 +130,8 @@ class Scenario:
 
 
 def scenarios(workspace: Path) -> list[Scenario]:
-    csv, notes, env = (str(workspace / name) for name in ("customers.csv", "notes.md", ".env"))
+    csv, notes, env, contacts = (str(workspace / name)
+                                 for name in ("customers.csv", "notes.md", ".env", "contacts.py"))
     return [
         Scenario("control-unprotected-read", "absent", True, [[("Read", {"file_path": csv})]],
                  notes="Harness sensitivity: without hooks the canaries must be observed."),
@@ -162,6 +169,19 @@ def scenarios(workspace: Path) -> list[Scenario]:
                   [("Read", {"file_path": str(workspace / "report.md")})]],
                  restored_file="report.md",
                  notes="Restored originals on disk; agent context must still hold tokens only."),
+        Scenario("write-python", "installed", False,
+                 [[("Read", {"file_path": contacts})],
+                  _write_received_tokens(Path(contacts), lambda tokens: "".join(
+                      f'VALUE_{index} = "{token}"\n' for index, token in enumerate(tokens))),
+                  [("Read", {"file_path": contacts})]],
+                 restored_file="contacts.py",
+                 notes="Rewriting source code: the values come back on disk, the model keeps tokens."),
+        Scenario("write-redacted-secret", "installed", False,
+                 [[("Read", {"file_path": env})],
+                  _write_received_tokens(Path(env), lambda tokens: "APP_ENV=production\n" + "".join(
+                      f"GITHUB_TOKEN={token}\n" for token in tokens))],
+                 preserved_file=".env",
+                 notes="Rewriting a .env would replace the real secret with its marker: refused."),
         Scenario("subagent-read", "installed", False,
                  {MAIN: [[("Agent", {"description": "Read the notes", "subagent_type": "general-purpose",
                                      "prompt": "SUBAGENT-TASK: read notes.md and report."})]],

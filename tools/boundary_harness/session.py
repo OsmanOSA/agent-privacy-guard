@@ -17,7 +17,7 @@ from contextlib import ExitStack
 from pathlib import Path
 
 from boundary_harness.fake_model import FINAL_TEXT, FakeModel
-from boundary_harness.scenarios import CANARIES, TOKEN, write_workspace
+from boundary_harness.scenarios import CANARIES, FILES, TOKEN, write_workspace
 
 PROMPT = "Run the scripted fixture check."
 # The hook's fail-closed replacement (claude_code/tool_failures.py).
@@ -98,6 +98,10 @@ def run_scenario(scenario, profile, workspace: Path, record_dir: Path, claude: s
         restored = (workspace / scenario.restored_file)
         content = restored.read_text(encoding="utf-8") if restored.exists() else ""
         outcome["restored_on_disk"] = leaked_ids([content])
+    if scenario.preserved_file:
+        kept = workspace / scenario.preserved_file
+        content = kept.read_text(encoding="utf-8") if kept.exists() else ""
+        outcome["preserved_on_disk"] = leaked_ids([content]) == leaked_ids([FILES[scenario.preserved_file]])
     outcome["verdict"] = _verdict(scenario, outcome)
     return outcome
 
@@ -114,6 +118,8 @@ def _verdict(scenario, outcome: dict) -> str:
         return "as expected (leak observed)" if outcome["leaked"] else "unexpected: no leak observed"
     if outcome["leaked"]:
         return "FAIL: canary reached the model"
+    if scenario.preserved_file and not outcome["preserved_on_disk"]:
+        return "FAIL: local file lost its original values"
     if not outcome["tokens_seen"] and not outcome["masked"]:
         # The hook may stop the session before the result is sent: nothing reached the model.
         if not outcome["completed"]:
