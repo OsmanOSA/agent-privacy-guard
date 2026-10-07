@@ -6,7 +6,7 @@ Status: source inspection, native installed-launcher checks and proposed contrac
 
 [![Current implementation blocks](assets/privacy-architecture.png)](assets/privacy-architecture.png)
 
-The [interactive Archify view](ux/privacy-current.html) traces the implementation at `f278402`, with links to the source for each block. It shows the successful tool-result path and its local restoration, vault, name-service and notification branches. The [diagram checks](ux/privacy-current.validation.json) record the source revision and rendering evidence. The proposed enforcement contract remains a separate view below.
+The [interactive Archify view](ux/privacy-current.html) traces the implementation at `e0fe861`, with links to the source for each block. It shows the successful tool-result path and its local restoration, vault, name-service and notification branches. The [diagram checks](ux/privacy-current.validation.json) record the source revision and rendering evidence. The proposed enforcement contract remains a separate view below.
 
 ## Current flow
 
@@ -41,6 +41,19 @@ The current hook does not first scan every file for personal data before allowin
 | `privacy_guard/claude_code/installer.py` | `install`, `status`, `uninstall` | Source deployment and settings registration; status checks registration, not runtime enforcement |
 
 Prefer the existing seams for tests. Keep protocol fields inside the adapter and detection decisions inside the detector. Introduce a new interface when behavior actually varies or an enforcement responsibility needs its own owner; do not build a universal adapter SDK before a second adapter is understood.
+
+## File types and inspection
+
+Privacy Guard inspects text returned by tools; it does not parse every source file itself. For the `Read` tool, the extension selects the name detector. Secret and formatted personal-data rules still apply to every covered text result.
+
+| Input returned by a tool | Current inspection | Separate limitation |
+| --- | --- | --- |
+| Python `.py` and other code/configuration, such as `.ts`, `.json` and `.env` | Rules and contextual name heuristics, without NER on `Read` | Automatic restoration after Write does not support these source formats |
+| Document text: `.txt`, `.md`, `.markdown`, `.rst`, `.csv`, `.tsv`, `.rtf`, `.html`, `.htm`, `.eml` | Rules plus the local name service, with DistilCamemBERT when installed | Detection can miss names; a cached detection still goes through session pseudonymization |
+| `.pdf`, `.doc`, `.docx`, `.odt`, `.msg` | The extension selects the document profile for any returned text | No dedicated binary extraction is implemented here; the extension alone does not establish format coverage |
+| Images and scanned documents | No image inspection or OCR | A separate extraction and evaluation step is still needed |
+
+For `Bash`, document routing uses filenames found in the command, not a full parser of the command's behavior. See [document routing](../privacy_guard/claude_code/document_scope.py) and [hook selection](../privacy_guard/claude_code/hook.py). These are inspection profiles, not file-access permissions or guarantees of complete protection.
 
 ## Read latency policy and exact-text cache
 

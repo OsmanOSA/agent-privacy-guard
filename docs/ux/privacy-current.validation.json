@@ -2,16 +2,16 @@
   "diagram_type": "architecture",
   "archify_version": "3.0.1",
   "date": "2026-10-07",
-  "source_revision": "f2784023499da56fcf3d876f794bf2adce60cece",
+  "source_revision": "e0fe861de9196165b8235e68ccf417ba4c754c1a",
   "specification": {
     "path": "docs/ux/privacy-current.architecture.json",
-    "sha256": "cd3840b76e4cafbbe7781060d899861818276d906ce1856248e872c822918d5b",
-    "bytes": 8029
+    "sha256": "afd7859d9a9f4b052be88b4cc0b06404427900f6482ac2438a9e5ee4d3d3c998",
+    "bytes": 8084
   },
   "artifact": {
     "path": "docs/ux/privacy-current.html",
-    "sha256": "00cbe80bdda4f03fd2b05fe606a9a62e8cddf82bb0ca9e93b5a761a2cbe282db",
-    "bytes": 764641
+    "sha256": "435b54e32dec0da264817182c1f3b8c273333674eab6a20603a278be8f0b9bf6",
+    "bytes": 764778
   },
   "validation": {
     "checksPassed": 9,
@@ -39,8 +39,8 @@
   "readme_image": {
     "path": "docs/assets/privacy-architecture.png",
     "method": "Archify canonical PNG export through headless Edge",
-    "sha256": "ea1e197a9ec2d3a04120e7ccf77472b8505f49873e4e37f55bbad5c623a91c01",
-    "bytes": 566021,
+    "sha256": "23eebb53a01c7057f7660d40206ded2066d976479a8a2cf56234a9b813548168",
+    "bytes": 571650,
     "dimensions": [
       4512,
       2499

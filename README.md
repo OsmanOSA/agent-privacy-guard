@@ -10,7 +10,7 @@ Agent Privacy Guard pseudonymizes detected personal data and masks credentials i
 
 [![Agent Privacy Guard architecture: Claude Code hooks, detection, encrypted session vault, local restoration and optional Windows notifications](docs/assets/privacy-architecture.png)](docs/assets/privacy-architecture.png)
 
-Implemented flow on native Windows. Every covered read is inspected, including rereads of restored documents. Python reads use rules and heuristics; document reads can use the local name model. This diagram does not establish complete model-boundary coverage.
+Implemented flow on native Windows. Every covered read is inspected, including rereads of restored documents. Python `.py` reads are inspected with rules and name heuristics, without NER; document reads can use the local name model. Image/OCR and binary document extraction remain outside the implemented inspection path. See the [file-type details](docs/architecture.md#file-types-and-inspection). This diagram does not establish complete model-boundary coverage.
 
 [Architecture details](docs/architecture.md) · [Interactive Archify diagram](docs/ux/privacy-current.html) (download and open locally).
 

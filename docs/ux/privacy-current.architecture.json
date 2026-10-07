@@ -4,11 +4,11 @@
   "meta": {
     "title": "Agent Privacy Guard — current architecture",
     "locale": "en",
-    "output": ".archify/architecture-privacy-current-20261007-131021/privacy-current.html",
+    "output": ".archify/architecture-privacy-current-20261007-132214/privacy-current.html",
     "quality_profile": "showcase",
     "repository": {
       "url": "https://github.com/OsmanOSA/agent-privacy-guard.git",
-      "revision": "f2784023499da56fcf3d876f794bf2adce60cece",
+      "revision": "e0fe861de9196165b8235e68ccf417ba4c754c1a",
       "provider": "github",
       "link_mode": "web"
     }
@@ -74,8 +74,8 @@
     {
       "id": "privacy-core",
       "type": "security",
-      "label": "Privacy core",
-      "sublabel": "Rules + session pseudonyms",
+      "label": "Rules + pseudonymization",
+      "sublabel": "Includes .py tool results",
       "pos": [
         750,
         300
@@ -96,9 +96,9 @@
           "end_line": 58
         },
         {
-          "path": "privacy_guard/core/insee_names.py",
-          "line": 61,
-          "end_line": 67
+          "path": "privacy_guard/claude_code/hook.py",
+          "line": 114,
+          "end_line": 127
         }
       ]
     },
@@ -224,7 +224,7 @@
     {
       "id": "local-ner",
       "type": "backend",
-      "label": "Local name service",
+      "label": "Document names (NER)",
       "sublabel": "DistilCamemBERT + exact cache",
       "pos": [
         750,
@@ -241,9 +241,9 @@
           "end_line": 27
         },
         {
-          "path": "privacy_guard/service/server.py",
-          "line": 31,
-          "end_line": 81
+          "path": "privacy_guard/claude_code/document_scope.py",
+          "line": 14,
+          "end_line": 31
         },
         {
           "path": "privacy_guard/service/cached_names.py",
@@ -299,7 +299,7 @@
       "id": "document-names",
       "from": "privacy-core",
       "to": "local-ner",
-      "label": "document profile",
+      "label": "documents; not .py",
       "variant": "dashed"
     }
   ],
@@ -308,9 +308,9 @@
       "dot": "emerald",
       "title": "Inspection on each covered read",
       "items": [
-        "Rules run on every covered string; Python reads use heuristics, without NER.",
-        "Document names use local inference and an exact-text detection cache.",
-        "Optional INSEE fields and known session names complement detection."
+        "Python (.py), other code and config: rules + name heuristics; no NER on Read.",
+        "Document text (.txt, .md, .csv and declared extensions): local name service.",
+        "Rules still run with NER; optional INSEE and known session names add matches."
       ]
     },
     {
@@ -326,9 +326,9 @@
       "dot": "amber",
       "title": "Prototype boundary",
       "items": [
-        "This view shows implemented calls, not verified model-network interception.",
-        "Hook absence, timeouts and detection misses remain coverage limitations.",
-        "Typed prompts, images and final chat restoration are outside this flow."
+        "Tool-returned strings only; model-network interception remains unverified.",
+        "A PDF/Word extension selects the text profile, not a built-in file extractor.",
+        "Images/OCR, typed prompts and final chat restoration are outside this flow."
       ]
     }
   ]
