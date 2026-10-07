@@ -15,7 +15,7 @@ from typing import Callable
 from privacy_guard.core.category_policy import Mode, mode_for
 from privacy_guard.core.restorable_files import is_restorable
 from privacy_guard.core.tokens import TOKEN_PATTERN
-from privacy_guard.exports.csv_content import restore_csv
+from privacy_guard.exports.file_content import restore_text
 from privacy_guard.exports.policy import _local_absolute_path, _validated_root
 from privacy_guard.exports.written_file_handles import WrittenFileHandles
 
@@ -55,9 +55,9 @@ class WrittenFileRestorer:
                 changed = changed or result != value
                 return result
 
-            restored = restore_csv(text, restore_value) if target.suffix.lower() == ".csv" else restore_value(text)
+            restored = restore_text(target.name, text, restore_value)
             if restored is None:
-                raise ValueError("Local CSV content is not eligible for restoration")
+                raise ValueError("Local CSV or SQL content is not eligible for restoration")
             if not changed:
                 return False
             data = (codecs.BOM_UTF8 if original.startswith(codecs.BOM_UTF8) else b"") + restored.encode("utf-8")

@@ -12,7 +12,9 @@ export directory is needed for this operation.
   reStructuredText, comma-separated CSV), source code (Python, SQL, JavaScript and
   TypeScript, Java, C#, Go, shell and PowerShell scripts, HTML, CSS…) and configuration
   (JSON, YAML, TOML, INI, XML, `.env` files). Values go back exactly as they were read,
-  without escaping for the host language.
+  without escaping for the host language, except in SQL: there, values return only
+  inside string literals (quotes doubled) and comments; tokens in identifiers or bare
+  SQL code stay tokens (`exports/sql_content.py`).
 - An absolute path on a fixed local drive, with existing plain directory ancestry.
 - One regular file, with no reparse point or additional hard link.
 - At most 2 MiB for both the masked and restored file.

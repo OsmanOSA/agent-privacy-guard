@@ -37,6 +37,7 @@ Get the unit suite green before any redeploy.
 | 11 | [Hook refusals disclose the local user path](issues/11-refusal-path-disclosure.md) | P1 | done |
 | 12 | [Technical file names masked as person names](issues/12-file-name-false-positives.md) | P1 | done |
 | 13 | [Rewriting code and configuration files damages them](issues/13-code-file-writes.md) | P1 | done |
+| 14 | [SQL files](issues/14-sql-files.md) | P1 | done |
 | 10 | [End-of-work summary notification](issues/10-end-of-work-summary.md) | later | blocked |
 
 ## Code freeze (founder, 2026-10-07)

@@ -54,6 +54,8 @@ FILES = {
                 f"Rendez-vous avec {CANARIES['name-3']} mardi. Contact : {CANARIES['email-2']}.\n",
     ".env": f"APP_ENV=staging\nGITHUB_TOKEN={CANARIES['secret-1']}\n",
     "contacts.py": f'OWNER = "{CANARIES["name-3"]}"\nSUPPORT_EMAIL = "{CANARIES["email-2"]}"\n',
+    "seed.sql": "INSERT INTO notes (body, email) VALUES\n"
+                f"  ('Rappeler {CANARIES['name-3']} jeudi pour le devis.', '{CANARIES['email-2']}');\n",
     f"cv_{CANARIES['name-file']}.md": "# CV\n\nExpérience : développement Python.\n",
 }
 
@@ -130,8 +132,8 @@ class Scenario:
 
 
 def scenarios(workspace: Path) -> list[Scenario]:
-    csv, notes, env, contacts = (str(workspace / name)
-                                 for name in ("customers.csv", "notes.md", ".env", "contacts.py"))
+    csv, notes, env, contacts, seed = (str(workspace / name)
+                                       for name in ("customers.csv", "notes.md", ".env", "contacts.py", "seed.sql"))
     return [
         Scenario("control-unprotected-read", "absent", True, [[("Read", {"file_path": csv})]],
                  notes="Harness sensitivity: without hooks the canaries must be observed."),
@@ -176,6 +178,13 @@ def scenarios(workspace: Path) -> list[Scenario]:
                   [("Read", {"file_path": contacts})]],
                  restored_file="contacts.py",
                  notes="Rewriting source code: the values come back on disk, the model keeps tokens."),
+        Scenario("write-sql", "installed", False,
+                 [[("Read", {"file_path": seed})],
+                  _write_received_tokens(Path(seed), lambda tokens: "INSERT INTO notes (body, email) VALUES\n"
+                                         + f"  ('Rappeler {tokens[0]} jeudi.', '{tokens[-1]}');\n"),
+                  [("Bash", {"command": "cat seed.sql"})]],
+                 restored_file="seed.sql",
+                 notes="A free-text name in a SQL note needs the name model; values come back escaped."),
         Scenario("write-redacted-secret", "installed", False,
                  [[("Read", {"file_path": env})],
                   _write_received_tokens(Path(env), lambda tokens: "APP_ENV=production\n" + "".join(
