@@ -58,6 +58,8 @@ class NotificationQueue:
             document = record["document"]
             if document and document not in body["documents"] and len(body["documents"]) < 3:
                 body["documents"].append(document)
+            if record.get("reduced"):
+                body["reduced"] = record["reduced"]
             db.execute("INSERT OR REPLACE INTO batches VALUES (?, ?, ?, ?)",
                        (key, first, now, json.dumps(body, ensure_ascii=False)))
             db.execute("DELETE FROM batches WHERE session IN "

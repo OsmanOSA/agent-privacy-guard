@@ -15,8 +15,13 @@ from privacy_guard.diagnostics import stage
 
 
 def protect_tool_output(payload: dict,
-                        core: PrivacyCore, report: Callable[[ProtectionSummary], None] | None = None) -> HookResult:
-    """Protect text values in a tool result, keeping its structure."""
+                        core: PrivacyCore, report: Callable[[ProtectionSummary], None] | None = None,
+                        reduced: Callable[[], str | None] | None = None) -> HookResult:
+    """Protect text values in a tool result, keeping its structure.
+
+    `reduced` tells, after detection, why names were found by the heuristic only; the
+    user is then warned even when nothing was found, the case where names may pass.
+    """
     output = payload.get("tool_response")
     counts = Counter()
     texts = []
@@ -38,16 +43,18 @@ def protect_tool_output(payload: dict,
         protected = map_strings(output, protect)
 
     result = allow()
-    if protected != output:
+    reason = reduced() if reduced is not None else None
+    if protected != output or reason:
         arguments = payload.get("tool_input")
         document = (arguments.get("file_path") if isinstance(arguments, dict)
                     and payload.get("tool_name") in {"Read", "Write", "Edit"} else None)
-        summary = ProtectionSummary(dict(counts), document)
+        summary = ProtectionSummary(dict(counts), document, reason)
         if report is not None:
             with stage('protection_journal'):
                 report(summary)
         with stage('output_response'):
-            result = notify(replace_tool_output(protected), summary.message())
+            response = replace_tool_output(protected) if protected != output else allow()
+            result = notify(response, summary.message())
 
     return guide_document_read(payload, protected, result)
 

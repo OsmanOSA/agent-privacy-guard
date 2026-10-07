@@ -66,6 +66,8 @@ def run_scenario(scenario, profile, workspace: Path, record_dir: Path, claude: s
     shutil.rmtree(workspace, ignore_errors=True)
     write_workspace(workspace)
     record = record_dir / f"{scenario.id}.jsonl"
+    journal = profile.home / ".privacy-guard/logs/protection.jsonl"
+    journal_start = journal.stat().st_size if journal.exists() else 0
     started = time.monotonic()
     with profile.hooks(scenario.hook), FakeModel(scenario.script, record) as model:
         command = [claude, "-p", PROMPT, "--output-format", "json",
@@ -80,7 +82,8 @@ def run_scenario(scenario, profile, workspace: Path, record_dir: Path, claude: s
                "agent_exit": result.returncode, "requests": _count_lines(record) if record.exists() else 0,
                "completed": _completed(result.stdout), "tokens_seen": len(set(TOKEN.findall("\n".join(texts)))),
                "masked": any(MASKED in text for text in texts), "seconds": elapsed, "leaked": leaked,
-               "refused": any(REFUSED in text for text in texts)}
+               "refused": any(REFUSED in text for text in texts),
+               "reduced_reported": _reduced_reported(journal, journal_start)}
     if scenario.restored_file:
         restored = (workspace / scenario.restored_file)
         content = restored.read_text(encoding="utf-8") if restored.exists() else ""
@@ -92,6 +95,11 @@ def run_scenario(scenario, profile, workspace: Path, record_dir: Path, claude: s
 def _verdict(scenario, outcome: dict) -> str:
     if outcome["requests"] == 0:
         return "inconclusive: no model request recorded"
+    if scenario.hook == "model_unavailable":
+        # Option B accepts missed names, never missed formatted data nor a silent reduction.
+        if any(not canary.startswith("name-") for canary in outcome["leaked"]):
+            return "FAIL: non-name canary reached the model"
+        return "pass: reduced detection reported" if outcome["reduced_reported"] else "FAIL: reduction not reported"
     if scenario.expect_leak:
         return "as expected (leak observed)" if outcome["leaked"] else "unexpected: no leak observed"
     if outcome["leaked"]:
@@ -106,6 +114,16 @@ def _verdict(scenario, outcome: dict) -> str:
     if scenario.restored_file and not outcome.get("restored_on_disk"):
         return "FAIL: local file not restored"
     return "pass"
+
+
+def _reduced_reported(journal: Path, start: int) -> bool:
+    """Whether the hook recorded a reduced-detection summary during this scenario."""
+    if not journal.exists():
+        return False
+    with journal.open("rb") as stream:
+        stream.seek(start)
+        rows = [json.loads(line) for line in stream.read().decode("utf-8").splitlines() if line.strip()]
+    return any(row.get("reduced") for row in rows)
 
 
 def _completed(stdout: bytes) -> bool:

@@ -86,7 +86,12 @@ class IsolatedProfile:
 
     @contextmanager
     def hooks(self, mode: str):
-        """Hook mode for one scenario; `stalled_service` suspends a running name service."""
+        """Hook mode for one scenario; `stalled_service` suspends a running name service,
+        `model_unavailable` damages the model file so the service starts in reduced mode."""
+        if mode == "model_unavailable":
+            with self._damaged_model():
+                yield
+            return
         if mode != "stalled_service":
             self.use_hooks(mode)
             yield
@@ -101,6 +106,28 @@ class IsolatedProfile:
             yield
         finally:
             resume(pids)
+
+    @contextmanager
+    def _damaged_model(self):
+        model = self.home / ".privacy-guard/models/distilcamembert-ner/model.onnx"
+        if not model.is_file():
+            raise RuntimeError("No installed model to damage")
+        self.use_hooks("installed")
+        self._stop_service()
+        original = model.read_bytes()
+        model.write_bytes(original[:1024])  # Fails the SHA-256 check: ModelFilesError.
+        try:
+            yield
+        finally:
+            self._stop_service()
+            model.write_bytes(original)
+
+    def _stop_service(self) -> None:
+        stop = ("from privacy_guard.service.channel import DEFAULT_RUN_DIR, ServiceChannel; "
+                "from privacy_guard.service.client import ServiceClient; "
+                "ServiceClient(ServiceChannel(DEFAULT_RUN_DIR)).stop()")
+        subprocess.run([str(self.python), "-c", stop], cwd=self.home / ".privacy-guard/app", env=self.env,
+                       capture_output=True, timeout=60)
 
     def use_hooks(self, mode: str) -> None:
         settings = json.loads(json.dumps(self._installed))

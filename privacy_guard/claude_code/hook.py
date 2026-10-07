@@ -145,8 +145,9 @@ def handle(payload: dict,
                 return before_shell(payload)
             return before_edit(payload)
 
+    document = is_document_read(payload)
     with stage('session_open'):
-        core = PrivacyCore(vaults.session(session_id), names if is_document_read(payload) else QUICK_NAMES)
+        core = PrivacyCore(vaults.session(session_id), names if document else QUICK_NAMES)
     if event == POST_TOOL_USE_FAILURE:
         return protect_failed_tool(payload, core, journal)
     if event == POST_TOOL_USE:
@@ -154,7 +155,9 @@ def handle(payload: dict,
         report = report if callable(report) else None
         if payload.get("tool_name") == "Write":
             return process_write_result(payload, core, report=report, failures=journal)
-        return protect_tool_output(payload, core, report)
+        # Read after detection: the service reports a model that could not load.
+        reduced = (lambda: getattr(names, "reduced", None)) if document else None
+        return protect_tool_output(payload, core, report, reduced)
 
     return allow()
 

@@ -137,6 +137,8 @@ def scenarios(workspace: Path) -> list[Scenario]:
                  notes="No Git Bash: Claude Code runs hooks in PowerShell."),
         Scenario("stalled-name-service", "stalled_service", False, [[("Read", {"file_path": notes})]],
                  notes="Suspended detector: the hook must answer masked before Claude Code's timeout."),
+        Scenario("model-unavailable", "model_unavailable", True, [[("Read", {"file_path": notes})]],
+                 notes="Founder's option B: names may pass on the heuristic; the warning must be reported."),
         Scenario("hook-timeout", "timeout", True, [[("Read", {"file_path": csv})]],
                  notes="Known platform limit: a timed-out hook's output is discarded."),
         Scenario("hook-launch-error", "launch_error", False, [[("Read", {"file_path": csv})]],

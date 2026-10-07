@@ -23,6 +23,7 @@ from privacy_guard.service.channel import ServiceChannel
 from privacy_guard.service.model_environment import ModelEnvironment
 from privacy_guard.service.runtime_python import bundled_python
 from privacy_guard.diagnostics import CATEGORIES, STAGES, fixed
+from privacy_guard.protection_summary import REDUCED_REASONS
 
 # The directory that contains the privacy_guard package: `python -m` must run from there.
 APP_ROOT = Path(privacy_guard.__file__).resolve().parent.parent
@@ -46,6 +47,8 @@ class ServiceClient:
     def __init__(self, channel: ServiceChannel,
                  python: Path | None = None) -> None:
         self._channel = channel
+        # Set by each answer: why document detection is reduced, or None (reduced_names.py).
+        self.reduced: str | None = None
         self._python = python or bundled_python(sys.executable) or (
             MODEL_PYTHON if MODEL_PYTHON.exists() else Path(sys.executable))
 
@@ -63,6 +66,7 @@ class ServiceClient:
             error._privacy_guard_stage = fixed(answer.get('stage'), STAGES, 'detection')
             error._privacy_guard_category = fixed(answer.get('error'), CATEGORIES, 'runtime_error')
             raise error
+        self.reduced = fixed(answer.get("reduced"), REDUCED_REASONS, None)
         return [Finding(kind, start, end) for kind, start, end in answer["findings"]]
 
     def is_ready(self) -> bool:
