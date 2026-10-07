@@ -19,7 +19,10 @@ DOCUMENT_EXTENSIONS = frozenset(
      ".log", ".output",
      # SQL dumps and seeds hold free-text columns (notes, comments) that name people
      # (benchmark: seed.sql).
-     ".sql"}
+     ".sql",
+     # Workbooks: Claude Code's Read refuses them, agents print them with a script whose
+     # command names the file (boundary scenario shell-xlsx).
+     ".xlsx", ".xlsm", ".xls", ".ods"}
 )
 # A shell command that names a document file: cat cv.txt, head notes.md, ...
 _DOCUMENT_IN_COMMAND = re.compile(

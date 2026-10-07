@@ -24,6 +24,7 @@ from privacy_guard.claude_code.path_restoration import restore_file_paths
 from privacy_guard.claude_code.redacted_writes import before_redacted_write
 from privacy_guard.claude_code.protection import protect_tool_output
 from privacy_guard.claude_code.shell_failures import SHELL_TOOLS, before_shell
+from privacy_guard.claude_code.workbook_restoration import process_shell_result
 from privacy_guard.claude_code.tool_failures import inspection_failed
 from privacy_guard.claude_code.write_restoration import process_write_result
 from privacy_guard.claude_code.responses import (
@@ -165,6 +166,8 @@ def handle(payload: dict,
             return process_write_result(payload, core, report=report, failures=journal)
         # Read after detection: the service reports a model that could not load.
         reduced = (lambda: getattr(names, "reduced", None)) if document else None
+        if payload.get("tool_name") in SHELL_TOOLS:
+            return process_shell_result(payload, core, report=report, failures=journal, reduced=reduced)
         return protect_tool_output(payload, core, report, reduced)
 
     return allow()

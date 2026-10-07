@@ -26,6 +26,20 @@ Relative, network, device, alternate-stream and traversal paths do not restore. 
 file tools get their path arguments detokenized (`claude_code/path_restoration.py`).
 A fixed local drive can still be cloud-synchronized.
 
+### Excel workbooks produced by shell commands
+
+Claude Code's Read refuses `.xlsx` files, so agents read and write workbooks with
+scripts. A command that names a workbook (`.xlsx`, `.xlsm`, `.xls`, `.ods`) goes through
+the name model like a document read. After a successful, foreground shell command, each
+existing `.xlsx` or `.xlsm` workbook it names gets this session's values back in its
+text cells (`exports/excel_content.py`, `claude_code/workbook_restoration.py`): shared
+strings and inline strings only, XML-escaped; formulas, numbers and every other part
+are copied unchanged, so a value never becomes a formula. The same native file
+guarantees as `Write` apply, with a 20 MiB file and 64 MiB decompressed limit. A
+workbook written by a script without being named in the command comes from a script
+file, which `Write` restoration already gave the real values; one written from inline
+code that does not name it keeps its tokens.
+
 ### Redacted secrets are never written
 
 Secrets reach Claude as redaction markers (the secret's kind followed by `REDACTED`)
