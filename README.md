@@ -1,10 +1,18 @@
 # Agent Privacy Guard
 
-A local privacy layer for AI coding agents. It replaces detected sensitive values in tool results with session-scoped tokens and restores approved personal values in local files written through its supported workflow.
+Agent Privacy Guard pseudonymizes detected personal data and masks credentials in agent tool results. It uses session-scoped tokens for personal values and restores them in local files written through its supported workflow.
 
 **Claude Code first; other agents later.** The current implementation targets Claude Code on native Windows, using Windows DPAPI for the vault. macOS, Linux, Codex and other adapters are future work, each subject to its own compatibility and security evidence.
 
 **Status: research prototype, not a verified security boundary.** Registering a hook is not proof that every path to a model is protected. See the [security baseline](docs/security/baseline-2026-10-05.md) for observed gaps and the [threat model](docs/security/threat-model.md) for the intended guarantee.
+
+## Architecture
+
+[![Agent Privacy Guard architecture: Claude Code hooks, detection, encrypted session vault, local restoration and optional Windows notifications](docs/assets/privacy-architecture.png)](docs/assets/privacy-architecture.png)
+
+Implemented flow on native Windows. Every covered read is inspected, including rereads of restored documents. Python reads use rules and heuristics; document reads can use the local name model. This diagram does not establish complete model-boundary coverage.
+
+[Architecture details](docs/architecture.md) · [Interactive Archify diagram](docs/ux/privacy-current.html) (download and open locally).
 
 ## Start here
 
@@ -17,7 +25,7 @@ A local privacy layer for AI coding agents. It replaces detected sensitive value
 | Contribute a rule, test, doc or adapter | [Contributing](CONTRIBUTING.md) |
 | Pick a bounded task | [Roadmap](docs/roadmap.md) |
 | Understand decisions and terminology | [Context](CONTEXT.md), [glossary](GLOSSARY.md), [ADRs](docs/adr/) |
-| Prepare the first public repository | [Publication and release guide](docs/releasing.md) |
+| Prepare a source publication or release | [Publication and release guide](docs/releasing.md) |
 | Report a vulnerability | [Security policy](SECURITY.md) |
 
 ## Try the development checks

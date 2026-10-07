@@ -8,6 +8,24 @@ Checked with headless Microsoft Edge on 2026-10-05: initial action gating, illus
 
 ## Archify architecture
 
+### Current implementation (2026-10-07)
+
+[privacy-current.html](privacy-current.html) shows the native Windows implementation at `f278402`, with 22 source references across eight blocks. Download the HTML and open it locally to use the source links, themes and exports. GitHub displays the [PNG export](../assets/privacy-architecture.png) directly in the repository README.
+
+The [specification](privacy-current.architecture.json) and HTML are exact copies of the finalized local artifacts. The earlier editorial changes affect documentation only; none of the cited runtime files differs from the pinned commit. The diagram covers tool-result inspection and the local restoration, vault, name-service and optional notification branches. It does not certify interception of actual model requests.
+
+Archify 3.0.1: all nine showcase checks passed with zero errors or warnings. Delivery, strict artifact checks and the built-in browser gate passed with headless Microsoft Edge. Automated checks covered light mode at 1440×900, 1600×1000, 1920×1080 and 2048×1320, and dark mode at both endpoints. The light 2048px capture, dark 1440px capture and canonical PNG export were inspected for readable blocks, labels and unobstructed arrows. The PNG contains the full diagram without viewer controls. See the [portable validation receipt](privacy-current.validation.json).
+
+To regenerate from the repository root:
+
+```text
+node <archify-skill>/bin/archify.mjs finalize architecture docs/ux/privacy-current.architecture.json .archify/architecture-privacy-current-20261007-131021/privacy-current.html --repo-root . --quality showcase --json
+```
+
+Set `ARCHIFY_CHROME` to an installed Chromium-based browser if automatic discovery fails. After validation, use **Export → PNG** in the HTML for the README image. Keep the generated HTML and specification together, and update the validation receipt when either changes.
+
+### Earlier target contract (2026-10-05)
+
 Open [privacy-target.html](privacy-target.html). It is a **proposed incoming tool-result disclosure contract**, not a verified architecture diagram of committed source. It does not claim filesystem isolation or comprehensive restoration enforcement.
 
 Authored specification: [privacy-target.architecture.json](privacy-target.architecture.json). The JSON retains the original local generation destination under `.archify/`; the documentation HTML is an exact byte copy of that artifact.

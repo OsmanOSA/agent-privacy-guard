@@ -13,7 +13,7 @@
 <body>
 <div class="notice"><strong>Design simulation.</strong> Synthetic data only. No agent connection, document access, persistence or network requests.</div>
 <div class="shell">
-<header><div><div class="eyebrow">Local privacy / Claude Code first</div><h1>Agent Privacy Guard</h1><div class="muted">Know what is covered. Keep control of restoration.</div></div><button id="reset">Reset simulation</button></header>
+<header><div><div class="eyebrow">Local privacy / Claude Code first</div><h1>Agent Privacy Guard</h1><div class="muted">Simulate inspection and choose a restoration destination.</div></div><button id="reset">Reset simulation</button></header>
 <div class="layout">
 <nav role="tablist" aria-label="Prototype screens">
 <button role="tab" id="tab-setup" aria-controls="setup" aria-selected="true" data-tab="setup">01 &nbsp; Set up</button>
@@ -27,7 +27,7 @@
 <div class="scope small"><strong>Proposed first scope:</strong> one tested Claude Code / native Windows / shell combination. Codex and other platforms are future adapters.</div>
 </section>
 <section id="setup" role="tabpanel" aria-labelledby="tab-setup">
-<div class="panel"><h2>Installation is only the first step</h2><p class="muted">A status check must explain detector availability, protocol compatibility and unsupported paths. Choose a scenario to explore that experience.</p>
+<div class="panel"><h2>Check the simulated integration status</h2><p class="muted">Choose a scenario to see how setup reports a missing name model, an invalid tool result or an unsupported image payload.</p>
 <div class="controls" aria-label="Simulated scenarios">
 <button data-state="checking">Checking</button><button data-state="ready">Checks pass (future)</button><button data-state="degraded">Name model missing</button><button data-state="blocked">Invalid tool result</button><button data-state="unsupported">Image payload</button><button data-state="uninstalled">Not installed</button>
 </div>
@@ -36,7 +36,7 @@
 <button class="primary" data-open="work">Explore a synthetic workflow</button>
 </section>
 <section id="work" role="tabpanel" aria-labelledby="tab-work" hidden>
-<div class="panel"><h2>A useful document, fewer exposed values</h2><p class="muted">Use a fictional customer note to explore inspection and an authorized local output. No file is opened.</p>
+<div class="panel"><h2>Inspect a fictional customer note</h2><p class="muted">Use a fictional customer note to explore inspection and an authorized local output. No file is opened.</p>
 <label id="reduced-label" hidden><input type="checkbox" id="reduced"> Allow reduced detection for this synthetic simulation</label>
 <button class="primary" id="inspect" disabled>Inspect fictional note</button><p id="action-feedback" class="small" role="status" aria-live="polite">Select a capability scenario in Set up first.</p>
 <div class="grid"><div><h3>Illustrative model context</h3><pre id="model-output" class="sample">Waiting for a simulated inspection.</pre></div><div><h3>Local output preview</h3><pre id="local-output" class="sample">No restoration requested.</pre></div></div>

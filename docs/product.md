@@ -18,7 +18,7 @@ Agent Privacy Guard aims to inspect every **covered path**, replace detected sen
 | Detection | Rules and heuristic names; optional local ONNX names | Published corpus mode, per-category scores and known misses |
 | Restoration | Tokens in selected local tool arguments | Explicit destination policy, session binding and no uncontrolled egress |
 | Status | Hook configuration and model-file readiness | Capability checks and actual compatibility evidence |
-| User experience | Install/status/uninstall CLI | Honest setup, degraded-mode and failure feedback |
+| User experience | Install/status/uninstall CLI | Setup status, reduced detection and failure messages |
 
 Codex and other companies' agents are part of the long-term direction. Adding them requires an adapter with equivalent evidence. Neither vendor nor platform support follows automatically from a reusable core.
 
@@ -58,10 +58,10 @@ User-typed prompts, previous conversation history, external integrations and arb
 
 ## Prospects and validation
 
-Assessment: this is worth testing because the pain is concrete and the local core is already present. The differentiator must be measured agent integration, safe restoration and clear operational status. Community contributions become useful when a synthetic fixture can turn an observation into a reproducible rule or adapter test.
+Validate the complete agent workflow: inspect incoming tool results, restore values at an approved destination and report inspection failures. Record which paths are covered and what happens when protection is unavailable. Each reported detection or adapter problem should have a synthetic reproducer.
 
-Detection alone is an established capability: [Presidio](https://presidio.dataprivacystack.org/) is a reference to compare against. [Claude Code sandboxing](https://code.claude.com/docs/en/sandboxing) addresses shell filesystem/network restrictions, with its own tool and platform limits. Those are adjacent capabilities, not proof that this integration works. The product opportunity is an inference, not demonstrated demand.
+Detection alone is an established capability: [Presidio](https://presidio.dataprivacystack.org/) is a reference to compare against. [Claude Code sandboxing](https://code.claude.com/docs/en/sandboxing) addresses shell filesystem/network restrictions, with its own tool and platform limits. Neither establishes that this agent integration works or that users need it.
 
 Proposed discovery targets, not current results: interview 10 developers about a recent privacy incident or avoidance behavior; have 5 independently run a synthetic trial; observe at least 3 willing to keep using it after a week. Ask what they would pay for and compare onboarding time, blocked work and support effort. Revise these thresholds after the first cohort.
 
-Potential commercial value: maintained integrations, desktop setup, signed delivery and support. Keep essential privacy behavior, vulnerability fixes and honest limitations available to the community. Prices and one-time versus recurring payment in the older PRD are hypotheses; ongoing vendor compatibility creates ongoing cost. Do not commit to lifetime maintenance before measuring that cost.
+Possible paid services include integration maintenance, desktop setup, signed delivery and support. Keep essential privacy behavior, vulnerability fixes and documented limitations available to the community. Prices and one-time versus recurring payment in the older PRD are hypotheses; ongoing vendor compatibility creates ongoing cost. Do not commit to lifetime maintenance before measuring that cost.

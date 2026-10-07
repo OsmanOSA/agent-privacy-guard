@@ -1,0 +1,335 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Agent Privacy Guard — current architecture",
+    "locale": "en",
+    "output": ".archify/architecture-privacy-current-20261007-131021/privacy-current.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/OsmanOSA/agent-privacy-guard.git",
+      "revision": "f2784023499da56fcf3d876f794bf2adce60cece",
+      "provider": "github",
+      "link_mode": "web"
+    }
+  },
+  "components": [
+    {
+      "id": "tool-results",
+      "type": "external",
+      "label": "Claude Code tools",
+      "sublabel": "Read / Bash / Write",
+      "pos": [
+        30,
+        300
+      ],
+      "size": [
+        220,
+        76
+      ],
+      "sources": [
+        {
+          "path": "privacy_guard/claude_code/registration.py",
+          "line": 15,
+          "end_line": 30
+        },
+        {
+          "path": "privacy_guard/claude_code/hook.py",
+          "line": 118,
+          "end_line": 127
+        }
+      ]
+    },
+    {
+      "id": "hook-adapter",
+      "type": "backend",
+      "label": "Hook adapter",
+      "sublabel": "JSON events + Write policy",
+      "pos": [
+        370,
+        300
+      ],
+      "size": [
+        220,
+        76
+      ],
+      "sources": [
+        {
+          "path": "privacy_guard/claude_code/hook.py",
+          "line": 87,
+          "end_line": 136
+        },
+        {
+          "path": "privacy_guard/claude_code/protection.py",
+          "line": 17,
+          "end_line": 64
+        },
+        {
+          "path": "privacy_guard/claude_code/write_restoration.py",
+          "line": 22,
+          "end_line": 44
+        }
+      ]
+    },
+    {
+      "id": "privacy-core",
+      "type": "security",
+      "label": "Privacy core",
+      "sublabel": "Rules + session pseudonyms",
+      "pos": [
+        750,
+        300
+      ],
+      "size": [
+        220,
+        76
+      ],
+      "sources": [
+        {
+          "path": "privacy_guard/core/privacy_core.py",
+          "line": 26,
+          "end_line": 97
+        },
+        {
+          "path": "privacy_guard/core/detector.py",
+          "line": 22,
+          "end_line": 58
+        },
+        {
+          "path": "privacy_guard/core/insee_names.py",
+          "line": 61,
+          "end_line": 67
+        }
+      ]
+    },
+    {
+      "id": "agent-response",
+      "type": "external",
+      "label": "Claude Code response",
+      "sublabel": "Tokens + redactions",
+      "pos": [
+        1140,
+        300
+      ],
+      "size": [
+        220,
+        76
+      ],
+      "sources": [
+        {
+          "path": "privacy_guard/claude_code/protection.py",
+          "line": 28,
+          "end_line": 52
+        },
+        {
+          "path": "privacy_guard/claude_code/responses.py",
+          "line": 57,
+          "end_line": 65
+        }
+      ]
+    },
+    {
+      "id": "restored-file",
+      "type": "database",
+      "label": "Local file restoration",
+      "sublabel": "TXT / Markdown / CSV",
+      "pos": [
+        370,
+        65
+      ],
+      "size": [
+        220,
+        76
+      ],
+      "sources": [
+        {
+          "path": "privacy_guard/claude_code/write_restoration.py",
+          "line": 22,
+          "end_line": 44
+        },
+        {
+          "path": "privacy_guard/exports/written_file.py",
+          "line": 21,
+          "end_line": 86
+        },
+        {
+          "path": "privacy_guard/core/privacy_core.py",
+          "line": 73,
+          "end_line": 97
+        }
+      ]
+    },
+    {
+      "id": "session-vault",
+      "type": "database",
+      "label": "Encrypted session vault",
+      "sublabel": "DPAPI + SQLite records",
+      "pos": [
+        750,
+        65
+      ],
+      "size": [
+        220,
+        76
+      ],
+      "sources": [
+        {
+          "path": "privacy_guard/core/vault.py",
+          "line": 81,
+          "end_line": 144
+        },
+        {
+          "path": "privacy_guard/core/cipher.py",
+          "line": 30,
+          "end_line": 36
+        },
+        {
+          "path": "privacy_guard/core/sqlite_records.py",
+          "line": 21,
+          "end_line": 59
+        }
+      ]
+    },
+    {
+      "id": "desktop-notices",
+      "type": "frontend",
+      "label": "Windows notifications",
+      "sublabel": "Grouped counts + basenames",
+      "pos": [
+        370,
+        535
+      ],
+      "size": [
+        220,
+        76
+      ],
+      "sources": [
+        {
+          "path": "privacy_guard/notifications/client.py",
+          "line": 13,
+          "end_line": 52
+        },
+        {
+          "path": "privacy_guard/notifications/worker.py",
+          "line": 15,
+          "end_line": 36
+        },
+        {
+          "path": "privacy_guard/notifications/renderer.py",
+          "line": 6,
+          "end_line": 11
+        }
+      ]
+    },
+    {
+      "id": "local-ner",
+      "type": "backend",
+      "label": "Local name service",
+      "sublabel": "DistilCamemBERT + exact cache",
+      "pos": [
+        750,
+        535
+      ],
+      "size": [
+        220,
+        76
+      ],
+      "sources": [
+        {
+          "path": "privacy_guard/service/distil_name_detector.py",
+          "line": 17,
+          "end_line": 27
+        },
+        {
+          "path": "privacy_guard/service/server.py",
+          "line": 31,
+          "end_line": 81
+        },
+        {
+          "path": "privacy_guard/service/cached_names.py",
+          "line": 18,
+          "end_line": 48
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "receive-event",
+      "from": "tool-results",
+      "to": "hook-adapter",
+      "label": "JSON event",
+      "variant": "emphasis"
+    },
+    {
+      "id": "inspect-strings",
+      "from": "hook-adapter",
+      "to": "privacy-core",
+      "label": "nested strings",
+      "variant": "security"
+    },
+    {
+      "id": "emit-response",
+      "from": "privacy-core",
+      "to": "agent-response",
+      "label": "via adapter",
+      "variant": "security"
+    },
+    {
+      "id": "restore-write",
+      "from": "hook-adapter",
+      "to": "restored-file",
+      "label": "eligible Write",
+      "variant": "security"
+    },
+    {
+      "id": "bind-values",
+      "from": "privacy-core",
+      "to": "session-vault",
+      "label": "store / lookup"
+    },
+    {
+      "id": "publish-notice",
+      "from": "hook-adapter",
+      "to": "desktop-notices",
+      "label": "if enabled",
+      "variant": "dashed"
+    },
+    {
+      "id": "document-names",
+      "from": "privacy-core",
+      "to": "local-ner",
+      "label": "document profile",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Inspection on each covered read",
+      "items": [
+        "Rules run on every covered string; Python reads use heuristics, without NER.",
+        "Document names use local inference and an exact-text detection cache.",
+        "Optional INSEE fields and known session names complement detection."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Restoration and feedback",
+      "items": [
+        "After eligible Write, restore personal values on disk; keep credentials masked.",
+        "A covered reread is inspected again. Token-bearing Edit is guided to Write.",
+        "Desktop delivery is optional and grouped; background mode checks host focus."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Prototype boundary",
+      "items": [
+        "This view shows implemented calls, not verified model-network interception.",
+        "Hook absence, timeouts and detection misses remain coverage limitations.",
+        "Typed prompts, images and final chat restoration are outside this flow."
+      ]
+    }
+  ]
+}

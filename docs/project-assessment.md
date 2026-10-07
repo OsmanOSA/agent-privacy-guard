@@ -2,15 +2,15 @@
 
 Assessment date: 2026-10-05. Source reviewed: `8dfe62f`. This document records a maintainer-facing assessment and proposed priorities. It does not certify protection or approve an architectural change.
 
-Agent Privacy Guard is worth investigating further. It already has a local detection core, reversible session mappings, native encryption and a testable adapter. The next investment should establish whether a useful workflow can be protected through a real agent, including failures. That result will determine whether the project becomes a dependable tool or needs a different integration mechanism.
+Agent Privacy Guard has a local detection core, reversible session mappings, native encryption and a testable adapter. The next experiment should check whether a real agent can read and edit a document while detected personal values stay out of model context, including when inspection fails. If the integration cannot enforce that behavior, its interception mechanism needs to change.
 
 ## Why the project deserves further work
 
-The problem is specific: an agent can encounter customer data or credentials while reading a file or running a command for a legitimate task. A developer may need the agent to understand the structure and relationships in that data without receiving every original value. Keeping consistent substitutes during reasoning and restoring approved values at a local output is a practical way to explore that need.
+The problem is specific: an agent can encounter customer data or credentials while reading a file or running a command for a legitimate task. A developer may need the agent to understand the structure and relationships in that data without receiving every original value. The proposed workflow keeps substitutes consistent during reasoning and restores approved values in a local output.
 
-The implementation gives that idea a basis for experiments. Detection, the vault, operating-system encryption and agent protocol handling have separate modules. The tests exercise those interfaces with synthetic data. A contributor can investigate one missed value or one tool-response failure without rebuilding the application.
+Detection, the vault, operating-system encryption and agent protocol handling have separate modules. The tests exercise those interfaces with synthetic data. A contributor can investigate one missed value or one tool-response failure without rebuilding the application.
 
-These capabilities do not establish an original market category. [Presidio](https://presidio.dataprivacystack.org/) already documents detection, transformation and pseudonymization with mappings. Our proposed distinction is reliable integration into an agent workflow: knowing which paths are covered, preserving useful work, controlling restoration and showing when protection is unavailable. That distinction remains to be demonstrated; no customer demand or willingness to pay has been measured.
+[Presidio](https://presidio.dataprivacystack.org/) already documents detection, transformation and pseudonymization with mappings. For this agent integration, we still need to demonstrate which paths are covered, whether the agent can complete its task, where restoration is allowed and how users learn that protection is unavailable. No customer demand or willingness to pay has been measured.
 
 ## What exists today
 
@@ -51,7 +51,7 @@ The [Claude Code sandbox](https://code.claude.com/docs/en/sandboxing) supplies f
 
 Use one pinned Claude Code version, one native Windows environment and one declared shell. Ask the agent to read a synthetic customer CSV, check its structure and produce an edited local CSV. Names and contact values should stay represented by consistent tokens during reasoning. Only an approved local export should recover the originals. A synthetic API credential in the input should remain masked.
 
-This proposed scenario exercises the intended value: the agent performs useful work and the user receives a usable local result. It also exposes failures that a detector-only demonstration would miss. CSV text avoids adding OCR or binary document extraction before the agent contract is understood.
+This scenario tests both what the agent receives and what it writes locally, including failures that a detector-only test would miss. CSV text avoids adding OCR or binary document extraction before the agent contract is understood.
 
 Observe the model-request boundary with a controlled harness, using synthetic values only. Check the successful read, a detection exception, an invalid replacement, a missing or killed hook, a timeout, a failed tool and competing transformations. Check attempts to restore into a network command, an unapproved path or another session. Retain fixture identifiers, environment versions and outcomes as evidence.
 
@@ -69,8 +69,6 @@ More agents, more operating systems, a desktop application and commercial packag
 
 ## When to continue or change direction
 
-Continue if the bounded workflow has credible failure behavior and people use it to complete work they otherwise avoid. The project can be a worthwhile open-source tool even if paid demand remains weak.
+Continue if the boundary checks confirm the declared failure behavior and trial users complete work they otherwise avoid. Assess willingness to pay separately from continued use.
 
 Change the integration mechanism if the agent contract cannot enforce the promised boundary. Narrow the use case if detection or setup prevents useful work. Reconsider commercial packaging if maintenance effort exceeds what trial users value.
-
-My assessment is that the project has enough substance for this next experiment. Its strongest future claim would be a supported workflow whose behavior others can reproduce. The present evidence supports a research prototype with concrete next questions.

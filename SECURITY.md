@@ -8,7 +8,7 @@ Agent Privacy Guard is a research prototype. There is no supported public releas
 
 **A private reporting channel is not configured yet.** Do not publish an exploit or private data in an ordinary issue or discussion. Do not include real credentials, original documents, vault contents or raw agent transcripts in a report.
 
-Before a public repository opens, the maintainer must configure and test a private channel (such as repository private vulnerability reporting), replace this section with its actual route and assign a responder. This is a publication blocker. No email address or response-time guarantee is invented here.
+Before a public repository opens, the maintainer must configure and test a private channel (such as repository private vulnerability reporting), replace this section with its actual route and assign a responder. This is a publication blocker.
 
 When that channel exists, a useful report contains affected version/platform, synthetic reproducer, expected and observed behavior, which privacy invariant is affected, and sanitized evidence. A report does not need access to someone else's data to establish impact.
 

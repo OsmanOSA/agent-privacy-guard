@@ -1,6 +1,6 @@
 # Contributing
 
-Welcome. The project is being prepared locally before public community contributions. Read the [product brief](docs/product.md), [glossary](GLOSSARY.md) and [threat model](docs/security/threat-model.md). Today the focus is Claude Code; expanding to other agents is planned work.
+Before proposing a change, read the [product brief](docs/product.md), [glossary](GLOSSARY.md) and [threat model](docs/security/threat-model.md). Today the focus is Claude Code; expanding to other agents is planned work.
 
 ## Before making a change
 

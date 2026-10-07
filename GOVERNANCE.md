@@ -1,6 +1,6 @@
 # Governance
 
-Status: proposed community operating model. The project founder owns decisions during local preparation. Named maintainers and contacts will be recorded before opening contributions; this document does not invent a committee or assign individuals.
+Status: proposed community operating model. The project founder owns decisions during local preparation. Named maintainers and contacts will be recorded before opening contributions.
 
 ## Roles
 
@@ -15,7 +15,7 @@ One person can hold multiple roles in preparation. Record when a review is not i
 
 Discuss routine changes in their work item. Durable architectural trade-offs use a concise ADR. The founder resolves unresolved local-preparation decisions and records the reason; community governance can evolve when multiple maintainers exist.
 
-Security claims need evidence, not a vote. An unresolved release blocker prevents the corresponding claim or release. Disagreement about evidence is recorded with a reproducer and reviewed by someone who did not implement the change when possible.
+Security claims require recorded evidence. An unresolved release blocker prevents the corresponding claim or release. Disagreement about evidence is recorded with a reproducer and reviewed by someone who did not implement the change when possible.
 
 ## Open source and commercial work
 

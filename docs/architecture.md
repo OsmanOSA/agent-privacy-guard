@@ -2,6 +2,12 @@
 
 Status: source inspection, native installed-launcher checks and proposed contracts, 2026-10-06. A successful unit test of a hook response is not evidence that an agent accepted that response.
 
+## Current architecture diagram
+
+[![Current implementation blocks](assets/privacy-architecture.png)](assets/privacy-architecture.png)
+
+The [interactive Archify view](ux/privacy-current.html) traces the implementation at `f278402`, with links to the source for each block. It shows the successful tool-result path and its local restoration, vault, name-service and notification branches. The [diagram checks](ux/privacy-current.validation.json) record the source revision and rendering evidence. The proposed enforcement contract remains a separate view below.
+
 ## Current flow
 
 1. The installer copies Python source to the user's guard directory and registers command hooks in Claude Code settings.

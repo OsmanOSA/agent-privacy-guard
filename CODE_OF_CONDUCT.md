@@ -1,6 +1,6 @@
 # Community conduct
 
-We want a community where people can contribute technical evidence, ask questions and disagree constructively.
+These rules apply to project discussions and contributions.
 
 - Treat contributors respectfully regardless of experience, background or identity.
 - Critique behavior and evidence, not a person's character.
@@ -10,4 +10,4 @@ We want a community where people can contribute technical evidence, ask question
 
 Maintainers may moderate discussions, ask for revised behavior and restrict participation when needed. Decisions should be proportionate, with a recorded reason and an appeal to an uninvolved maintainer when one is available.
 
-A private conduct contact has not yet been designated because no public community channel exists. Establish it, with an escalation route, before opening contributions. This is a project-authored policy, not a claim to have adopted a named third-party code verbatim.
+A private conduct contact has not yet been designated because no public community channel exists. Establish it, with an escalation route, before opening contributions.
