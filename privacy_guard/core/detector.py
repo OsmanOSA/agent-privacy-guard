@@ -17,6 +17,7 @@ from privacy_guard.core.personal_data_detector import find_personal_data
 from privacy_guard.core.secret_detector import find_secrets
 from privacy_guard.core.tabular import find_tabular_personal_data
 from privacy_guard.core.tokens import find_tokens
+from privacy_guard.core.tool_vocabulary import is_tool_vocabulary
 
 
 class SensitiveDataDetector:
@@ -32,7 +33,8 @@ class SensitiveDataDetector:
         """One pass per string; committed session names augment result-local names."""
         detected = [self._find(text) for text in texts]
         known = set().union(*(spellings(text, found) for text, found in zip(texts, detected)))
-        known.update(known_names)
+        # Sessions recorded before the vocabulary filter may hold tool words.
+        known.update(name for name in known_names if not is_tool_vocabulary(name))
         pattern = name_pattern(known) if known else None
         return [preserve_markers(text, propagate(text, found, known, pattern))
                 for text, found in zip(texts, detected)]
@@ -55,4 +57,5 @@ class SensitiveDataDetector:
         # must also support lowercase names when the optional lexicon is enabled.
         if not any(character.isupper() for character in text) and not has_person_context(text):
             return []
-        return complete(text, self._names.find_names(text))
+        return [finding for finding in complete(text, self._names.find_names(text))
+                if not is_tool_vocabulary(text[finding.start:finding.end])]
