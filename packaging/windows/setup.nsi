@@ -7,6 +7,9 @@ Unicode true
 !ifndef VERSION
   !error "Build with tools/build_windows_setup.py"
 !endif
+!ifndef MAX_INSTDIR
+  !error "Build with tools/build_windows_setup.py"
+!endif
 !ifdef TEST_BUILD
   !define PRODUCT "Privacy Guard Setup Test"
   !define DIRECTORY "PrivacyGuardSetupTest"
@@ -55,6 +58,13 @@ Function .onInit
 FunctionEnd
 
 Section "Privacy Guard" SEC_MAIN
+  ; Without long-path support, a payload file beyond MAX_PATH fails half-way through
+  ; the copy. The build computes the longest directory that keeps every path valid.
+  StrLen $0 "$INSTDIR"
+  ${If} $0 > ${MAX_INSTDIR}
+    StrCpy $1 "Le dossier d'installation est trop long ($0 caractères, ${MAX_INSTDIR} au maximum). Choisissez un dossier plus court."
+    Call SetupFailed
+  ${EndIf}
   Call CheckExistingVersion
   IfFileExists "${BUNDLE}\payload.json" activate
   SetOutPath "${BUNDLE}"

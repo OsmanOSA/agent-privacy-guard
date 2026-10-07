@@ -8,6 +8,17 @@ import zipfile
 from pathlib import Path
 
 PROJECT = Path(__file__).resolve().parents[1]
+# Not needed at run time: the documentation (68 MB, holding the 264-character path that
+# failed installs under a long directory), C headers and import libraries, IDLE, pip.
+UNUSED_RUNTIME = ('Doc', 'include', 'libs', 'Lib/idlelib', 'Lib/ensurepip')
+# Windows MAX_PATH without long-path support, terminating null excluded.
+MAX_PATH = 259
+
+
+def longest_install_directory(payload, version):
+    """How long the installation directory may be before a payload path exceeds MAX_PATH."""
+    longest = max(len(p.relative_to(payload).as_posix()) for p in payload.rglob('*'))
+    return MAX_PATH - len(f'\\versions\\{version}\\') - longest
 
 
 def digest(path):
@@ -50,6 +61,8 @@ def build_payload(target, cache, model, version, lexicon=None):
     runtime = target / 'runtime'
     runtime.mkdir(parents=True)
     extract(fetch(lock['python'], cache), runtime)
+    for unused in UNUSED_RUNTIME:
+        shutil.rmtree(runtime / unused)
     for wheel in lock['wheels']:
         extract(fetch(wheel, cache / 'wheels'), runtime / 'Lib/site-packages')
     (runtime / 'python314._pth').write_text(

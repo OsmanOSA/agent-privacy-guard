@@ -31,7 +31,7 @@ Get the unit suite green before any redeploy.
 | 04 | [Hook timeout](issues/04-hook-timeout.md) | P0 leak | done |
 | 05 | [Hook launch failure](issues/05-hook-launch-failure.md) | P0 leak | done |
 | 06 | [Silent degradation without the name model](issues/06-silent-degradation.md) | P0 leak | done |
-| 07 | [Rebuild and harden the setup](issues/07-rebuild-setup.md) | P1 | open |
+| 07 | [Rebuild and harden the setup](issues/07-rebuild-setup.md) | P1 | done |
 | 08 | [Untested paths](issues/08-untested-paths.md) | P1 | open |
 | 09 | [Public distribution prerequisites](issues/09-public-distribution.md) | P2 | open |
 | 11 | [Hook refusals disclose the local user path](issues/11-refusal-path-disclosure.md) | P1 | open |

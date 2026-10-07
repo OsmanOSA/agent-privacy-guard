@@ -12,7 +12,8 @@ are outside this package's scope.
 ## Install
 
 1. Close running Claude Code sessions.
-2. Run `PrivacyGuard-0.1.0-preview.1-windows-x64.exe` and follow the wizard.
+2. Run `PrivacyGuard-0.1.0-preview.2-windows-x64.exe` and follow the wizard. The
+   installation directory may be at most 107 characters long; the default is shorter.
 3. Start a new Claude Code session in VS Code or a terminal.
 
 The setup registers hooks in the current user's Claude Code configuration,
@@ -62,4 +63,5 @@ Isolated automated setup checks do not replace those checks.
 OCR and binary extraction are deferred to [issue #1](https://github.com/OsmanOSA/agent-privacy-guard/issues/1).
 See [build instructions](../packaging/windows/README.md).
 
-Recorded checks and artifact hashes: [2026-10-07 setup receipt](windows-setup-checks-2026-10-07.md).
+Recorded checks and artifact hashes: [preview.2 receipt](windows-setup-checks-2026-10-07-preview-2.md)
+(earlier: [preview.1 receipt](windows-setup-checks-2026-10-07.md)).

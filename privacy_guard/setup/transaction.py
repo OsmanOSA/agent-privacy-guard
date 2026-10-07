@@ -5,13 +5,15 @@ import tempfile
 from contextlib import contextmanager
 from pathlib import Path
 
+from privacy_guard.setup.errors import SetupError
+
 
 @contextmanager
 def installation_transaction(home: Path, settings: Path):
     for target in (home, settings):
         for part in (target, *target.parents):
             if part.is_symlink() or (hasattr(part, 'is_junction') and part.is_junction()):
-                raise ValueError('Setup does not modify redirected directories')
+                raise SetupError('Le setup ne modifie pas un dossier redirigé (lien ou jonction).')
     home.mkdir(parents=True, exist_ok=True)
     lock = home / 'setup.lock'
     with lock.open('x', encoding='ascii') as stream:
@@ -28,7 +30,7 @@ def installation_transaction(home: Path, settings: Path):
             for index, target in enumerate(targets):
                 for part in (target, *target.parents):
                     if part.is_symlink() or (hasattr(part, 'is_junction') and part.is_junction()):
-                        raise ValueError('Setup does not modify redirected files')
+                        raise SetupError('Le setup ne modifie pas un fichier redirigé (lien).')
                 backup = Path(folder) / str(index)
                 exists = target.exists()
                 if exists:

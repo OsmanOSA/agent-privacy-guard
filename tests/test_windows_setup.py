@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 from privacy_guard.setup.transaction import installation_transaction
 from privacy_guard.setup.bundle import verify_bundle
+from privacy_guard.setup.errors import SetupError
 from privacy_guard.setup.installation import preflight, uninstall
 from privacy_guard.service.runtime_python import bundled_python
 
@@ -53,7 +54,7 @@ class WindowsSetupTest(unittest.TestCase):
         bundle.mkdir()
         (bundle / 'payload.json').write_text(json.dumps({'schema': 1,
             'product': 'agent-privacy-guard', 'files': {'../outside': '0' * 64}}))
-        with self.assertRaisesRegex(ValueError, 'Invalid payload path'):
+        with self.assertRaisesRegex(SetupError, 'invalide'):
             verify_bundle(bundle)
 
     def test_corrupted_file_is_rejected_before_installation(self):
@@ -62,7 +63,7 @@ class WindowsSetupTest(unittest.TestCase):
         (bundle / 'engine.py').write_text('corrupted')
         (bundle / 'payload.json').write_text(json.dumps({'schema': 1,
             'product': 'agent-privacy-guard', 'files': {'engine.py': '0' * 64}}))
-        with self.assertRaisesRegex(ValueError, 'failed verification'):
+        with self.assertRaisesRegex(SetupError, 'altéré'):
             verify_bundle(bundle)
         self.assertEqual(self.settings.read_bytes(), b'{"theme":"dark"}')
 
@@ -70,14 +71,14 @@ class WindowsSetupTest(unittest.TestCase):
         self.settings.write_text('{"disableAllHooks":true}')
         with patch('privacy_guard.setup.installation.verify_bundle', return_value={}):
             with patch.dict('os.environ', {}, clear=True):
-                with self.assertRaisesRegex(RuntimeError, 'disable hooks'):
+                with self.assertRaisesRegex(SetupError, 'désactivent les hooks'):
                     preflight(self.root / 'bundle', self.root)
         self.assertFalse(self.home.exists())
 
     def test_old_uninstaller_cannot_remove_new_installation(self):
         self.home.mkdir()
         (self.home / 'windows-setup.json').write_text(json.dumps({'bundle':str(self.root/'new')}))
-        with self.assertRaisesRegex(RuntimeError, 'different installed version'):
+        with self.assertRaisesRegex(SetupError, 'autre version installée'):
             uninstall(self.root / 'old', self.root)
         self.assertTrue((self.home / 'windows-setup.json').exists())
 
@@ -106,7 +107,7 @@ class WindowsSetupTest(unittest.TestCase):
         self.settings.write_text(json.dumps({'hooks': {'PreToolUse': [
             {'hooks': [{'command': 'other-python .privacy-guard/app'}]}]}}))
         before = self.settings.read_bytes()
-        with self.assertRaisesRegex(RuntimeError, 'now owns the hooks'):
+        with self.assertRaisesRegex(SetupError, 'gère maintenant les hooks'):
             uninstall(bundle, self.root)
         self.assertEqual(self.settings.read_bytes(), before)
         self.assertTrue((self.home / 'windows-setup.json').exists())
