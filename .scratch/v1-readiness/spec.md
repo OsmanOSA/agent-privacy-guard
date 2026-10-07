@@ -26,7 +26,7 @@ Get the unit suite green before any redeploy.
 | ID | Item | Priority | Status |
 | --- | --- | --- | --- |
 | 01 | [Tool names taken for person names](issues/01-tool-name-false-positives.md) | P0 usability | done |
-| 02 | [Hook command without Git Bash](issues/02-hook-without-git-bash.md) | P0 leak | open |
+| 02 | [Hook command without Git Bash](issues/02-hook-without-git-bash.md) | P0 leak | done |
 | 03 | [Explicit exit in a shell command](issues/03-explicit-exit.md) | P0 leak | open |
 | 04 | [Hook timeout](issues/04-hook-timeout.md) | P0 leak | open |
 | 05 | [Hook launch failure](issues/05-hook-launch-failure.md) | P0 leak | open |

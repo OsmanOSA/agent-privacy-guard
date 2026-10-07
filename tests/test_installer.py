@@ -10,7 +10,6 @@ from pathlib import Path
 from privacy_guard.claude_code import registration
 from privacy_guard.claude_code.installer import ClaudeCodeInstaller, ClaudeCodeNotFoundError
 from tests.fakes import STRIPE_KEY
-from tests.native_shell import native_bash
 
 ORIGINAL_SETTINGS = {"model": "opus", "enabledPlugins": {"some-plugin": True}}
 
@@ -129,12 +128,12 @@ class InstallerTest(unittest.TestCase):
 
     def _run_installed_hook(self, payload):
         settings = json.loads(self.settings_path.read_text(encoding="utf-8"))
-        command = settings["hooks"]["PreToolUse"][0]["hooks"][0]["command"]
+        handler = settings["hooks"]["PreToolUse"][0]["hooks"][0]
         # HOME and USERPROFILE point to the temp dir so the journal never writes to the real home.
         env = {**os.environ, "HOME": str(self.home), "USERPROFILE": str(self.home)}
-        # Claude Code runs hooks through bash; on Windows that is Git's bash, found via PATH.
+        # Exec form: Claude Code starts the interpreter directly, with no shell in between.
         return subprocess.run(
-            [native_bash(), "-c", command],
+            [handler["command"], *handler["args"]],
             input=json.dumps({"session_id": "test-session", **payload}),
             capture_output=True,
             text=True,

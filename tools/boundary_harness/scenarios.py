@@ -128,6 +128,8 @@ def scenarios(workspace: Path) -> list[Scenario]:
                   [("Read", {"file_path": str(workspace / "report.md")})]],
                  restored_file="report.md",
                  notes="Restored originals on disk; agent context must still hold tokens only."),
+        Scenario("hook-in-powershell", "powershell", False, [[("Read", {"file_path": csv})]],
+                 notes="No Git Bash: Claude Code runs hooks in PowerShell."),
         Scenario("hook-timeout", "timeout", True, [[("Read", {"file_path": csv})]],
                  notes="Known platform limit: a timed-out hook's output is discarded."),
         Scenario("hook-launch-error", "launch_error", True, [[("Read", {"file_path": csv})]],

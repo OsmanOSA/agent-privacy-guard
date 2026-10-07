@@ -2,8 +2,28 @@ import unittest
 
 from privacy_guard.claude_code import registration
 
-COMMAND = '"python" "/home/user/.privacy-guard/app"'
+COMMAND = registration.command_handler("C:/runtime/python.exe", "C:/Users/u/.privacy-guard/app")
+# Shell-string entry written by 0.1.0-preview.1.
+LEGACY = {"type": "command", "command": '"python" "/home/user/.privacy-guard/app"', "timeout": 30}
 USER_HOOK = {"matcher": "Bash", "hooks": [{"type": "command", "command": "echo user"}]}
+
+
+class CommandHandlerTest(unittest.TestCase):
+    def test_exec_form_needs_no_shell(self):
+        self.assertEqual(COMMAND, {"type": "command", "command": "C:/runtime/python.exe",
+                                   "args": ["C:/Users/u/.privacy-guard/app"],
+                                   "timeout": registration.HOOK_TIMEOUT_SECONDS})
+
+    def test_legacy_string_entries_are_replaced_on_upgrade(self):
+        legacy = {"hooks": {event: [{"matcher": "*", "hooks": [LEGACY]}] for event in registration.HOOK_EVENTS}}
+        upgraded = registration.register(legacy, COMMAND)
+        self.assertEqual(registration.owned_targets(upgraded),
+                         {("C:/runtime/python.exe", ("C:/Users/u/.privacy-guard/app",))})
+        self.assertEqual(registration.unregister(legacy), {})
+
+    def test_owned_targets_ignore_user_hooks(self):
+        settings = registration.register({"hooks": {"PreToolUse": [USER_HOOK]}}, COMMAND)
+        self.assertEqual(len(registration.owned_targets(settings)), 1)
 
 
 class RegisterTest(unittest.TestCase):

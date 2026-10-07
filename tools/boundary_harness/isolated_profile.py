@@ -3,8 +3,9 @@
 Interface:
     profile = IsolatedProfile.install(setup_exe, root)
     profile.env                    environment where HOME/USERPROFILE/CLAUDE_CONFIG_DIR point inside root
-    profile.use_hooks(mode)        installed | absent | timeout | launch_error
+    profile.use_hooks(mode)        installed | absent | powershell | timeout | launch_error
     profile.use_engine(package, launcher)   test a source tree with the bundled runtime and model
+    profile.use_handler(handler)   register the source tree's hook handler instead of the setup's
     profile.uninstall()
 
 USERPROFILE redirects every ~/.privacy-guard and ~/.claude path of the hook, the
@@ -45,6 +46,7 @@ class IsolatedProfile:
         notifications = home / ".privacy-guard/notifications/settings.json"
         notifications.write_text('{"version":1,"mode":"off","style":"card"}')
         profile._installed = json.loads(profile.settings.read_text(encoding="utf-8"))
+        profile._setup_settings = json.loads(json.dumps(profile._installed))
         profile._run([profile.python, "-m", "privacy_guard.setup", "status"])  # Loads the model once.
         return profile
 
@@ -72,23 +74,33 @@ class IsolatedProfile:
                 "ServiceClient(ServiceChannel(DEFAULT_RUN_DIR)).stop()")
         subprocess.run([str(self.python), "-c", stop], cwd=app, env=self.env, capture_output=True, timeout=60)
 
+    def use_handler(self, handler: dict) -> None:
+        """Register a source handler in place of the setup's own entries (fresh profile: all ours)."""
+        for groups in self._installed.get("hooks", {}).values():
+            for group in groups:
+                group["hooks"] = [dict(handler) for _ in group["hooks"]]
+
     def use_hooks(self, mode: str) -> None:
         settings = json.loads(json.dumps(self._installed))
+        handlers = [hook for groups in settings.get("hooks", {}).values() for group in groups for hook in group["hooks"]]
         if mode == "absent":
             settings.pop("hooks", None)
+        elif mode == "powershell":
+            # Without Git Bash, Claude Code runs hooks in PowerShell.
+            for hook in handlers:
+                hook["shell"] = "powershell"
         elif mode in {"timeout", "launch_error"}:
-            command = (f'"{self.python.as_posix()}" -c "import time; time.sleep(60)"' if mode == "timeout"
-                       else f'"{(self.root / "missing/python.exe").as_posix()}" app')
-            for groups in settings.get("hooks", {}).values():
-                for group in groups:
-                    for hook in group["hooks"]:
-                        hook.update(command=command, timeout=FAULT_TIMEOUT_SECONDS)
+            command, args = ((self.python.as_posix(), ["-c", "import time; time.sleep(60)"]) if mode == "timeout"
+                             else ((self.root / "missing/python.exe").as_posix(), ["app"]))
+            for hook in handlers:
+                hook.update(command=command, args=args, timeout=FAULT_TIMEOUT_SECONDS)
         elif mode != "installed":
             raise ValueError(f"Unknown hook mode: {mode}")
         self.settings.write_text(json.dumps(settings, indent=2), encoding="utf-8")
 
     def uninstall(self) -> None:
-        self.use_hooks("installed")
+        # The setup under test removes only the entries it wrote itself.
+        self.settings.write_text(json.dumps(self._setup_settings, indent=2), encoding="utf-8")
         self._setup(self._app / "Uninstall.exe", "/S", f"_?={self._app}")
         receipt = self.home / ".privacy-guard/windows-setup.json"
         deadline = time.monotonic() + 15

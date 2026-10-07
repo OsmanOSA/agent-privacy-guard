@@ -59,7 +59,7 @@ class ClaudeCodeInstaller:
         self._service.stop()
         stop_worker(self._notification_dir)
         self._deploy_app()
-        backup = self._update_settings(registration.register(self._settings.load(), self._hook_command()))
+        backup = self._update_settings(registration.register(self._settings.load(), self.hook_handler()))
         self._vault_format.record()
         return backup
 
@@ -93,9 +93,9 @@ class ClaudeCodeInstaller:
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, target)
 
-    def _hook_command(self) -> str:
-        # Forward slashes: Claude Code runs hooks through a bash shell, Windows included.
-        return f'"{self._python.as_posix()}" "{self._app_dir.as_posix()}"'
+    def hook_handler(self) -> dict:
+        """The registered handler: exec form, so it starts whichever shell Claude Code uses."""
+        return registration.command_handler(self._python.as_posix(), self._app_dir.as_posix())
 
     def _update_settings(self, updated: dict) -> Path | None:
         # No write (and no backup) when nothing changes.

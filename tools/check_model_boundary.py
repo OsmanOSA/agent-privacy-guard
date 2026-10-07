@@ -15,6 +15,7 @@ import json
 import platform
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 from boundary_harness.isolated_profile import IsolatedProfile
@@ -43,6 +44,7 @@ def main():
         if args.source:
             profile.use_engine(REPOSITORY / "privacy_guard",
                                REPOSITORY / "privacy_guard/claude_code/launcher.py")
+            profile.use_handler(source_handler(profile))
         outcomes = [run_scenario(s, profile, workspace, records, args.claude) for s in selected]
     finally:
         profile.uninstall()
@@ -55,6 +57,13 @@ def main():
 def environment(claude: str, setup: Path) -> dict:
     version = subprocess.run([claude, "--version"], capture_output=True, text=True).stdout.strip()
     return {"claude_code": version, "windows": platform.version(), "setup": setup.name}
+
+
+def source_handler(profile: IsolatedProfile) -> dict:
+    """The hook handler this checkout's installer would register for the profile."""
+    sys.path.insert(0, str(REPOSITORY))
+    from privacy_guard.claude_code.registration import command_handler
+    return command_handler(profile.python.as_posix(), (profile.home / ".privacy-guard/app").as_posix())
 
 
 def engine(source: bool) -> str:

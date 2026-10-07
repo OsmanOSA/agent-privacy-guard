@@ -82,11 +82,10 @@ def uninstall(bundle: Path, user_home: Path):
         raise RuntimeError('A different installed version owns the active integration')
     settings = SettingsFile(Path(receipt['claude_directory']) / 'settings.json')
     current = settings.load()
-    expected = f'"{(bundle / "runtime/python.exe").as_posix()}" "{(home / "app").as_posix()}"'
-    commands = [hook.get('command', '') for event in registration.HOOK_EVENTS
-                for group in current.get('hooks', {}).get(event, [])
-                for hook in group.get('hooks', [])]
-    if any(registration.MARKER in command and command != expected for command in commands):
+    python, app = (bundle / 'runtime/python.exe').as_posix(), (home / 'app').as_posix()
+    # This bundle's exec form, or the shell string written by 0.1.0-preview.1.
+    ours = {(python, (app,)), (f'"{python}" "{app}"', ())}
+    if not registration.owned_targets(current) <= ours:
         raise RuntimeError('Another Privacy Guard installation now owns the hooks')
     # Only remove this product's hooks. Other settings and retained mappings survive.
     ServiceClient(ServiceChannel(home / 'run')).stop()
