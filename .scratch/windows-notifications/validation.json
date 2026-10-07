@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-07",
+  "state": "source implementation ready; global deployment and activation pending",
+  "test_suite": {"command": "python -m unittest discover -s tests -t .", "tests": 370, "failures": 0, "errors": 0, "skipped": 2, "elapsed_seconds": 30.346, "new_tests": 23, "skip_reasons": ["optional ONNX model unavailable", "Windows symlink creation unavailable"]},
+  "native_checks": {
+    "synthetic_banner_api_accepted": true,
+    "initial_shell_callback_reported_display": false,
+    "user_confirmed_visual_display": true,
+    "callback_handling_subsequently_corrected": true,
+    "native_synthetic_window_callback_test_passed": true,
+    "detached_worker_and_mutex_test_passed": true,
+    "worker_stop_and_lease_release_passed": true,
+    "temporary_installed_hook_with_real_dpapi_published_protected_counts": true,
+    "actual_claude_background_foreground_cycle_observed": false,
+    "native_foreground_available": true,
+    "origin_for_codex_launched_probe": "unknown"
+  },
+  "preferences": {"default": "off", "supported": ["off", "background", "always"], "global_activated": false},
+  "metadata": ["hashed session key", "category occurrence counts", "up to three sanitized basenames", "optional numeric window and process lifetime metadata"],
+  "not_recorded": ["tool bodies", "detected values", "token mappings", "command lines", "window titles", "full document paths"],
+  "limits": ["window-level origin only; no exact editor tab or terminal pane detection", "unknown origins use grouped notification fallback", "delivery subject to Windows settings", "Windows 11 notification-area banners are transient", "no click navigation", "best-effort summaries may expire or be dropped on overflow"],
+  "module_size": {"notification_modules": 12, "maximum_lines": 102},
+  "latency_receipt": "publish-latency.json",
+  "git_diff_check": "passed",
+  "global_installation_changed": false,
+  "agenticrag_changed": false,
+  "new_dependencies": [],
+  "model_network_boundary_claimed": false
+}

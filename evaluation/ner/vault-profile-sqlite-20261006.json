@@ -1,0 +1,6 @@
+{
+  "source_sha256": "730402f0f21c4d538b93a969a8eeedbec37edc49d2133cd18a26b925d93b0961",
+  "text_sha256": "9f6246cfd0b06f487921535b253f7d771f2f548421bfe8c1f6469166d110e904",
+  "total_ms": 63.8214,
+  "scope": "One warm in-process hook reread, real name service cache and isolated DPAPI vault"
+}

@@ -1,0 +1,21 @@
+{
+  "deployed": true,
+  "completed_at": "2026-10-06T08:03:26.350883+00:00",
+  "existing_vault_files": 0,
+  "vault_bytes_unchanged": true,
+  "settings_bytes_unchanged": true,
+  "export_policy_unchanged": true,
+  "model_configuration_unchanged": true,
+  "model_bundle_verified": true,
+  "source_matches_deployment": true,
+  "vault_format_before": "windows-dpapi-bound-personal-v1",
+  "vault_format_after": "windows-dpapi-bound-personal-sqlite-v2",
+  "legacy_migration": false,
+  "new_storage": "SQLite BLOBs encrypted using unchanged Windows DPAPI",
+  "tests": {
+    "run": 267,
+    "failed": 0,
+    "skipped": 2
+  },
+  "network_model_boundary_verified": false
+}

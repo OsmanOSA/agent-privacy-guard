@@ -1,0 +1,20 @@
+{
+  "date_utc": "2026-10-07T10:17:53.581925+00:00",
+  "checks": {
+    "source_matches": true,
+    "claude_settings_unchanged": true,
+    "existing_vault_bytes_unchanged": true,
+    "model_export_format_config_unchanged": true,
+    "name_model_ready": true,
+    "hooks_registered": true
+  },
+  "deployed_modules": 94,
+  "preserved_vault_files": 2,
+  "backup": "~/.privacy-guard/backups/notifications-20261007T101752Z",
+  "preferences": {
+    "mode": "background",
+    "style": "card"
+  },
+  "agenticrag_changed": false,
+  "model_downloaded": false
+}

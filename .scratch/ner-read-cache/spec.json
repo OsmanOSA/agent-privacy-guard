@@ -1,0 +1,27 @@
+{
+  "problem": "Repeated identical document tool output reruns name inference; code reads must keep the rules-only profile.",
+  "authorized_scope": "Implement exact-text in-memory name detection caching; preserve the validated Python rules-only routing.",
+  "interface": "NameDetector.find_names(text), used through the sequential background service",
+  "invariants": [
+    "No NER call for Python Read outputs, including comments and strings",
+    "All covered output still runs through PrivacyCore.protect",
+    "Cache only successful detections, including empty results",
+    "Any text change reruns detection; no normalization of the key",
+    "A cache belongs to one fixed detector instance and is reset on model reload",
+    "Memory is bounded by entries and findings; raw text and session tokens are not cached",
+    "Session tokens and vault mappings are generated on each protection call"
+  ],
+  "excluded": ["DistilCamemBERT production replacement", "window caching", "model quantization", "installation", "AgenticRAG changes"],
+  "baseline": {"scoped_tests": 47, "passed": true, "benchmark_mode": "heuristic-only", "name_recall": "19/35", "false_alarms": 0},
+  "validation": {
+    "scoped_tests": 61,
+    "passed": true,
+    "new_cache_and_read_tests": 14,
+    "benchmark_mode": "heuristic-only",
+    "scores_unchanged": true,
+    "name_recall": "19/35",
+    "false_alarms": 0,
+    "latency_receipt": "evaluation/ner/latency-cache-20261006.json",
+    "real_agent_network_evidence": "Not added; local source and IPC tests only"
+  }
+}

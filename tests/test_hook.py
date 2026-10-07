@@ -6,10 +6,12 @@ from pathlib import Path
 
 from privacy_guard.claude_code import hook
 from privacy_guard.claude_code.responses import EXIT_ALLOW, EXIT_BLOCK
+from privacy_guard.core.bound_values import BoundValues
 from privacy_guard.core.vault import VaultStore
 from tests.fakes import STRIPE_KEY, RecordingNameService, ReversingCipher
 
 SESSION = "test-session"
+EMAIL = "jean.dupont@example.com"
 
 
 class RecordingJournal:
@@ -31,6 +33,8 @@ class HookTest(unittest.TestCase):
         self.vaults = VaultStore(Path(self._tmp.name), ReversingCipher())
         self.journal = RecordingJournal()
         self.names = RecordingNameService()
+        self.export_root = Path(self._tmp.name).resolve() / "exports"
+        self.export_root.mkdir()
 
     def tearDown(self):
         self._tmp.cleanup()
@@ -72,19 +76,47 @@ class HookTest(unittest.TestCase):
         self.assertNotIn(STRIPE_KEY, output["stdout"])
         self.assertIn("⟦STRIPE_SECRET_KEY:", output["stdout"])
 
-    def test_restores_real_value_for_local_tool(self):
-        token = self.protect(STRIPE_KEY)
-
-        _, stdout, _ = self.run_hook(
-            {"hook_event_name": "PreToolUse", "tool_name": "Bash", "tool_input": {"command": f"echo {token}"}}
+    def test_write_keeps_personal_tokens_without_creating_an_output(self):
+        token = self.protect(EMAIL)
+        target = self.export_root / "clients.csv"
+        exit_code, stdout, _ = self.run_hook(
+            {"hook_event_name": "PreToolUse", "tool_name": "Write",
+             "tool_input": {"file_path": str(target), "content": f"email\n{token}\n"}}
         )
+        self.assertEqual((exit_code, stdout), (EXIT_ALLOW, ""))
+        self.assertFalse(target.exists())
 
-        output = self.specific_output(stdout)
-        self.assertEqual(output["updatedInput"], {"command": f"echo {STRIPE_KEY}"})
-        self.assertNotIn("permissionDecision", output)
+    def test_commands_edits_and_remote_tools_keep_personal_tokens(self):
+        token = self.protect(EMAIL)
+        for tool in ("Bash", "Edit", "MultiEdit", "NotebookEdit", "Agent", "mcp__remote__send"):
+            with self.subTest(tool=tool):
+                exit_code, stdout, _ = self.run_hook(
+                    {"hook_event_name": "PreToolUse", "tool_name": tool,
+                     "tool_input": {"command": f"echo {token}", "content": token}}
+                )
+                self.assertEqual((exit_code, stdout), (EXIT_ALLOW, ""))
+
+    def test_outside_write_keeps_personal_tokens(self):
+        token = self.protect(EMAIL)
+        _, stdout, _ = self.run_hook(
+            {"hook_event_name": "PreToolUse", "tool_name": "Write",
+             "tool_input": {"file_path": str(Path(self._tmp.name) / "outside.csv"), "content": f"email\n{token}\n"}}
+        )
+        self.assertEqual(stdout, "")
+
+    def test_write_does_not_read_the_vault_even_if_corrupted(self):
+        token = self.protect(EMAIL)
+        for path in (Path(self._tmp.name) / SESSION).iterdir():
+            if path.name != "session.key":
+                path.write_bytes(b"corrupted")
+        exit_code, stdout, _ = self.run_hook(
+            {"hook_event_name": "PreToolUse", "tool_name": "Write",
+             "tool_input": {"file_path": str(self.export_root / "clients.csv"), "content": f"email\n{token}\n"}}
+        )
+        self.assertEqual((exit_code, stdout), (EXIT_ALLOW, ""))
 
     def test_never_restores_for_sub_agents(self):
-        token = self.protect(STRIPE_KEY)
+        token = self.protect(EMAIL)
 
         _, stdout, _ = self.run_hook(
             {"hook_event_name": "PreToolUse", "tool_name": "Agent", "tool_input": {"prompt": f"use {token}"}}
@@ -92,14 +124,24 @@ class HookTest(unittest.TestCase):
 
         self.assertEqual(stdout, "")
 
+    def test_never_restores_redacted_secret_in_local_tool_arguments(self):
+        marker = self.protect(STRIPE_KEY)
+
+        exit_code, stdout, _ = self.run_hook(
+            {"hook_event_name": "PreToolUse", "tool_name": "Bash", "tool_input": {"command": f"echo {marker}"}}
+        )
+
+        self.assertEqual((exit_code, stdout), (EXIT_ALLOW, ""))
+        self.assertEqual(marker, "⟦STRIPE_SECRET_KEY:REDACTED⟧")
+
     def test_session_end_forgets_the_session_values(self):
-        token_id = self.protect(STRIPE_KEY)[-9:-1]
-        self.assertEqual(self.vaults.session(SESSION).lookup(token_id), STRIPE_KEY)
+        token_id = self.protect(EMAIL)[-9:-1]
+        self.assertEqual(BoundValues(self.vaults.session(SESSION)).lookup("email", token_id), EMAIL)
 
         exit_code, _, _ = self.run_hook({"hook_event_name": "SessionEnd", "reason": "prompt_input_exit"})
 
         self.assertEqual(exit_code, EXIT_ALLOW)
-        self.assertIsNone(self.vaults.session(SESSION).lookup(token_id))
+        self.assertIsNone(BoundValues(self.vaults.session(SESSION)).lookup("email", token_id))
 
     def test_session_start_warms_the_name_service_up(self):
         exit_code, _, _ = self.run_hook({"hook_event_name": "SessionStart", "source": "startup"})
@@ -146,7 +188,8 @@ class HookTest(unittest.TestCase):
 
         output = self.specific_output(stdout)
         self.assertEqual(exit_code, EXIT_ALLOW)
-        self.assertIn("Output masked", output["updatedToolOutput"])
+        self.assertIn("Output masked", output["updatedToolOutput"]["stdout"])
+        self.assertFalse(json.loads(stdout)["continue"])
 
     def test_fails_closed_without_session_id(self):
         exit_code, _, _ = self.run_hook(json.dumps({"hook_event_name": "PreToolUse", "tool_name": "Bash"}))

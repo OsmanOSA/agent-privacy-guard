@@ -1,0 +1,10 @@
+{
+  "scope": "Compare bounded batches of one, two and four overlapping windows on the selected CPU model, then retain a configuration only if it improves latency without prediction drift",
+  "invariants": ["Unchanged FP32 weights and tokenizer", "Four total intra-op threads", "512-token windows with 64-token overlap", "Threshold 0.5", "Complete character coverage and unchanged decoding", "No detection cache in timing", "No changes to Python routing or AgenticRAG"],
+  "status": "completed; production batch size one retained",
+  "validation": {"annotated_inputs_per_corpus": 12, "corpora": 3, "published_excerpt_lengths": 4, "prediction_drift": 0},
+  "decision": "Batches two and four provide no convincing gain on 1999/3997-token reads and increase fresh-process peak working set; batch four also slows the 999-token excerpt",
+  "production_runtime_modified": false,
+  "deployment_required": false,
+  "evidence": "evaluation/ner/window-batches-20261006.json"
+}

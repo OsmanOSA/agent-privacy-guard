@@ -1,6 +1,6 @@
 # Publication and release guide
 
-Status: a local preparation procedure. It creates neither a repository nor a release. No history exists in this workspace at the initial baseline; there is no existing GitHub history to audit here.
+Status: source updates are published to the existing GitHub repository. This guide distinguishes a source update from an installable product release. Audit the full reachable history and the exact source export before pushing; the initial-publication checklist below is retained as the historical preparation procedure.
 
 ## Gate A — Open a public source repository
 

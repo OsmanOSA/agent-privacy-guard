@@ -21,7 +21,7 @@ from benchmark.annotation import load_corpus
 from benchmark.scoring import Mistake, Report
 from privacy_guard.claude_code.document_scope import DOCUMENT_EXTENSIONS
 from privacy_guard.core.detector import SensitiveDataDetector
-from privacy_guard.core.name_detector import CombinedNameDetector, HeuristicNameDetector, PlausibleNameFilter
+from privacy_guard.core.name_detector import CombinedNameDetector, HeuristicNameDetector
 
 CORPUS = Path(__file__).resolve().parent / "corpus"
 
@@ -52,10 +52,10 @@ def main() -> int:
 def _documents_detector() -> tuple[SensitiveDataDetector, str]:
     heuristic = HeuristicNameDetector()
     try:
-        from privacy_guard.service.onnx_name_detector import OnnxNameDetector
+        from privacy_guard.service.distil_name_detector import DistilNameDetector
 
-        names = CombinedNameDetector([heuristic, PlausibleNameFilter(OnnxNameDetector())])
-        return SensitiveDataDetector(names), "heuristic + NER model"
+        names = CombinedNameDetector([heuristic, DistilNameDetector()])
+        return SensitiveDataDetector(names), "heuristic + DistilCamemBERT FP32"
     except Exception as error:
         return SensitiveDataDetector(heuristic), f"heuristic only (model unavailable: {type(error).__name__})"
 

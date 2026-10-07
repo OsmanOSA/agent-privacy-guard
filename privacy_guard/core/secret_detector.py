@@ -35,10 +35,13 @@ SECRET_RULES = (
     # The value must be a whole literal of 8+ characters without code punctuation
     # (API_KEY = os.environ["X"] is code), and look like a secret (_looks_like_secret).
     # [ \t] rather than \s: an empty value must not swallow the next line.
+    # Token metrics/tokenizer settings and self-references are not credential
+    # literals; retain access_token, authToken and actual quoted secret values.
     rule(
         "secret_assignment",
-        r"(?<![\w.])[\"']?(?i:[a-z0-9_.-]*(?:secret|password|passwd|token|api[_-]?key|private[_-]?key)"
-        r"[a-z0-9_-]*|mot de passe|mdp)[\"']?[ \t]*[=:][ \t]*[\"']?"
+        r"(?<![\w.])[\"']?(?P<label>(?i:[a-z0-9_.-]*(?:secret|password|passwd|token(?![a-z])|api[_-]?key|private[_-]?key)"
+        r"[a-z0-9_-]*|mot de passe|mdp))[\"']?[ \t]*[=:][ \t]*[\"']?"
+        r"(?!(?P=label)(?=[\"'\s#,;)]|$))"
         r"(?P<value>[^\s\"'#()\[\]{}$<>,;]{8,})(?=[\"'\s#,;]|$)",
         _looks_like_secret,
     ),

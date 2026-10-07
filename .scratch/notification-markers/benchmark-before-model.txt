@@ -1,0 +1,16 @@
+Name detection on documents: heuristic + DistilCamemBERT FP32  |  corpus run in 0.6 s
+
+category     expected   recall   found  precision
+address             4     100%       4       100%
+banking             6     100%       6       100%
+birth_date          4     100%       4       100%
+email              21     100%      21       100%
+identifier          2     100%       2       100%
+name               35      97%      33       100%
+phone               8     100%       8       100%
+secret              7     100%       7       100%
+
+Missed (leaks): 1
+  traceback.log:12   name        L·u·c·a·s· ·M·o·r·e·l
+
+False alarms (noise): 0

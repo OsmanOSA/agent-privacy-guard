@@ -21,6 +21,7 @@ import privacy_guard
 from privacy_guard.core.findings import Finding
 from privacy_guard.service.channel import ServiceChannel
 from privacy_guard.service.model_environment import ModelEnvironment
+from privacy_guard.diagnostics import CATEGORIES, STAGES, fixed
 
 # The directory that contains the privacy_guard package: `python -m` must run from there.
 APP_ROOT = Path(privacy_guard.__file__).resolve().parent.parent
@@ -56,7 +57,10 @@ class ServiceClient:
     def find_names(self, text: str) -> list[Finding]:
         answer = self._request({"op": "find_names", "text": text})
         if "error" in answer:
-            raise ServiceError(answer["error"])
+            error = ServiceError('Background name detection failed')
+            error._privacy_guard_stage = fixed(answer.get('stage'), STAGES, 'detection')
+            error._privacy_guard_category = fixed(answer.get('error'), CATEGORIES, 'runtime_error')
+            raise error
         return [Finding(kind, start, end) for kind, start, end in answer["findings"]]
 
     def is_ready(self) -> bool:

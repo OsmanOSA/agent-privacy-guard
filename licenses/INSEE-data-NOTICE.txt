@@ -1,0 +1,28 @@
+Public name lexicon sources (prepared locally; raw and compiled data are not
+included in the Git repository).
+
+Producer: Institut national de la statistique et des études économiques (INSEE).
+
+1. Fichier des prénoms, published 16 July 2026.
+   Births in France, 1900-2025; list of given names attributed at least 3 times.
+   https://www.insee.fr/fr/statistiques/8595130
+
+2. Fichier des noms, published 22 May 2018.
+   Births in France, 1891-2000; national surnames attributed at least 30 times.
+   https://www.insee.fr/fr/statistiques/3536630
+
+The project's MIT license applies to its code, not to these source data.
+The INSEE general data reuse terms allow commercial reuse unless stated
+otherwise, subject to preserving information integrity and precise source
+attribution. See the official terms:
+https://www.insee.fr/fr/outil-interactif/7737357/legal-notice.html
+
+The prepared index folds case, accents, apostrophes and repeated whitespace;
+deduplicates names; removes aggregate suppression labels; and retains no sex,
+birth counts or geographic information. These are project transformations,
+not an INSEE publication or endorsement. Original source archives remain intact.
+
+The preparation receipt records the exact editions, source URLs and SHA-256
+digests. Attribution and provenance are also embedded in the SQLite metadata.
+These files are public name statistics, not records identifying individuals,
+not complete lists of names, and not annotated NER evaluation corpora.

@@ -1,6 +1,6 @@
 """Tokens: the placeholders that replace sensitive values in what the model sees.
 
-Format: ⟦KIND:ID⟧, for example ⟦GITHUB_TOKEN:3FA9C2D1⟧.
+Formats: ⟦KIND:ID⟧ for reversible values; ⟦KIND:REDACTED⟧ for redactions.
 
 - KIND tells the model what the value is, so it can still reason about it.
 - ID is an HMAC of the value under a per-session key. The same value always
@@ -19,6 +19,7 @@ from privacy_guard.core.findings import Finding
 TOKEN_KIND = "token"
 TOKEN_ID_LENGTH = 8
 TOKEN_PATTERN = re.compile(rf"⟦([A-Z0-9_]+):([0-9A-F]{{{TOKEN_ID_LENGTH}}})⟧")
+PLACEHOLDER_PATTERN = re.compile(rf"⟦[A-Z0-9_]+:(?:[0-9A-F]{{{TOKEN_ID_LENGTH}}}|REDACTED)⟧")
 
 
 def token_id(session_key: bytes,
@@ -34,6 +35,11 @@ def format_token(kind: str,
     return f"⟦{kind.upper()}:{identifier}⟧"
 
 
+def format_redaction(kind: str) -> str:
+    """Marks a detected category without retaining a value or a stable identifier."""
+    return f"⟦{kind.upper()}:REDACTED⟧"
+
+
 def find_tokens(text: str) -> list[Finding]:
     """Locates the tokens already present in a text, so they are never tokenized again."""
-    return [Finding(TOKEN_KIND, match.start(), match.end()) for match in TOKEN_PATTERN.finditer(text)]
+    return [Finding(TOKEN_KIND, match.start(), match.end()) for match in PLACEHOLDER_PATTERN.finditer(text)]

@@ -5,7 +5,10 @@ privacy_guard package. Claude Code then runs `python ~/.privacy-guard/app`, and
 Python executes this file with app/ on its import path.
 """
 
+import json
 import sys
+from datetime import datetime, timezone
+from pathlib import Path
 
 EXIT_BLOCK = 2
 CORRUPTED_MESSAGE = (
@@ -31,11 +34,41 @@ def main() -> int:
         vaults = VaultStore(DEFAULT_VAULT_ROOT, default_cipher())
         names = ServiceClient(ServiceChannel(DEFAULT_RUN_DIR))
     except Exception:
-        # Fail closed: without the engine or its encryption, block rather than let content through.
-        print(CORRUPTED_MESSAGE, file=sys.stderr)
-        return EXIT_BLOCK
+        return _unavailable()
 
-    return run(sys.stdin, sys.stdout, sys.stderr, EventJournal(), vaults, names)
+    journal = EventJournal()
+    try:
+        from privacy_guard.notifications.client import desktop_journal
+        journal = desktop_journal(journal)
+    except Exception:
+        pass  # Optional notifications cannot turn a working guard into a stop.
+    return run(sys.stdin, sys.stdout, sys.stderr, journal, vaults, names)
+
+
+def _unavailable() -> int:
+    """Use only stdlib: the package itself may be missing or corrupted."""
+    try:
+        payload = json.loads(sys.stdin.read())
+        event = payload.get("hook_event_name") if isinstance(payload, dict) else None
+    except (ValueError, OSError):
+        event = None
+    try:
+        path = Path.home() / '.privacy-guard/logs/failures.jsonl'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        row = dict(timestamp=datetime.now(timezone.utc).isoformat(timespec='seconds'),
+                   event=event if isinstance(event, str) and event in {
+                       'PreToolUse', 'PostToolUse', 'PostToolUseFailure', 'SessionStart', 'SessionEnd'} else 'unknown',
+                   tool='unknown', stage='launcher_init', category='installation_unavailable')
+        with path.open('a', encoding='utf-8') as journal:
+            journal.write(json.dumps(row) + '\n')
+    except Exception:
+        pass  # Corrupt package and inaccessible logs must retain the stop response.
+    if isinstance(event, str) and event in {"PostToolUse", "PostToolUseFailure"}:
+        message = "Privacy Guard : installation indisponible, traitement interrompu. Réparez-la avant de reprendre."
+        print(json.dumps({"continue": False, "stopReason": message, "systemMessage": message}, ensure_ascii=False))
+        return 0
+    print(CORRUPTED_MESSAGE, file=sys.stderr)
+    return EXIT_BLOCK
 
 
 if __name__ == "__main__":

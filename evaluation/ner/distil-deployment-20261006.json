@@ -1,0 +1,58 @@
+{
+  "deployed": true,
+  "model": "DistilCamemBERT ONNX FP32",
+  "model_bundle_verified": true,
+  "existing_vault_files": 7,
+  "vault_bytes_unchanged": true,
+  "unrelated_settings_unchanged": true,
+  "export_policy_unchanged": true,
+  "model_environment_reused": true,
+  "hooks_registered": {
+    "PreToolUse": true,
+    "PostToolUse": true,
+    "SessionStart": true,
+    "SessionEnd": true
+  },
+  "completed_at": "2026-10-06T07:39:37.546429+00:00",
+  "upstream": "cmarkea/distilcamembert-base-ner",
+  "revision": "e539d952f70088b450c300c28ba455da87f2dc4b",
+  "files_sha256": {
+    "config.json": "103f36a11079994f128a20c46cb388912dc9d481fded4ce12fbfe2d9f63d2662",
+    "model.onnx": "666ce15c968ca49874d2449aa9b83164dbb1126090d012dda7c35b2ef3672e1d",
+    "tokenizer.json": "87d51d8e30bfe0b07f9042dd67ca7ee52510c0f8f91d103980e9112e83beced1",
+    "README.upstream.md": "e115be795fa5af7ff5db3da46db0352d6f71724197a1b263be890d7d2a131ec3"
+  },
+  "runtime": "ONNX Runtime CPU FP32",
+  "threads": 4,
+  "threshold": 0.5,
+  "window_tokens": 512,
+  "window_overlap": 64,
+  "model_required_marker": "ner-model.json",
+  "legacy_model_retained": true,
+  "python_profile": "rules and heuristics; no NER",
+  "tests": {
+    "run": 259,
+    "failed": 0,
+    "skipped": 2,
+    "baseline_failures": 5,
+    "baseline_repairs": [
+      "Native Git Bash instead of WSL in launcher tests",
+      "Accept protected-read edit guidance without replacement"
+    ]
+  },
+  "synthetic_benchmark": {
+    "name_expected": 35,
+    "name_hidden": 34,
+    "name_findings_before": 34,
+    "name_findings_after": 33,
+    "name_precision": 1.0,
+    "false_alarms": 0,
+    "same_missing_names": 1,
+    "corpus_before_s": 2.8,
+    "corpus_after_s": 0.6,
+    "metric": "overlap coverage, not exact F1"
+  },
+  "runtime_validation": "distil-runtime-validation-20261006.json",
+  "installed_cycle": "distil-installed-check-20261006.json",
+  "network_model_boundary_verified": false
+}

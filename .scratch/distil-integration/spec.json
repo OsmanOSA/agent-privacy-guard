@@ -1,0 +1,35 @@
+{
+  "authorized_scope": "Integrate the selected DistilCamemBERT FP32 detector and deploy compatible Claude Code source updates",
+  "invariants": [
+    "Use the evaluated artifact and tokenizer hashes, threshold 0.5, 512-token windows with 64-token overlap and four CPU threads",
+    "Python reads remain rules-only",
+    "No dependency on the evaluation package at runtime",
+    "A present but invalid model bundle fails document detection rather than silently downgrading",
+    "Compatible vaults, mappings, export policy and unrelated Claude settings are preserved",
+    "Keep the legacy GLiNER artifact in its separate directory"
+  ],
+  "baseline": {
+    "tests": 250,
+    "failures": 5,
+    "skipped": 2,
+    "failure_causes": "Four native Windows launcher tests pick WSL bash; one existing protected-read test expects empty stdout instead of edit guidance",
+    "model_benchmark": {
+      "name_correct": 34,
+      "name_expected": 35,
+      "false_alarms": 0,
+      "model": "GLiNER2 legacy"
+    }
+  },
+  "validation": {
+    "run": 259,
+    "failed": 0,
+    "skipped": 2,
+    "baseline_failures": 5,
+    "baseline_repairs": [
+      "Native Git Bash instead of WSL in launcher tests",
+      "Accept protected-read edit guidance without replacement"
+    ]
+  },
+  "deployment_receipt": "evaluation/ner/distil-deployment-20261006.json",
+  "complete": true
+}

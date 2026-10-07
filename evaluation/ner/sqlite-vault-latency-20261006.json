@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-06",
+  "runs_per_version": 3,
+  "before_receipts": [
+    "hook-latency-before-sqlite-20261006.json",
+    "hook-latency-before-sqlite-20261006-1.json",
+    "hook-latency-before-sqlite-20261006-2.json"
+  ],
+  "after_receipts": [
+    "hook-latency-after-sqlite-20261006-1.json",
+    "hook-latency-after-sqlite-20261006-2.json",
+    "hook-latency-after-sqlite-20261006-3.json"
+  ],
+  "before": {
+    "python_read_ms": {
+      "median_ms": 293.3684999952675,
+      "min_ms": 293.2146000021021,
+      "max_ms": 387.28509999782545
+    },
+    "document_first_read_ms": {
+      "median_ms": 2309.9426999979187,
+      "min_ms": 1951.4026000033482,
+      "max_ms": 2869.443299998238
+    },
+    "document_identical_reread_ms": {
+      "median_ms": 674.8551999990013,
+      "min_ms": 657.4774000036996,
+      "max_ms": 876.2858000045526
+    }
+  },
+  "after": {
+    "python_read_ms": {
+      "median_ms": 296.19559999991907,
+      "min_ms": 289.66919999948004,
+      "max_ms": 300.67269999562996
+    },
+    "document_first_read_ms": {
+      "median_ms": 1684.2743999950471,
+      "min_ms": 1677.290699997684,
+      "max_ms": 1812.4237999945763
+    },
+    "document_identical_reread_ms": {
+      "median_ms": 294.5850000032806,
+      "min_ms": 290.6585999953677,
+      "max_ms": 296.1991999982274
+    }
+  },
+  "excerpt_tokens": 3997,
+  "python_lines": 1000,
+  "method": "Native Git Bash, installed hook, separate probe vault each run; restart service, warm on small document, first unseen long document then exact reread",
+  "scope": "Hook wall time including shell/Python startup, IPC, rules, vault and NER; excludes original tool execution, session-start/model-loading warmup and Claude network",
+  "limitations": "Three sequential observations per version on one machine; uncontrolled system load, no randomized ordering, not a latency percentile or isolated NER measurement",
+  "exact_restoration_and_stable_tokens_all_runs": true,
+  "existing_vault_files_at_deployment": 0,
+  "existing_vault_subset_unchanged_after_probes": true,
+  "legacy_record_compatibility": "Covered by tests; no pre-existing vault files were present at this deployment",
+  "in_process_profile": {
+    "before_total_ms_approx": 487,
+    "before_file_open_ms_approx": 415,
+    "after_receipt": "vault-profile-sqlite-20261006.json"
+  }
+}

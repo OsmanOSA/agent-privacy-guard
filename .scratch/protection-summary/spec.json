@@ -1,0 +1,20 @@
+{
+  "scope": "Add informative native user notices and a local summary journal with category occurrence counts and the document basename requested by the user",
+  "status": "implemented, tested and deployed",
+  "invariants": [
+    "Reuse the actual findings from one detection pass; no extra NER inference",
+    "Count replaced occurrences rather than distinct values or entire-file totals",
+    "Exclude pre-existing tokens and report only successful protection",
+    "Distinguish reversible pseudonymization from irreversible secret redaction",
+    "Allowlisted readable categories; never echo arbitrary detector kinds",
+    "Basename only, bounded length with control and bidi characters removed",
+    "No extracted body values, full paths, tokens or session identifiers in summaries",
+    "Preserve replacement structure and model editing guidance",
+    "Stop on failed required summary recording before releasing the result"
+  ],
+  "validation": {"suite_run": 296, "failures": 0, "skipped": 2, "new_regressions": 11},
+  "journal": "~/.privacy-guard/logs/protection.jsonl",
+  "deployment": "evaluation/ner/protection-summary-deployment-20261006.json",
+  "installed_checks": "evaluation/ner/protection-summary-installed-20261006.json",
+  "limits": "Visual VS Code rendering remains unobserved. Document basenames are intentionally retained as local metadata. Existing model-boundary and hook-absence/timeout limitations are unchanged."
+}

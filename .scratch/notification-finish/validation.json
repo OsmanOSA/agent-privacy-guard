@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-07",
+  "full_suite": {"tests": 388, "failures": 0, "errors": 0, "skipped": 2, "seconds": 28.471},
+  "followup_after_click_foreground_grant": {"tests": 18, "failures": 0, "errors": 0},
+  "live_synthetic_card": {"accepted": true, "card_rendered": true, "human_confirmation": false},
+  "real_hidden_wpf_checks": ["focus change after preparation suppresses without a visible window", "quiet state after preparation suppresses without render acknowledgement"],
+  "native_attention_observation": "available",
+  "covered_cases": ["quiet mode in background and always modes", "unknown quiet state uses native delivery", "disable during renderer startup", "suppression never creates fallback popup", "visible card closes on quiet-state change", "stale owner cannot activate", "verified owner return request", "negative monitor coordinates and taskbar work area"],
+  "remaining_limits": ["undocumented WNF quiet profile is not a stable public Windows contract", "exact editor tabs and terminal panes not identified", "custom card has no Windows notification-center history", "physical multi-monitor and manual Windows DND toggle not observed", "Windows may refuse foreground activation", "small final grant to paint focus race remains"],
+  "deployment_receipt": "deployment.json"
+}

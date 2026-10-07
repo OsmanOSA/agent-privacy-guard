@@ -3,10 +3,11 @@ from pathlib import Path
 
 from privacy_guard.core.secret_detector import find_secrets
 from tests.fakes import STRIPE_KEY
+from tests.env_fixture import SYNTHETIC_ENV
 
 PLAYGROUND = Path(__file__).resolve().parent.parent / "playground"
 
-# Every secret of playground/.env, exactly as it must be cut out.
+# Every secret in the synthetic environment, exactly as it must be cut out.
 PLAYGROUND_SECRETS = {
     "FakePassw0rd123",
     "FakeRedisPass456",
@@ -28,7 +29,7 @@ def detected(text):
 
 class PlaygroundEnvTest(unittest.TestCase):
     def setUp(self):
-        self.env = (PLAYGROUND / ".env").read_text(encoding="utf-8")
+        self.env = SYNTHETIC_ENV
 
     def test_detects_every_secret_and_nothing_else(self):
         self.assertEqual(detected(self.env), PLAYGROUND_SECRETS)

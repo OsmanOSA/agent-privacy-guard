@@ -1,0 +1,16 @@
+{
+  "problem": "Lowercase given names and isolated surnames in explicit personal fields are missed by capital-based rules.",
+  "scope": "Prepare pinned official INSEE public files locally and add an optional contextual complement to rules and NER.",
+  "invariants": [
+    "No change to AgenticRAG or global Claude Code installation",
+    "No NER bypass or veto for names absent from INSEE",
+    "Original spans and casing restore exactly with existing session tokens",
+    "No automatic masking of every dictionary word or filename",
+    "No downloads from hooks; indexed public lookups only",
+    "Existing corrupt configured indexes fail rather than silently downgrade"
+  ],
+  "validation": "Synthetic regressions, actual pinned source import, same existing corpus before/after and contextual/no-context lookup latency",
+  "deployment": "source and ignored local data only; live deployment remains a separate action",
+  "status": "implemented and locally validated; no global deployment",
+  "evidence": "evaluation/ner/insee-lexicon-review-20261007.json"
+}

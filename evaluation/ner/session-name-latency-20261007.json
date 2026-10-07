@@ -1,0 +1,39 @@
+{
+  "text_sha256": "9f6246cfd0b06f487921535b253f7d771f2f548421bfe8c1f6469166d110e904",
+  "tokens": 3997,
+  "committed_unique_names": 62,
+  "scope": "Warm in-process reread; actual DPAPI, reopened vault; exact restoration and stable tokens",
+  "disabled_scope": "Same runtime with committed-name lookup disabled for a cost comparison only",
+  "excluded": "NER/loading, hook startup, IPC and model networking",
+  "observations_ms": {
+    "reuse_disabled_for_comparison": [
+      56.6964999998163,
+      56.17789999814704,
+      55.48630000339472,
+      56.31540000103996,
+      57.33190000319155,
+      58.01639999845065,
+      55.72109999775421,
+      59.40329999793903,
+      54.9786999981734,
+      59.65130000186036
+    ],
+    "reuse_enabled": [
+      81.3358999985212,
+      81.75829999890993,
+      79.78630000070552,
+      77.35309999770834,
+      79.35989999896265,
+      79.21589999750722,
+      82.1918999972695,
+      81.33830000224407,
+      81.4213000012387,
+      81.61800000016228
+    ]
+  },
+  "median_ms": {
+    "reuse_disabled_for_comparison": 56.50595000042813,
+    "reuse_enabled": 81.33710000038263
+  },
+  "limitations": "One public excerpt, ten interleaved pairs, uncontrolled Windows load; not a total hook latency guarantee"
+}

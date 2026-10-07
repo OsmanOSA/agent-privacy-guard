@@ -1,0 +1,23 @@
+{
+  "installed_native_git_bash": true,
+  "insee_lowercase_fields_protected": true,
+  "python_read_rules_and_lexicon": true,
+  "later_unlabelled_name_protected": true,
+  "other_session_does_not_learn": true,
+  "exact_local_restoration": true,
+  "reread_tokens_stable": true,
+  "content_free_failure_diagnostics_verified": true,
+  "native_failure_stop_verified": true,
+  "observed_failure_categories": [
+    {
+      "stage": "session_open",
+      "category": "runtime_error"
+    },
+    {
+      "stage": "failed_tool",
+      "category": "sensitive_result"
+    }
+  ],
+  "scope": "Installed hook subprocesses and local files; no real Claude model-network observation",
+  "only_probe_owned_vaults_removed": true
+}

@@ -1,0 +1,136 @@
+{
+  "measured_at": "2026-10-06T00:30:59.153049+00:00",
+  "model": "distilcamembert-base-ner",
+  "model_sha256": "666ce15c968ca49874d2449aa9b83164dbb1126090d012dda7c35b2ef3672e1d",
+  "tokenizer_sha256": "87d51d8e30bfe0b07f9042dd67ca7ee52510c0f8f91d103980e9112e83beced1",
+  "harness_sha256": {
+    "latency_length.py": "6f6f0f7cd9dbd3c2eae16710ca895f2eff0060c64d91999d32af18648d9819ff",
+    "token_model.py": "59f0f9013b9f5044df5cfa66a22a90c461dc127c7758e3abed7a6c01ef023071",
+    "decode.py": "28b49f45437a39255aa3b5113652213fba12865975467136b8dbe70af0349078",
+    "unicode_offsets.py": "0a6e8ec0368347cf25f2edee1546bf8e865a9fd5480883f310949770537b0faa"
+  },
+  "source_sha256": "730402f0f21c4d538b93a969a8eeedbec37edc49d2133cd18a26b925d93b0961",
+  "source_url": "https://raw.githubusercontent.com/EuropeanaNewspapers/ner-corpora/6bf838d23112c255fd81431b1187ab30ef6c2d90/enp_FR.bnf.bio/enp_FR.bnf.bio",
+  "source": "Contiguous prefixes of first 12000 Europeana source tokens; single-space reconstruction",
+  "machine_from_prior_run_same_host": {
+    "CPU": {
+      "Name": "AMD Ryzen 5 5600H with Radeon Graphics         ",
+      "NumberOfCores": 6,
+      "NumberOfLogicalProcessors": 12
+    },
+    "RAMBytes": 16477151232,
+    "power_scheme": null,
+    "power_query_status": 1,
+    "power_query_error": "Le mode de gestion, sous-groupe ou paramÃ¨tre dâ€™alimentation spÃ©cifiÃ© nâ€™existe pas.",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "runtime": "ONNX Runtime CPU; FP32",
+  "threads": 4,
+  "batch_size": 1,
+  "passes": 5,
+  "token_unit": "Detector tokenizer subwords, excluding special tokens; not agent tokens",
+  "measured": "Warm tokenization + serial overlapping windows + inference + span decoding",
+  "excluded": "Loading, file I/O, IPC, vault and pseudonymization; no prediction cache",
+  "scope": "Latency-only single-source length probe; not F1 or a page-level benchmark",
+  "cases": [
+    {
+      "target_tokens": 500,
+      "tokens": 498,
+      "characters": 1775,
+      "windows": 1,
+      "window_lengths": [
+        500
+      ],
+      "text_sha256": "fdacf65580660cf059ac9f95aa62be360f67e2019559ac35a00b8b87b696afdc",
+      "elapsed_ms": [
+        271.7226999993727,
+        266.58040000256733,
+        270.2086999997846,
+        270.1923999993596,
+        275.6426999985706
+      ],
+      "prediction_sha256": "8f33cbb154402df63520eda5714aa7fa2fa14adc9d09dadc2ce89968ed1f40cd",
+      "median_ms": 270.2086999997846,
+      "min_ms": 266.58040000256733,
+      "max_ms": 275.6426999985706
+    },
+    {
+      "target_tokens": 1000,
+      "tokens": 999,
+      "characters": 3617,
+      "windows": 3,
+      "window_lengths": [
+        512,
+        512,
+        109
+      ],
+      "text_sha256": "4161836c7b662d9a18db7dfd464916b66fc40480040c0295c37d5b6ca640d21d",
+      "elapsed_ms": [
+        606.3780999975279,
+        609.3164000012621,
+        606.1663000000408,
+        619.4804000006116,
+        605.7536000007531
+      ],
+      "prediction_sha256": "15624555d0c90c7b9383eeeb84cfacfe3ff4474c30dcbcd4541210e9889880b2",
+      "median_ms": 606.3780999975279,
+      "min_ms": 605.7536000007531,
+      "max_ms": 619.4804000006116
+    },
+    {
+      "target_tokens": 2000,
+      "tokens": 1999,
+      "characters": 7495,
+      "windows": 5,
+      "window_lengths": [
+        512,
+        512,
+        512,
+        512,
+        217
+      ],
+      "text_sha256": "1ad2250ea572603a3cf91be209c0e571924e4ec45226fc70a321fc94a079e9ae",
+      "elapsed_ms": [
+        1219.4987000002584,
+        1245.6309000008332,
+        1223.614099999395,
+        1251.8878999981098,
+        1219.6132999997644
+      ],
+      "prediction_sha256": "16a3606bcbdee3a4468d07088ebfe800a4db19c797e4cac5b8e2675fbc009aa8",
+      "median_ms": 1223.614099999395,
+      "min_ms": 1219.4987000002584,
+      "max_ms": 1251.8878999981098
+    },
+    {
+      "target_tokens": 4000,
+      "tokens": 3997,
+      "characters": 14792,
+      "windows": 9,
+      "window_lengths": [
+        512,
+        512,
+        512,
+        512,
+        512,
+        512,
+        512,
+        512,
+        431
+      ],
+      "text_sha256": "9f6246cfd0b06f487921535b253f7d771f2f548421bfe8c1f6469166d110e904",
+      "elapsed_ms": [
+        2446.3793999966583,
+        2418.1451000004017,
+        2437.9710000030173,
+        2469.633300002897,
+        2520.8854000011343
+      ],
+      "prediction_sha256": "88e65c0af3595bac85ef86e591ce8912893fb7ae0f0e50d6c678cb9204f2a479",
+      "median_ms": 2446.3793999966583,
+      "min_ms": 2418.1451000004017,
+      "max_ms": 2520.8854000011343
+    }
+  ]
+}

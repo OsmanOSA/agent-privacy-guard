@@ -1,0 +1,31 @@
+{
+  "cause": "Verified Unicode composition in original-offset mapping; no input truncation. Successful pre-repair inputs never entered the changed branch.",
+  "models": {
+    "masker-mini": {
+      "checked_inputs": 3108,
+      "max_windows": 1,
+      "repaired_compositions": [],
+      "incomplete_inputs": 0
+    },
+    "nym-pii-multilingual-small": {
+      "checked_inputs": 3108,
+      "max_windows": 2,
+      "repaired_compositions": [],
+      "incomplete_inputs": 0
+    },
+    "distilcamembert-base-ner": {
+      "checked_inputs": 3108,
+      "max_windows": 1,
+      "repaired_compositions": [
+        {
+          "id": "europeana-newspapers-fr:58",
+          "positions": [
+            268
+          ],
+          "inside_reference": false
+        }
+      ],
+      "incomplete_inputs": 0
+    }
+  }
+}

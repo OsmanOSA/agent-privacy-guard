@@ -42,6 +42,8 @@ docs/ux/*.finalize-summary.json
 
 # Local logs are ignored; only reviewed synthetic benchmark fixtures are eligible.
 *.log
+protection.jsonl
+failures.jsonl
 !benchmark/corpus/*.log
 node_modules/
 .DS_Store

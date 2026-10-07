@@ -1,0 +1,4 @@
+# Install in the isolated evaluation environment after requirements.txt.
+# Preserve the existing runtime versions with the captured pip constraints.
+spacy==3.8.11
+flair==0.15.1

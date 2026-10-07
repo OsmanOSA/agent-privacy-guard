@@ -1,0 +1,35 @@
+{
+  "deployed": true,
+  "completed_at": "2026-10-06T09:05:06.716021+00:00",
+  "existing_vault_files": 0,
+  "vault_bytes_unchanged": true,
+  "settings_bytes_unchanged": true,
+  "export_policy_unchanged": true,
+  "model_configuration_unchanged": true,
+  "vault_format_unchanged": true,
+  "source_matches_deployment": true,
+  "tests": {
+    "run": 296,
+    "failed": 0,
+    "skipped": 2
+  },
+  "notification_mechanism": "Native Claude Code systemMessage",
+  "count_unit": "Occurrences newly protected in this returned tool result; not unique people or full-file totals",
+  "counting_method": "Reuse findings from the same detection pass, after successful vault commit",
+  "summary_metadata": [
+    "document basename",
+    "category counts",
+    "pseudonymization/redaction action",
+    "UTC timestamp"
+  ],
+  "summary_journal": "logs/protection.jsonl",
+  "excluded_from_summaries": [
+    "body values",
+    "full paths",
+    "session IDs",
+    "token IDs",
+    "arbitrary detector kinds"
+  ],
+  "visual_notification_display_verified": false,
+  "network_model_boundary_verified": false
+}

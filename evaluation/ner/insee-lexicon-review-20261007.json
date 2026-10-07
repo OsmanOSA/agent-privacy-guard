@@ -1,0 +1,525 @@
+{
+  "measured_utc": "2026-10-07T08:39:02.631203+00:00",
+  "source_only": true,
+  "global_deployment": false,
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.4",
+  "lexicon": {
+    "producer": "INSEE",
+    "prepared_utc": "2026-10-07T08:34:52.105606+00:00",
+    "sources": [
+      {
+        "kind": "given",
+        "archive": "given.zip",
+        "member": "prenoms-2025-liste.csv",
+        "url": "https://www.insee.fr/fr/statistiques/fichier/8595130/prenoms-2025-liste_csv.zip",
+        "page": "https://www.insee.fr/fr/statistiques/8595130",
+        "published": "2026-07-16",
+        "coverage": "Births in France, 1900-2025; given at least three times",
+        "sha256": "3a85c26c4932af016c3dfc8212e3e739092f1f51f21821b2e36f1d4fd3e8c283",
+        "delimiter": ";",
+        "column": "prenom"
+      },
+      {
+        "kind": "family",
+        "archive": "family.zip",
+        "member": "noms2008nat_txt.txt",
+        "url": "https://www.insee.fr/fr/statistiques/fichier/3536630/noms2008nat_txt.zip",
+        "page": "https://www.insee.fr/fr/statistiques/3536630",
+        "published": "2018-05-22",
+        "coverage": "Births in France, 1891-2000; surname given at least thirty times",
+        "sha256": "c8693ff69bed32621250f1fc06e71b686e72bba1dbd771055e431d305527cfba",
+        "delimiter": "\t",
+        "column": "NOM"
+      }
+    ],
+    "unique_normalized_names": {
+      "family": 218982,
+      "given": 155176
+    },
+    "terms_url": "https://www.insee.fr/fr/outil-interactif/7737357/legal-notice.html",
+    "reuse": "INSEE data reuse terms; attribution and integrity required; code MIT is separate",
+    "transformation": "Case/accent/apostrophe/space folding, deduplication; no sex or birth counts",
+    "scope": "Public name lexicon, not an annotated evaluation corpus or completeness guarantee",
+    "sqlite_sha256": "ad62c4e9bab0f8246fdd642fa2ee038ece7d47286e80db9b008e8bca7e83d832",
+    "sqlite_bytes": 7458816
+  },
+  "corpus": "benchmark/corpus; same inputs and modes with optional index disabled/enabled",
+  "quality_metric": "Existing annotated overlap coverage, not exact-span F1; synthetic regression corpus",
+  "quality": {
+    "rules_without_insee": {
+      "address": {
+        "expected": 4,
+        "hidden": 4,
+        "found": 4,
+        "justified": 4,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "banking": {
+        "expected": 6,
+        "hidden": 6,
+        "found": 6,
+        "justified": 6,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "birth_date": {
+        "expected": 4,
+        "hidden": 4,
+        "found": 4,
+        "justified": 4,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "email": {
+        "expected": 21,
+        "hidden": 21,
+        "found": 21,
+        "justified": 21,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "identifier": {
+        "expected": 2,
+        "hidden": 2,
+        "found": 2,
+        "justified": 2,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "name": {
+        "expected": 35,
+        "hidden": 19,
+        "found": 19,
+        "justified": 19,
+        "recall": 0.5428571428571428,
+        "precision": 1.0
+      },
+      "phone": {
+        "expected": 8,
+        "hidden": 8,
+        "found": 8,
+        "justified": 8,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "secret": {
+        "expected": 7,
+        "hidden": 7,
+        "found": 7,
+        "justified": 7,
+        "recall": 1.0,
+        "precision": 1.0
+      }
+    },
+    "rules_with_insee": {
+      "address": {
+        "expected": 4,
+        "hidden": 4,
+        "found": 4,
+        "justified": 4,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "banking": {
+        "expected": 6,
+        "hidden": 6,
+        "found": 6,
+        "justified": 6,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "birth_date": {
+        "expected": 4,
+        "hidden": 4,
+        "found": 4,
+        "justified": 4,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "email": {
+        "expected": 21,
+        "hidden": 21,
+        "found": 21,
+        "justified": 21,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "identifier": {
+        "expected": 2,
+        "hidden": 2,
+        "found": 2,
+        "justified": 2,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "name": {
+        "expected": 35,
+        "hidden": 19,
+        "found": 19,
+        "justified": 19,
+        "recall": 0.5428571428571428,
+        "precision": 1.0
+      },
+      "phone": {
+        "expected": 8,
+        "hidden": 8,
+        "found": 8,
+        "justified": 8,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "secret": {
+        "expected": 7,
+        "hidden": 7,
+        "found": 7,
+        "justified": 7,
+        "recall": 1.0,
+        "precision": 1.0
+      }
+    },
+    "model_without_insee": {
+      "address": {
+        "expected": 4,
+        "hidden": 4,
+        "found": 4,
+        "justified": 4,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "banking": {
+        "expected": 6,
+        "hidden": 6,
+        "found": 6,
+        "justified": 6,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "birth_date": {
+        "expected": 4,
+        "hidden": 4,
+        "found": 4,
+        "justified": 4,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "email": {
+        "expected": 21,
+        "hidden": 21,
+        "found": 21,
+        "justified": 21,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "identifier": {
+        "expected": 2,
+        "hidden": 2,
+        "found": 2,
+        "justified": 2,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "name": {
+        "expected": 35,
+        "hidden": 34,
+        "found": 33,
+        "justified": 33,
+        "recall": 0.9714285714285714,
+        "precision": 1.0
+      },
+      "phone": {
+        "expected": 8,
+        "hidden": 8,
+        "found": 8,
+        "justified": 8,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "secret": {
+        "expected": 7,
+        "hidden": 7,
+        "found": 7,
+        "justified": 7,
+        "recall": 1.0,
+        "precision": 1.0
+      }
+    },
+    "model_with_insee": {
+      "address": {
+        "expected": 4,
+        "hidden": 4,
+        "found": 4,
+        "justified": 4,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "banking": {
+        "expected": 6,
+        "hidden": 6,
+        "found": 6,
+        "justified": 6,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "birth_date": {
+        "expected": 4,
+        "hidden": 4,
+        "found": 4,
+        "justified": 4,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "email": {
+        "expected": 21,
+        "hidden": 21,
+        "found": 21,
+        "justified": 21,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "identifier": {
+        "expected": 2,
+        "hidden": 2,
+        "found": 2,
+        "justified": 2,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "name": {
+        "expected": 35,
+        "hidden": 34,
+        "found": 33,
+        "justified": 33,
+        "recall": 0.9714285714285714,
+        "precision": 1.0
+      },
+      "phone": {
+        "expected": 8,
+        "hidden": 8,
+        "found": 8,
+        "justified": 8,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "secret": {
+        "expected": 7,
+        "hidden": 7,
+        "found": 7,
+        "justified": 7,
+        "recall": 1.0,
+        "precision": 1.0
+      }
+    }
+  },
+  "latency": [
+    {
+      "case": "synthetic_person_fields",
+      "characters": 44,
+      "text_sha256": "478f7b83c3073090d2228771f79a3f81d555a9d63bcd8cb918f7bbd26a6a4573",
+      "findings": 2,
+      "first_observation_ms": 1.0378000006312504,
+      "median_ms": 0.5942500010860385,
+      "p95_ms": 0.6742000005033333,
+      "observations_ms": [
+        0.6992000016907696,
+        0.7042999968689401,
+        0.6207000005815644,
+        0.6633000011788681,
+        0.605500001256587,
+        0.6031999982951675,
+        0.612899999396177,
+        0.5898000017623417,
+        0.5907999984628987,
+        0.5916000009165145,
+        0.6167999999888707,
+        0.5903999990550801,
+        0.5863000005774666,
+        0.5974000014248304,
+        0.5916999980399851,
+        0.5922999989707023,
+        0.5982000002404675,
+        0.5916000009165145,
+        0.5983999981253874,
+        0.5821999984618742,
+        0.5923000026086811,
+        0.5784000022686087,
+        0.622200001089368,
+        0.597800000832649,
+        0.5854999981238507,
+        0.5813999996462371,
+        0.5836000018462073,
+        0.6104000021878164,
+        0.5799999998998828,
+        0.6742000005033333,
+        0.6452999987232033,
+        0.6247999990591779,
+        0.5849999979545828,
+        0.6031000011716969,
+        0.6106000000727363,
+        0.5917999988014344,
+        0.5909999999857973,
+        0.601199997618096,
+        0.5807000015920494,
+        0.5834000003233086,
+        0.5915000001550652,
+        0.5850999987160321,
+        0.6417999975383282,
+        0.6074999982956797,
+        0.5860999990545679,
+        0.5964999982097652,
+        0.589600000239443,
+        0.596199999563396,
+        0.6344999965222087,
+        0.5851999994774815
+      ]
+    },
+    {
+      "case": "synthetic_code_1000_lines",
+      "characters": 34000,
+      "text_sha256": "eea0f019eabbf9f3397ce809b40d7067cf281c1ae852deb9cf0599cbc81daa84",
+      "findings": 0,
+      "first_observation_ms": 1.8124000016541686,
+      "median_ms": 1.8340500009799143,
+      "p95_ms": 1.8725000008998904,
+      "observations_ms": [
+        1.8430999989504926,
+        1.9490999984554946,
+        1.8339000016567297,
+        1.8436999998812098,
+        1.841599998442689,
+        1.8535000017436687,
+        1.8341000031796284,
+        1.8339999987802003,
+        1.8364999996265396,
+        1.8373000020801555,
+        1.8561999968369491,
+        1.8461999970895704,
+        1.8436999998812098,
+        1.8336000030103605,
+        1.8725000008998904,
+        1.8268999992869794,
+        1.8295999980182387,
+        1.824700000724988,
+        1.8208000001322944,
+        1.9284000009065494,
+        1.828899999964051,
+        1.8291999986104202,
+        1.8435999991197605,
+        1.8295999980182387,
+        1.8304000004718546,
+        1.8239999990328215,
+        1.8282999990333337,
+        1.828899999964051,
+        1.832900001318194,
+        1.839199998357799,
+        1.8610999977681786,
+        1.836299998103641,
+        1.8356999971729238,
+        1.8382999987807125,
+        1.833700000133831,
+        1.827100000809878,
+        1.8277999988640659,
+        1.8325000019103754,
+        1.824700000724988,
+        1.8310000014025718,
+        1.82679999852553,
+        1.8343999981880188,
+        1.834200000303099,
+        1.8205000014859252,
+        1.8184999971708748,
+        1.8670999997993931,
+        1.852199999120785,
+        1.8299999974260572,
+        1.8502999992051627,
+        1.8364000025030691
+      ]
+    },
+    {
+      "case": "public_europeana_3997_model_tokens",
+      "characters": 14792,
+      "text_sha256": "9f6246cfd0b06f487921535b253f7d771f2f548421bfe8c1f6469166d110e904",
+      "findings": 0,
+      "first_observation_ms": 1.1852000025101006,
+      "median_ms": 1.1849499987874879,
+      "p95_ms": 1.2146000008215196,
+      "observations_ms": [
+        1.185000000987202,
+        1.177900001493981,
+        1.1921999976038933,
+        1.1345999992045108,
+        1.1463000009825919,
+        1.1321000019961502,
+        1.1386000005586538,
+        1.324599998042686,
+        1.2110999996366445,
+        1.1770000019168947,
+        1.187899997603381,
+        1.1728999998013023,
+        1.1911999972653575,
+        1.190299997688271,
+        1.1894000017491635,
+        1.1726000011549331,
+        1.1704999997164123,
+        1.200899998366367,
+        1.1759000008169096,
+        1.1876999997184612,
+        1.186600002256455,
+        1.4889999984006863,
+        1.1813999990408774,
+        1.1933999994653277,
+        1.1909999993804377,
+        1.1817000013252255,
+        1.1957000024267472,
+        1.1829000031866599,
+        1.1830000003101304,
+        1.1763000002247281,
+        1.1711000006471295,
+        1.180499999463791,
+        1.1816000005637761,
+        1.1779999986174516,
+        1.16859999980079,
+        1.2146000008215196,
+        1.2122000007366296,
+        1.200899998366367,
+        1.1894000017491635,
+        1.1878000004799105,
+        1.1871999995491933,
+        1.1778000007325318,
+        1.1913999987882562,
+        1.1848999965877738,
+        1.1862999999721069,
+        1.1830000003101304,
+        1.197199999296572,
+        1.1900999998033512,
+        1.1760999987018295,
+        1.1741000016627368
+      ]
+    }
+  ],
+  "latency_scope": "INSEE complement only; no NER, vault, IPC, hook startup or network; uncontrolled Windows load",
+  "runtime_hashes": {
+    "privacy_guard/core/name_lexicon.py": "1f98bbd2e6b7480fd2b52eba6162a3387e8c6759ce030a3b8801ae4bb82f5d1e",
+    "privacy_guard/core/insee_names.py": "f96c97c92cf676e3c9a04c70c00259ae35328100a8b314e0b66ff62f03c35dc6",
+    "privacy_guard/core/detector.py": "52aa89c3226c4874f2dec5a4e147f93d3ce7f0bf6bccc358b79dece2d59db0cb",
+    "privacy_guard/claude_code/hook.py": "42d4da886fb37ca433a7b973d3d63d492afcbf2e0657055e68608332b48366c8",
+    "privacy_guard/service/__main__.py": "3a5ef09ab48dcf0b16955f22dc727cb753d84356fc7134ee162baf216790cbc8",
+    "tools/prepare_insee_lexicon.py": "9047ddf103ddfdeb746025c1236ec0e8175064a7c6c6a7b0309e065653fb0cbb",
+    "tools/check_insee_lexicon.py": "5315c3f714eaf6bb3a6917da4afcf97c8423e62272af89966f334be4f96dd43a",
+    "tests/test_insee_names.py": "e2b90e5623ca46c90f6dfcf168ad8157ca9d71d7314e0f4fb33aa3cbeb973937"
+  },
+  "limitations": [
+    "Context-dependent matching; ambiguous dictionary words intentionally not blanket-masked",
+    "No cross-call name learning or image extraction",
+    "INSEE files are incomplete public name statistics, not labelled NER reference corpora",
+    "Code is MIT; INSEE source attribution/reuse terms remain separate"
+  ],
+  "suite": {
+    "command": "python -m unittest discover -s tests -t .",
+    "run": 327,
+    "failures": 0,
+    "skipped": 2,
+    "new_regressions": 15,
+    "elapsed_seconds": 19.711
+  }
+}

@@ -1,0 +1,355 @@
+{
+  "date": "2026-10-07",
+  "source_only": true,
+  "global_deployment": false,
+  "unrelated_project_modified": false,
+  "vault_format": "windows-dpapi-bound-personal-sqlite-v2",
+  "record_layout_changed": false,
+  "token_derivation_changed": false,
+  "suite": {
+    "command": "python -m unittest discover -s tests -t .",
+    "run": 347,
+    "failures": 0,
+    "skipped": 2,
+    "new_regressions": 20,
+    "elapsed_seconds": 25.512
+  },
+  "session_recognition": {
+    "storage": "Existing encrypted category-bound person mappings, SQLite and authoritative legacy files",
+    "scope": "Complete spellings, case insensitive, same session only; committed snapshot before inference",
+    "aliases_inferred": false,
+    "plaintext_persistent_index": false,
+    "native_probe": "Isolated temporary installed launcher, separate hook processes, actual DPAPI; stable tokens, distinct sessions and SessionEnd deletion verified"
+  },
+  "diagnostics": {
+    "file": "failures.jsonl",
+    "fields": [
+      "timestamp",
+      "event",
+      "tool",
+      "stage",
+      "category"
+    ],
+    "inspected_values_recorded": false,
+    "exception_messages_recorded": false,
+    "paths_recorded": false,
+    "session_or_token_ids_recorded": false,
+    "logging_best_effort": true,
+    "stages_tested": [
+      "payload_parse",
+      "event_journal",
+      "session_names",
+      "detection",
+      "restoration",
+      "failed_tool",
+      "model_loading",
+      "launcher_init",
+      "input_read"
+    ]
+  },
+  "corpus": {
+    "source": "benchmark/corpus",
+    "metric": "Annotated overlap coverage, not exact-span F1",
+    "before": {
+      "rules_only": {
+        "address": {
+          "expected": 4,
+          "hidden": 4,
+          "found": 4,
+          "justified": 4,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "banking": {
+          "expected": 6,
+          "hidden": 6,
+          "found": 6,
+          "justified": 6,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "birth_date": {
+          "expected": 4,
+          "hidden": 4,
+          "found": 4,
+          "justified": 4,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "email": {
+          "expected": 21,
+          "hidden": 21,
+          "found": 21,
+          "justified": 21,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "identifier": {
+          "expected": 2,
+          "hidden": 2,
+          "found": 2,
+          "justified": 2,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "name": {
+          "expected": 35,
+          "hidden": 19,
+          "found": 19,
+          "justified": 19,
+          "recall": 0.5428571428571428,
+          "precision": 1.0
+        },
+        "phone": {
+          "expected": 8,
+          "hidden": 8,
+          "found": 8,
+          "justified": 8,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "secret": {
+          "expected": 7,
+          "hidden": 7,
+          "found": 7,
+          "justified": 7,
+          "recall": 1.0,
+          "precision": 1.0
+        }
+      },
+      "model_enabled": {
+        "address": {
+          "expected": 4,
+          "hidden": 4,
+          "found": 4,
+          "justified": 4,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "banking": {
+          "expected": 6,
+          "hidden": 6,
+          "found": 6,
+          "justified": 6,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "birth_date": {
+          "expected": 4,
+          "hidden": 4,
+          "found": 4,
+          "justified": 4,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "email": {
+          "expected": 21,
+          "hidden": 21,
+          "found": 21,
+          "justified": 21,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "identifier": {
+          "expected": 2,
+          "hidden": 2,
+          "found": 2,
+          "justified": 2,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "name": {
+          "expected": 35,
+          "hidden": 34,
+          "found": 33,
+          "justified": 33,
+          "recall": 0.9714285714285714,
+          "precision": 1.0
+        },
+        "phone": {
+          "expected": 8,
+          "hidden": 8,
+          "found": 8,
+          "justified": 8,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "secret": {
+          "expected": 7,
+          "hidden": 7,
+          "found": 7,
+          "justified": 7,
+          "recall": 1.0,
+          "precision": 1.0
+        }
+      }
+    },
+    "after": {
+      "rules_only": {
+        "address": {
+          "expected": 4,
+          "hidden": 4,
+          "found": 4,
+          "justified": 4,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "banking": {
+          "expected": 6,
+          "hidden": 6,
+          "found": 6,
+          "justified": 6,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "birth_date": {
+          "expected": 4,
+          "hidden": 4,
+          "found": 4,
+          "justified": 4,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "email": {
+          "expected": 21,
+          "hidden": 21,
+          "found": 21,
+          "justified": 21,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "identifier": {
+          "expected": 2,
+          "hidden": 2,
+          "found": 2,
+          "justified": 2,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "name": {
+          "expected": 35,
+          "hidden": 19,
+          "found": 19,
+          "justified": 19,
+          "recall": 0.5428571428571428,
+          "precision": 1.0
+        },
+        "phone": {
+          "expected": 8,
+          "hidden": 8,
+          "found": 8,
+          "justified": 8,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "secret": {
+          "expected": 7,
+          "hidden": 7,
+          "found": 7,
+          "justified": 7,
+          "recall": 1.0,
+          "precision": 1.0
+        }
+      },
+      "model_enabled": {
+        "address": {
+          "expected": 4,
+          "hidden": 4,
+          "found": 4,
+          "justified": 4,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "banking": {
+          "expected": 6,
+          "hidden": 6,
+          "found": 6,
+          "justified": 6,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "birth_date": {
+          "expected": 4,
+          "hidden": 4,
+          "found": 4,
+          "justified": 4,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "email": {
+          "expected": 21,
+          "hidden": 21,
+          "found": 21,
+          "justified": 21,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "identifier": {
+          "expected": 2,
+          "hidden": 2,
+          "found": 2,
+          "justified": 2,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "name": {
+          "expected": 35,
+          "hidden": 34,
+          "found": 33,
+          "justified": 33,
+          "recall": 0.9714285714285714,
+          "precision": 1.0
+        },
+        "phone": {
+          "expected": 8,
+          "hidden": 8,
+          "found": 8,
+          "justified": 8,
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "secret": {
+          "expected": 7,
+          "hidden": 7,
+          "found": 7,
+          "justified": 7,
+          "recall": 1.0,
+          "precision": 1.0
+        }
+      }
+    },
+    "scores_unchanged": true,
+    "false_alarms": 0
+  },
+  "latency_receipt": "session-name-latency-20261007.json",
+  "limits": [
+    "Original live interruption causes not established; diagnostics apply after source deployment",
+    "No retroactive protection of already emitted output or original retained errors",
+    "No inferred aliases or new image/OCR extraction",
+    "Killed/timed-out hooks and unrecoverable stdout cannot guarantee safe replacement",
+    "Corrupt/locked known-name storage blocks; Write may stop before restoration and keeps masked bytes",
+    "Name decryption/matching cost grows with distinct session mappings"
+  ],
+  "runtime_hashes": {
+    "privacy_guard/diagnostics.py": "0143623cfb79d38188e2596ce16e2af66ef22c71640b490d8bea053e26dd7bf0",
+    "privacy_guard/core/privacy_core.py": "5b11aff49131e7b38be889efd2c94c7836e430617d6e7967ccfcbffeb9fb05bf",
+    "privacy_guard/core/detector.py": "1b51fff979e98c95427167d7218077e602a6bd46ad2328011df6f959d47aa400",
+    "privacy_guard/core/name_spans.py": "c00cf1c3ca83386b21ac5d0b1460489e21b2e02b0893f55f592243a11fe3af24",
+    "privacy_guard/core/bound_values.py": "99cc5d0760ded84b7a9b0fb3639072db3bcb3913d67a5eaca01a938f610551bb",
+    "privacy_guard/core/sqlite_records.py": "b36e48fed1a01e956aa022e9563bb46fdfee8b48660252a83596f1bffd1777e0",
+    "privacy_guard/core/vault.py": "5f4bdc14d5f64f0f5dceaacc43e40efb0c072fbadd2a94cdbfc4046f91af2dbe",
+    "privacy_guard/claude_code/hook.py": "af925838b237e52225240535f2b088dade07abeae70bec30bf5822b1f530d0be",
+    "privacy_guard/claude_code/protection.py": "1e0f577c17f488542bb7d9f50f9432d96adb2e8cd044beb9a298d3b2065c4da0",
+    "privacy_guard/claude_code/failed_tool.py": "f1d924eeed8886be0a113b9436dd73e2523fba335bf16d41e962eebf7a8ae4c4",
+    "privacy_guard/claude_code/write_restoration.py": "6d391603c634818b8891e411bbfde2de886a5a7ec5687f6136e78eb8e6ae0f66",
+    "privacy_guard/claude_code/launcher.py": "c912441613937e1ab4da9399e4fee78cd2545034ed6e87f020eb3016cc8af914",
+    "privacy_guard/service/client.py": "75c5f9751f4ebff52422e50536c99d257c78345c9f0884c36ead23a919597926",
+    "privacy_guard/service/server.py": "1ec70924b207f0c5d3082a82b220e32281cc2a67a4063486223b13da9bcd3aa4",
+    "privacy_guard/journal.py": "83cfb3061d891f1edfa87381ba12b375d563dd63d7d892c91ae7383f083eb6fd",
+    "tests/test_session_names.py": "6b2ba0c913782ce3dc7a71d63f7b875fa8ee93f9a96654a69bf73e4e512e61fb",
+    "tests/test_failure_diagnostics.py": "1624ff1659dd23f4217040a4f5062de78838c7b05227f47a340146ef1ba6cc40",
+    "tests/test_installed_write_cycle.py": "5c10ba722c9b25d8a3245b9e4d6fbd04e2ea3068f41a7cbb2b9d83bfb519e656",
+    "tests/test_launcher_failure.py": "15d1d30b4264f2490e44d2815da102a87d59acfa3f5ff50fceb807fe258c7817",
+    "tools/check_session_name_latency.py": "718a36ed57f73034a5565a22eaec4f8fe48b347bdb880a113491e051ac829ae4"
+  }
+}

@@ -34,4 +34,15 @@ PERSONAL_DATA_RULES = FRENCH_CONTEXT_RULES + FRENCH_RULES + INTERNATIONAL_RULES
 
 def find_personal_data(text: str) -> list[Finding]:
     """Returns the personal data found in the text, ordered by position."""
-    return find_with(PERSONAL_DATA_RULES, text)
+    return [finding for finding in find_with(PERSONAL_DATA_RULES, text)
+            if not _diff_decorator(text, finding)]
+
+
+def _diff_decorator(text: str, finding: Finding) -> bool:
+    if finding.kind != "email" or text[finding.end:finding.end + 1] != "(":
+        return False
+    local = text[finding.start:finding.end].split("@", 1)[0]
+    line_start = text.rfind("\n", 0, finding.start) + 1
+    # +@app.post(...) is an added decorator, not a mailbox whose local part
+    # is '+'. Retain unusual real mailboxes in other contexts.
+    return local in {"+", "-"} and not text[line_start:finding.start].strip()

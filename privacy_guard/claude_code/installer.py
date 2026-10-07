@@ -4,8 +4,8 @@ Install = deploy the engine to ~/.privacy-guard/app, then register the hook in
 ~/.claude/settings.json. Uninstall = the reverse. The rest of the user's
 configuration is never modified.
 
-Both purge the session vaults: no real value is ever left behind on disk, and
-vaults written by another version are never read with a different format.
+Compatible updates preserve session vaults and their token identifiers. Unknown
+formats stop installation without deleting data. Uninstall purges the vaults.
 """
 
 from __future__ import annotations
@@ -16,10 +16,12 @@ from pathlib import Path
 import privacy_guard
 from privacy_guard.claude_code import registration
 from privacy_guard.claude_code.settings_file import SettingsFile
+from privacy_guard.claude_code.vault_format import VaultCompatibility
 from privacy_guard.core.cipher import default_cipher
 from privacy_guard.fs import remove_tree
 from privacy_guard.service.channel import ServiceChannel
 from privacy_guard.service.client import ServiceClient
+from privacy_guard.notifications.lifecycle import stop_worker
 
 PACKAGE_DIR = Path(privacy_guard.__file__).resolve().parent
 LAUNCHER_FILE = PACKAGE_DIR / "claude_code" / "launcher.py"
@@ -37,8 +39,10 @@ class ClaudeCodeInstaller:
         self._app_dir = guard_home / "app"
         self._vault_dir = guard_home / "vault"
         self._run_dir = guard_home / "run"
+        self._notification_dir = guard_home / "notifications"
         self._python = python
         self._settings = SettingsFile(claude_dir / "settings.json")
+        self._vault_format = VaultCompatibility(guard_home, PACKAGE_DIR)
         self._service = ServiceClient(ServiceChannel(self._run_dir))
 
     def install(self) -> Path | None:
@@ -50,19 +54,24 @@ class ClaudeCodeInstaller:
         if not self._claude_dir.is_dir():
             raise ClaudeCodeNotFoundError(f"Directory not found: {self._claude_dir}")
         default_cipher()
+        self._vault_format.check()
         # The running service still executes the previous version: stop it first.
         self._service.stop()
-        remove_tree(self._vault_dir)
+        stop_worker(self._notification_dir)
         self._deploy_app()
-        return self._update_settings(registration.register(self._settings.load(), self._hook_command()))
+        backup = self._update_settings(registration.register(self._settings.load(), self._hook_command()))
+        self._vault_format.record()
+        return backup
 
     def uninstall(self) -> Path | None:
         """Removes the hook, the service, the deployed engine and the vaults.
         Returns the settings.json backup."""
         backup = self._update_settings(registration.unregister(self._settings.load()))
         self._service.stop()
+        stop_worker(self._notification_dir)
         for directory in (self._app_dir, self._vault_dir, self._run_dir):
             remove_tree(directory)
+        self._vault_format.clear()
         return backup
 
     def status(self) -> dict[str, bool]:

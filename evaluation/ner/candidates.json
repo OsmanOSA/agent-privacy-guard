@@ -1,0 +1,92 @@
+{
+  "schema_version": 2,
+  "checked_at": "2026-10-05",
+  "task": "PERSON on published French NER corpora",
+  "selection_status": "Five-model initial PERSON comparison complete; Masker Mini recommended for further validation, no production replacement",
+  "license_policy": "MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause or ISC for active model candidates; notices and base-model provenance remain separate obligations",
+  "models": [
+    {
+      "id": "gliner2-privacy-filter-PII-multi",
+      "source": "https://huggingface.co/fastino/gliner2-privacy-filter-PII-multi",
+      "upstream_revision": "1cb4166094dc58fa8d836429f060d6c95f62b495",
+      "license_from_card": "apache-2.0",
+      "role": "Existing person-only implementation baseline",
+      "execution_status": "initial_person_comparison_completed",
+      "variant": "Existing person-only ONNX int4 export; distinguish from full upstream model",
+      "local_model_sha256": "a0da9404e04da3b832f89cd92f81fc9d3fe8a160d8f645fae57805b7efc71986",
+      "evaluation_eligible": true,
+      "redistribution_status": "notice_and_artifact_provenance_review_required",
+      "separate_license_file_present": false,
+      "evaluation_report": "report-20261005.md"
+    },
+    {
+      "id": "masker-mini",
+      "source": "https://huggingface.co/divergentlabs/masker-mini",
+      "upstream_revision": "beb7235d454aa4488b6ee1cd47f417caa12a6d15",
+      "license_from_card": "apache-2.0",
+      "role": "Small multilingual PII encoder",
+      "execution_status": "initial_person_comparison_completed",
+      "variant": "onnx/model_int4.onnx",
+      "local_artifact_revision": "beb7235d454aa4488b6ee1cd47f417caa12a6d15",
+      "local_model_sha256": "338b7c2daf15168441a93c175b1fe6b364fef9a6ef7dee65e00c9159a76fdfae",
+      "evaluation_eligible": true,
+      "redistribution_status": "notice_and_artifact_provenance_review_required",
+      "separate_license_file_present": true,
+      "training_overlap_warning": "Card explicitly credits WikiNER-fr-gold among training/distillation sources; this WikiNER score is not independent generalization.",
+      "evaluation_report": "report-20261005.md"
+    },
+    {
+      "id": "nym-pii-multilingual-small",
+      "source": "https://huggingface.co/Wismut/nym-pii-multilingual-small",
+      "upstream_revision": "4348999cd3c2e20c49615e9af7c6bbb45b64cd85",
+      "license_from_card": "mit",
+      "role": "Compact multilingual PII comparator",
+      "execution_status": "initial_person_comparison_completed",
+      "variant": "int8/ export: quantized embedding plus fp16 body storage; FP32 computation, not a full INT8 execution backend",
+      "evaluation_eligible": true,
+      "redistribution_status": "notice_and_artifact_provenance_review_required",
+      "separate_license_file_present": false,
+      "evaluation_report": "report-20261005.md"
+    },
+    {
+      "id": "distilcamembert-base-ner",
+      "source": "https://huggingface.co/cmarkea/distilcamembert-base-ner",
+      "execution_status": "initial_person_comparison_completed",
+      "upstream_revision": "e539d952f70088b450c300c28ba455da87f2dc4b",
+      "license_from_card": "mit",
+      "role": "French distilled NER comparator; trained on WikiNER",
+      "evaluation_eligible": true,
+      "redistribution_status": "notice_and_artifact_provenance_review_required",
+      "variant": "model.onnx FP32; upstream quantized graph rejected by calibration equivalence check",
+      "training_overlap_warning": "Fine-tuned on WikiNER; WikiNER-fr-gold is not established unseen data",
+      "separate_license_file_present": false,
+      "rejected_variant": "model_quantized.onnx produced near-zero person recall; graph and tokenizer diagnostic retained locally",
+      "evaluation_report": "report-20261005.md"
+    },
+    {
+      "id": "gliner_multi_pii-v1",
+      "source": "https://huggingface.co/urchade/gliner_multi_pii-v1",
+      "execution_status": "initial_person_comparison_completed",
+      "upstream_revision": "1fcf13e85f4eef5394e1fcd406cf2ca9ea82351d",
+      "license_from_card": "apache-2.0",
+      "role": "Multilingual PII quality reference; larger than the smallest candidates",
+      "evaluation_eligible": true,
+      "redistribution_status": "notice_and_artifact_provenance_review_required",
+      "variant": "Original upstream PyTorch CPU FP32 weights; strict state-dict loading",
+      "separate_license_file_present": false,
+      "evaluation_report": "report-20261005.md"
+    }
+  ],
+  "excluded_models": [
+    {
+      "id": "rampart",
+      "license": "CC-BY-4.0",
+      "reason": "Commercial use is allowed, but outside the selected MIT/Apache/BSD software-license policy; not a commercial prohibition."
+    },
+    {
+      "id": "fr_core_news_sm",
+      "license": "LGPL-LR",
+      "reason": "Commercial use is not categorically forbidden; excluded to avoid the different redistribution obligations of this corpus/model license."
+    }
+  ]
+}

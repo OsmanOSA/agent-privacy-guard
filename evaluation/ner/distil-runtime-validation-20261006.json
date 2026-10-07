@@ -1,0 +1,12 @@
+{
+  "checked_real_corpus_inputs": {
+    "deep-sequoia-nonwiki": 12,
+    "europeana-newspapers-fr": 12,
+    "soduco-nested-ner": 12
+  },
+  "long_input_tokens": 3997,
+  "long_input_windows": 9,
+  "long_input_findings": 63,
+  "prediction_drift": 0,
+  "model_dir": "distil-bundle"
+}

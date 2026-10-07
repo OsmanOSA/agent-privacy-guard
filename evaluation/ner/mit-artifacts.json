@@ -1,0 +1,104 @@
+{
+  "spacy-multilingual": {
+    "accuracy.json": {
+      "sha256": "977037295369e6d3ce971ae68258bd0f8e65b1523026b8b0dd239a7345e37503",
+      "bytes": 510
+    },
+    "config.cfg": {
+      "sha256": "7faf9f88b839eba2f5c6a201e8636ae12e9b06f2d98e2fac0566b7d407d33f09",
+      "bytes": 2796
+    },
+    "LICENSE": {
+      "sha256": "3933c176979b68bc6d0bcc902c7d6c130f1d127f476f17ba5cdba8d99cfd0012",
+      "bytes": 1056
+    },
+    "LICENSES_SOURCES": {
+      "sha256": "00088755852cde64f3449d2363699c8e4320b6d7782bf07e22f6c842efa45d03",
+      "bytes": 12951
+    },
+    "meta.json": {
+      "sha256": "22ce1186ef6f6fc8444e275ca616e5a92865569d93df6ca8002a3e42f5eed330",
+      "bytes": 1447
+    },
+    "README.md": {
+      "sha256": "e0ed23a87f92ec4bc22f1da0497059cc0a379fc27bdbaab79c55111f2cf8cea7",
+      "bytes": 941
+    },
+    "tokenizer": {
+      "sha256": "0b22cd2a783cd6b384c4f370d068c47df6e13f28b9dd84ed1e4ca886bc960d51",
+      "bytes": 37695
+    },
+    "xx_ent_wiki_sm-3.8.0-py3-none-any.whl": {
+      "sha256": "6f3c4b853852ea9e9d2dc76cc950dddb10a7e4c42d813308caefe6c5e8be2f0a",
+      "bytes": 11099251
+    },
+    "ner\\cfg": {
+      "sha256": "a7172edadafba9f472e9ac0f2660eec04b6405e471be9e20267b79c67288d22d",
+      "bytes": 221
+    },
+    "ner\\model": {
+      "sha256": "849289bd6e291a6c7ba741fcd634e3bc71288198790ada77c639e91d8287e6fb",
+      "bytes": 6140040
+    },
+    "ner\\moves": {
+      "sha256": "9e5eb4dedf89f9e69267b7aeca847d42b3a59381cc07fc7379692ba38824be3a",
+      "bytes": 288
+    },
+    "vocab\\key2row": {
+      "sha256": "76be8b528d0075f7aae98d6fa57a6d3c83ae480a8469e668d7b0af968995ac71",
+      "bytes": 1
+    },
+    "vocab\\lookups.bin": {
+      "sha256": "76be8b528d0075f7aae98d6fa57a6d3c83ae480a8469e668d7b0af968995ac71",
+      "bytes": 1
+    },
+    "vocab\\strings.json": {
+      "sha256": "377d54e7b5c9091056ec84be8da96b41fa389be75e58fb8e62d35d6e676249f2",
+      "bytes": 34244326
+    },
+    "vocab\\vectors": {
+      "sha256": "14772b683e726436d5948ad3fff2b43d036ef2ebbe3458aafed6004e05a40706",
+      "bytes": 128
+    },
+    "vocab\\vectors.cfg": {
+      "sha256": "ff4359091952c8cd16f1f0482f5770fb82d1707368d5cca3c46aa501f552e3c5",
+      "bytes": 22
+    }
+  },
+  "hmbert-tiny-fr": {
+    "pytorch_model.bin": {
+      "sha256": "d3fb90b24348371823627063f2d3f7298221363ccfd442546b88d1434c58d9c8",
+      "bytes": 19045922
+    },
+    "README.md": {
+      "sha256": "4325ed08213b48d4132025ab47a8455921cf23a5d6438cdc81207277d5a7ee04",
+      "bytes": 4779
+    }
+  },
+  "moderncamembert-fr": {
+    "config.json": {
+      "sha256": "c404b5ef25efa419301f37b8486cf08f5fee05591c5f5be74fdd81bbf7091664",
+      "bytes": 1484
+    },
+    "model.safetensors": {
+      "sha256": "8049fac128048a8ffda05e10d99bdf4fe6afb410d4342895eee7c3ab71b6c1a0",
+      "bytes": 544381812
+    },
+    "README.md": {
+      "sha256": "aed887bf90d10f12d0674c013ba7cfa2d380c1f7257e67a6bea00a7b913738f8",
+      "bytes": 9920
+    },
+    "special_tokens_map.json": {
+      "sha256": "94e3cbe47d4f177ce0940122d91b7e49ceef238a6895eca9634d58b717b6a031",
+      "bytes": 970
+    },
+    "tokenizer.json": {
+      "sha256": "79eddc8645e51a0e7524832a38ae7d606154fb935b5f78f6aae0adaa069c8ed0",
+      "bytes": 756031
+    },
+    "tokenizer_config.json": {
+      "sha256": "495b6ed1fe50af16faf2c56053e0547f8333562db4837b003228090fa221b319",
+      "bytes": 1325
+    }
+  }
+}

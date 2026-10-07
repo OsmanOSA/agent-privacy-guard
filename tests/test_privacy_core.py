@@ -6,11 +6,12 @@ from pathlib import Path
 
 from privacy_guard.core.name_detector import HeuristicNameDetector
 from privacy_guard.core.privacy_core import PrivacyCore
+from privacy_guard.core.tokens import format_token, token_id
 from privacy_guard.core.vault import VaultError, VaultStore
 from tests.fakes import STRIPE_KEY, ReversingCipher
 
-PLAYGROUND_ENV = Path(__file__).resolve().parent.parent / "playground" / ".env"
-OTHER_KEY = "sk_live_" + "OTHEROTHEROTHER000000000000"
+EMAIL = "jean.dupont@example.com"
+OTHER_EMAIL = "marie.martin@example.com"
 
 
 class PrivacyCoreTest(unittest.TestCase):
@@ -24,13 +25,13 @@ class PrivacyCoreTest(unittest.TestCase):
         self._tmp.cleanup()
 
     def test_round_trip_restores_the_exact_original(self):
-        env = PLAYGROUND_ENV.read_text(encoding="utf-8")
+        original = f"Nom : Jean Dupont\nEmail={EMAIL}\nTéléphone : +33 6 12 34 56 78"
 
-        protected = self.core.protect(env)
+        protected = self.core.protect(original)
 
-        self.assertNotIn(STRIPE_KEY, protected)
-        self.assertNotIn("FakePassw0rd123", protected)
-        self.assertEqual(self.core.restore(protected), env)
+        self.assertNotIn("Jean Dupont", protected)
+        self.assertNotIn(EMAIL, protected)
+        self.assertEqual(self.core.restore(protected), original)
 
     def test_protects_personal_data(self):
         protected = self.core.protect("ADMIN_EMAIL=jean.dupont@example.com\nPHONE=+33 6 12 34 56 78")
@@ -54,10 +55,10 @@ class PrivacyCoreTest(unittest.TestCase):
         self.assertIn("@db.example.com:5432/app", protected)
 
     def test_same_value_gets_the_same_token(self):
-        self.assertEqual(self.core.protect(STRIPE_KEY), self.core.protect(STRIPE_KEY))
+        self.assertEqual(self.core.protect(EMAIL), self.core.protect(EMAIL))
 
     def test_different_values_get_different_tokens(self):
-        self.assertNotEqual(self.core.protect(STRIPE_KEY), self.core.protect(OTHER_KEY))
+        self.assertNotEqual(self.core.protect(EMAIL), self.core.protect(OTHER_EMAIL))
 
     def test_never_tokenizes_a_token(self):
         protected = self.core.protect(f"STRIPE_SECRET_KEY={STRIPE_KEY}")
@@ -65,9 +66,51 @@ class PrivacyCoreTest(unittest.TestCase):
         self.assertEqual(self.core.protect(protected), protected)
 
     def test_leaves_unknown_tokens_untouched(self):
-        foreign_token = PrivacyCore(self.vaults.session("session-b"), HeuristicNameDetector()).protect(STRIPE_KEY)
+        foreign_token = PrivacyCore(self.vaults.session("session-b"), HeuristicNameDetector()).protect(EMAIL)
 
         self.assertEqual(self.core.restore(foreign_token), foreign_token)
+
+    def test_secrets_redact_without_creating_a_vault(self):
+        original = f"STRIPE_SECRET_KEY={STRIPE_KEY}\npassword=FakePassw0rd123"
+
+        protected = self.core.protect(original)
+
+        self.assertEqual(protected, "STRIPE_SECRET_KEY=⟦STRIPE_SECRET_KEY:REDACTED⟧\npassword=⟦SECRET_ASSIGNMENT:REDACTED⟧")
+        self.assertEqual(self.core.restore(protected), protected)
+        self.assertFalse((self.root / "session-a").exists())
+
+    def test_mixed_output_restores_personal_values_only(self):
+        protected = self.core.protect(f"Email={EMAIL}\nSTRIPE_SECRET_KEY={STRIPE_KEY}")
+
+        self.assertEqual(self.core.restore(protected), f"Email={EMAIL}\nSTRIPE_SECRET_KEY=⟦STRIPE_SECRET_KEY:REDACTED⟧")
+        vault = self.vaults.session("session-a")
+        self.assertIsNone(vault.lookup(token_id(vault.session_key(), STRIPE_KEY)))
+
+    def test_legacy_secret_kind_tokens_do_not_restore(self):
+        vault = self.vaults.session("session-a")
+        identifier = token_id(vault.session_key(), STRIPE_KEY)
+        vault.store(identifier, STRIPE_KEY)
+        token = format_token("stripe_secret_key", identifier)
+
+        self.assertEqual(self.core.restore(token), token)
+
+    def test_relabeling_a_new_redaction_cannot_recover_a_value(self):
+        marker = self.core.protect(STRIPE_KEY)
+        relabeled = marker.replace("STRIPE_SECRET_KEY", "EMAIL")
+
+        self.assertEqual(self.core.restore(relabeled), relabeled)
+        self.assertFalse((self.root / "session-a").exists())
+
+    def test_unknown_token_kind_cannot_access_a_personal_mapping(self):
+        token = self.core.protect(EMAIL).replace("EMAIL:", "UNKNOWN:")
+
+        self.assertEqual(self.core.restore(token), token)
+
+    def test_existing_markers_are_not_sent_back_to_the_vault(self):
+        marker = "⟦SECRET_ASSIGNMENT:REDACTED⟧"
+
+        self.assertEqual(self.core.protect(f"password={marker}"), f"password={marker}")
+        self.assertFalse((self.root / "session-a").exists())
 
     def test_clean_text_touches_no_disk(self):
         self.core.protect("PORT=3000")

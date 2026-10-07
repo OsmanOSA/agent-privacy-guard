@@ -1,0 +1,21 @@
+{
+  "scope": "Repair handled hook failures and use native Claude Code user notices; deploy locally without changing detectors, vault format or user documents",
+  "status": "implemented, tested and deployed",
+  "changes": [
+    "Native continue:false stop after handled post-tool inspection errors",
+    "Neutral recognized Bash, text Read, Grep/Glob and MCP result envelopes; unknown shapes are not guessed",
+    "Register PostToolUseFailure and stop on sensitive or uninspectable errors without echoing error text",
+    "Use native systemMessage for actual protection changes and local restoration success/failure",
+    "Use a stdlib-only stop if the deployed launcher cannot import its engine after a tool",
+    "Status says registered rather than claiming verified protection"
+  ],
+  "validation": {"suite_run": 285, "failures": 0, "skipped": 2, "new_regressions": 18},
+  "installed_checks": "evaluation/ner/hook-failures-notices-installed-20261006.json",
+  "deployment_receipt": "evaluation/ner/hook-failures-notices-deployment-20261006.json",
+  "limits": [
+    "Absent or canceled command hooks cannot emit a stop; this is an external enforcement limitation",
+    "Stops do not erase original tool results from retained session history; unknown shapes or failed-tool errors must be reviewed before resuming",
+    "No new coverage for binary/image contents, arbitrary metadata or direct user prompts",
+    "Native message emission verified; visual VS Code rendering and Claude outbound requests not observed"
+  ]
+}

@@ -2,10 +2,12 @@
 
 | Document | Purpose |
 | --- | --- |
+| [Project assessment](project-assessment.md) | Current evidence, assessment and proposed next experiment |
 | [Product](product.md) | Problem, Claude-first scope, acceptance and commercial hypotheses |
 | [Architecture](architecture.md) | Current flow, interfaces and future adapter contract |
 | [Threat model](security/threat-model.md) | Assets, adversaries, exclusions and security requirements |
 | [Baseline](security/baseline-2026-10-05.md) | Dated observations, test results and unresolved gaps |
+| [History audit](security/history-audit-2026-10-05.md) | Publication, secret scanning and later Windows test evidence |
 | [UX flows](ux/flows.md) | User journeys, proposed state model and copy |
 | [UX mockup](ux/privacy-guard.prototype.html) | Local interactive simulation; no agent connection |
 | [Archify diagram](ux/privacy-target.html) | Proposed incoming disclosure contract; [check notes](ux/README.md) |

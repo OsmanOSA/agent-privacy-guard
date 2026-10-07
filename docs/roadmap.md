@@ -2,7 +2,11 @@
 
 Milestones have exit criteria, not promised dates. Security tasks are local in [.scratch/security-baseline](../.scratch/security-baseline/spec.md). No milestone is currently marked complete merely because its documents exist.
 
+Progress on 2026-10-05: the source is published under MIT and the three published commits have been scanned. Selecting Git Bash produced 124 passing tests and one optional-model skip; automatic shell selection and real-agent enforcement remain open. The private vulnerability-reporting channel is still pending. See the [history audit](security/history-audit-2026-10-05.md) for these checks and the [project assessment](project-assessment.md) for the proposed first workflow. The immediate priority remains M1, followed by M2; publication has not closed the security gates for M3.
+
 ## M0 — Reproducible foundation
+
+Update on 2026-10-06: the selected DistilCamemBERT is integrated, exact-text detection caching and transactional DPAPI-encrypted vault storage are deployed, and CPU window batching was evaluated and rejected. Handled post-tool failures now request a native stop and recognized result replacements; native user notices and sensitive-error stopping are deployed. Notices now include category occurrence counts and document basenames, with a local metadata summary journal. The suite runs 296 tests with no failures and two skips. M1 still requires actual model-boundary and hook-absence/timeout evidence; local emission checks do not close those gates. See the [current architecture and receipts](architecture.md#handled-failures-and-native-user-notices).
 
 Deliver: honest product scope, source map, glossary, threat model, UX simulation, contribution templates and a local backlog.
 

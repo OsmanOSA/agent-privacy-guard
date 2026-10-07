@@ -1,0 +1,7 @@
+{
+  "problem": "Protection summaries are visible in Claude Code but not when its host window is in the background.",
+  "scope": "Optional Windows notification-area banners, grouped per session, delivered by a detached local worker. No host plugin, click navigation, startup task or global redeployment.",
+  "reproducer": "Two synthetic protected Read results from one session must produce one count-only banner when the identified host window is not foreground.",
+  "invariants": ["Notification failures never change hook decisions", "No body text, detected values, command lines, window titles or full document paths enter the queue", "Notification configuration defaults to off", "Match window owner and process creation time, never process name alone", "Unknown origins use grouped delivery, without claiming exact tab detection"],
+  "validation": ["Grouping, cooldown, expiration and queue bound", "Foreground, background, recycled PID and unknown-origin decisions", "Hook preserves pseudonymization when queue or native transport fails", "Isolated worker integration", "Native Windows accepted and shell-displayed callbacks distinguished"]
+}

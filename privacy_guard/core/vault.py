@@ -1,10 +1,11 @@
 """Session vaults: where real values stay while the model only sees tokens.
 
-Layout: one directory per agent session, holding the session key and one file
-per token. Everything written to disk is encrypted by the OS cipher (PRD §10).
+Layout: a directory per session, with an OS-encrypted key and personal records.
+New bound records are encrypted BLOBs in SQLite; legacy encrypted files remain
+readable without migration. SQLite's visible keys replace the old filenames.
 
 Claude Code runs hook processes in parallel, so every write is atomic and
-nothing is ever read-modify-written.
+new personal records are inserted transactionally without replacing a winner.
 
 Interface:
     vaults = VaultStore(root, cipher)
@@ -21,9 +22,12 @@ import secrets
 import shutil
 import tempfile
 import time
+import sqlite3
+from contextlib import contextmanager
 from pathlib import Path
 
 from privacy_guard.core.cipher import Cipher
+from privacy_guard.core.sqlite_records import RECORDS_FILE, SqliteRecords
 
 DEFAULT_VAULT_ROOT = Path.home() / ".privacy-guard" / "vault"
 KEY_FILE = "session.key"
@@ -82,31 +86,62 @@ class SessionVault:
         self._dir = directory
         self._cipher = cipher
         self._key: bytes | None = None
+        self._records = SqliteRecords(directory / RECORDS_FILE)
+
+    @contextmanager
+    def batch(self):
+        """Commit personal mappings before output; keep legacy files unchanged."""
+        try:
+            with self._records.batch():
+                yield
+        except sqlite3.Error as error:
+            raise VaultError("Encrypted record storage unavailable") from error
 
     def session_key(self) -> bytes:
         """Returns the session's secret key, creating it on first use."""
         if self._key is None:
             key_file = self._dir / KEY_FILE
-            self._create_once(key_file, self._cipher.encrypt(secrets.token_bytes(KEY_BYTES)))
+            if not key_file.exists():
+                self._create_once(key_file, self._cipher.encrypt(secrets.token_bytes(KEY_BYTES)))
             self._key = self._cipher.decrypt(key_file.read_bytes())
         return self._key
 
     def store(self, token_id: str,
               value: str) -> None:
         """Saves the value behind a token. Idempotent for the same value."""
-        known = self.lookup(token_id)
-        if known is not None and known != value:
-            # Two values sharing an identifier would restore the wrong data.
-            raise VaultError("Token collision")
-        if known is None:
-            self._write_atomic(self._dir / token_id, self._cipher.encrypt(value.encode("utf-8")))
+        with self.batch():
+            known = self.lookup(token_id)
+            if known is not None and known != value:
+                raise VaultError("Token collision")
+            if known is None:
+                encrypted = self._cipher.encrypt(value.encode("utf-8"))
+                if token_id.startswith("bound-"):
+                    winner = self._records.put_once(token_id, encrypted)
+                    if self._cipher.decrypt(winner).decode("utf-8") != value:
+                        raise VaultError("Token collision")
+                else:
+                    self._write_atomic(self._dir / token_id, encrypted)
 
     def lookup(self, token_id: str) -> str | None:
         """Returns the value behind a token, or None if this session never issued it."""
         token_file = self._dir / token_id
-        if not token_file.is_file():
-            return None
-        return self._cipher.decrypt(token_file.read_bytes()).decode("utf-8")
+        with self.batch():
+            if token_file.is_file():
+                encrypted = token_file.read_bytes()
+            elif token_id.startswith("bound-"):
+                encrypted = self._records.get(token_id)
+            else:
+                encrypted = None
+            return None if encrypted is None else self._cipher.decrypt(encrypted).decode("utf-8")
+
+    def name_keys(self) -> list[str]:
+        """Existing bound person mappings only; include authoritative legacy files."""
+        prefix = 'bound-person_name-'
+        with self.batch():
+            keys = set(self._records.keys(prefix))
+            if self._dir.exists():
+                keys.update(path.name for path in self._dir.glob(prefix + '*') if path.is_file())
+            return sorted(keys)
 
     def _create_once(self, path: Path,
                      data: bytes) -> None:

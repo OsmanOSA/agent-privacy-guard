@@ -7,8 +7,8 @@ exit code.
 
 Interface: `run(stdin, stdout, stderr, journal, vaults, names) -> exit code`.
 
-Fail-closed guarantee: if handling fails, nothing unchecked reaches the model.
-The tool is blocked (before it runs) or its output is masked (after it ran).
+Errors produce blocking or masking responses. Runtime enforcement still needs
+validation against Claude Code's tool-result schemas and failure behavior.
 """
 
 from __future__ import annotations
@@ -17,24 +17,29 @@ import json
 from typing import Protocol, TextIO
 
 from privacy_guard.claude_code.document_scope import is_document_read
-from privacy_guard.claude_code.protection import protect_tool_output, restore_tool_input
+from privacy_guard.claude_code.edit_policy import before_edit
+from privacy_guard.claude_code.failed_tool import protect_failed_tool
+from privacy_guard.claude_code.protection import protect_tool_output
+from privacy_guard.claude_code.tool_failures import inspection_failed
+from privacy_guard.claude_code.write_restoration import process_write_result
 from privacy_guard.claude_code.responses import (
     POST_TOOL_USE,
+    POST_TOOL_USE_FAILURE,
     PRE_TOOL_USE,
     SESSION_END,
     SESSION_START,
     HookResult,
     allow,
     block,
-    replace_tool_output,
 )
-from privacy_guard.core.name_detector import HeuristicNameDetector
+from privacy_guard.core.insee_names import local_name_detector
 from privacy_guard.core.privacy_core import PrivacyCore
 from privacy_guard.core.vault import VaultStore
+from privacy_guard.diagnostics import record_failure, stage
 
 FAILURE_MESSAGE = "Privacy Guard: internal error, action blocked for safety."
 # Instant name detection for everything that is not a document.
-QUICK_NAMES = HeuristicNameDetector()
+QUICK_NAMES = local_name_detector()
 
 
 class Journal(Protocol):
@@ -61,9 +66,20 @@ def run(stdin: TextIO,
     """Handles a full call (read, decide, write)
     and returns the exit code."""
 
-    result = _handle_safely(stdin.read(), journal, vaults, names)
-    stdout.write(result.stdout)
-    stderr.write(result.stderr)
+    try:
+        with stage('input_read'):
+            raw = stdin.read()
+    except Exception as error:
+        record_failure(journal, None, None, error)
+        raw = ''  # Invalid input produces the existing conservative block response.
+    result = _handle_safely(raw, journal, vaults, names)
+    try:
+        with stage('output_write'):
+            stdout.write(result.stdout)
+            stderr.write(result.stderr)
+    except Exception as error:
+        record_failure(journal, None, None, error)
+        raise  # A broken output pipe cannot carry a guaranteed replacement.
 
     return result.exit_code
 
@@ -72,34 +88,51 @@ def handle(payload: dict,
            journal: Journal,
            vaults: VaultStore,
            names: NameService) -> HookResult:
-    """Decides what happens to an event: protect tool results, restore local tool inputs,
+    """Decides what happens to an event: protect tool results without returning originals in tool inputs,
     warm the name service up when a session starts, forget the session's values when it ends."""
     event = payload["hook_event_name"]
     session_id = payload["session_id"]
-    journal.record(event, payload.get("tool_name", "?"))
+    bind_context = getattr(journal, "bind_context", None)
+    if callable(bind_context):
+        try:
+            bind_context(event, session_id)
+        except Exception:
+            pass  # Optional desktop metadata must not affect enforcement.
+    with stage('event_journal'):
+        journal.record(event, payload.get("tool_name", "?"))
 
     if event == SESSION_START:
         # Load the NER model while the user writes the first prompt.
-        names.ensure_running()
+        with stage('service_start'):
+            names.ensure_running()
         return allow()
     if event == SESSION_END:
-        vaults.close_session(session_id)
+        with stage('session_close'):
+            vaults.close_session(session_id)
         return allow()
 
-    core = PrivacyCore(vaults.session(session_id), names if is_document_read(payload) else QUICK_NAMES)
-    if event == POST_TOOL_USE:
-        return protect_tool_output(payload, core)
     if event == PRE_TOOL_USE:
-        return restore_tool_input(payload, core)
+        with stage('tool_policy'):
+            return before_edit(payload)
+
+    with stage('session_open'):
+        core = PrivacyCore(vaults.session(session_id), names if is_document_read(payload) else QUICK_NAMES)
+    if event == POST_TOOL_USE_FAILURE:
+        return protect_failed_tool(payload, core, journal)
+    if event == POST_TOOL_USE:
+        report = getattr(journal, "record_protection", None)
+        report = report if callable(report) else None
+        if payload.get("tool_name") == "Write":
+            return process_write_result(payload, core, report=report, failures=journal)
+        return protect_tool_output(payload, core, report)
 
     return allow()
 
 
-def fail_closed(event: str) -> HookResult:
-    """Fallback response when handling failed: never let content through."""
-    if event == POST_TOOL_USE:
-        # The tool already ran: replace its output with a neutral message.
-        return replace_tool_output(f"[{FAILURE_MESSAGE} Output masked.]")
+def fail_closed(event: str, payload: object = None) -> HookResult:
+    """Stop post-tool processing; mask recognized schemas without guessing others."""
+    if event in {POST_TOOL_USE, POST_TOOL_USE_FAILURE}:
+        return inspection_failed(event, payload)
     return block(FAILURE_MESSAGE)
 
 
@@ -109,13 +142,21 @@ def _handle_safely(raw_payload: str,
                    names: NameService) -> HookResult:
     # Most cautious assumption until the event has been read.
     event = PRE_TOOL_USE
+    payload = None
 
     try:
-
-        payload = json.loads(raw_payload)
-        event = payload.get("hook_event_name", PRE_TOOL_USE)
+        with stage('payload_parse'):
+            payload = json.loads(raw_payload)
+            if not isinstance(payload, dict):
+                raise ValueError("Hook event must be an object")
+            candidate = payload.get("hook_event_name", PRE_TOOL_USE)
+            if not isinstance(candidate, str):
+                raise ValueError("Hook event name must be a string")
+            event = candidate
         return handle(payload, journal, vaults, names)
 
-    except Exception:
+    except Exception as error:
         # Deliberately broad: whatever the error, fail closed.
-        return fail_closed(event)
+        tool = payload.get('tool_name') if isinstance(payload, dict) else None
+        record_failure(journal, event, tool, error)
+        return fail_closed(event, payload)

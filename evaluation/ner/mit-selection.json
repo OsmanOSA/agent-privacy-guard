@@ -1,0 +1,25 @@
+{
+  "decision_date": "2026-10-06",
+  "status": "evaluation_complete_single_model_selected",
+  "selected_model": "distilcamembert-base-ner",
+  "selected_variant": "Original ONNX FP32; upstream quantized graph remains rejected",
+  "declared_weight_license": "MIT",
+  "task": "PERSON detection in French; keep SoDUCo NAME_OR_BUSINESS as separate diagnostic",
+  "summary": "summary-mit-20261006.json",
+  "production_integration": "Integrated and deployed locally on 2026-10-06; original FP32 artifact, calibrated threshold, exact-text cache and rules-only Python profile",
+  "reasons": [
+    "DistilCamemBERT obtient le meilleur F1 observé sur les deux corpus de personnes : 70,71 % sur Sequoia et 64,69 % sur Europeana. Aucun score global ne mélange ces deux corpus et le diagnostic SoDUCo.",
+    "Sa couverture complète des références PERSON atteint 87,04 % sur Sequoia et 86,50 % sur Europeana, supérieure aux trois nouveaux candidats. Pour la pseudonymisation, cette couverture compte autant que les limites exactes des entités.",
+    "spaCy et hmBERT Tiny sont plus rapides, mais leur qualité PERSON baisse nettement sur Sequoia. hmBERT Tiny améliore le diagnostic SoDUCo, qui réunit noms et entreprises ; cela ne suffit pas à sélectionner un détecteur de personnes généraliste.",
+    "ModernCamemBERT n'améliore pas le F1 observé et reste plus lent dans son déploiement CPU FP32 eager. L'écart de F1 Sequoia avec DistilCamemBERT n'est pas établi par l'intervalle bootstrap apparié ; sur Europeana, cet intervalle favorise DistilCamemBERT. Le choix s'appuie aussi sur la couverture et le coût mesuré.",
+    "Les nouvelles latences médianes de DistilCamemBERT sont 11,95 ms sur Sequoia, 80,19 ms sur Europeana et 9,50 ms sur SoDUCo. Son F1 est repris et recalculé à partir des prédictions précédentes, et sa latence est remesurée dans cette série.",
+    "La comparaison s'arrête ici. Ce choix ne remplace pas encore le modèle de production et ne démontre pas une couverture complète de tous les types de données personnelles."
+  ],
+  "limitations": [
+    "Different native deployment backends; no claim about optimized architecture speed",
+    "hmBERT Europeana data exposure; not an independent test for this model",
+    "No address quality score; SoDUCo label includes businesses",
+    "Warm inference latency excludes model loading and complete hook workflow"
+  ],
+  "deployment_receipt": "distil-deployment-20261006.json"
+}

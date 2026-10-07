@@ -1,0 +1,123 @@
+{
+  "tokenizer_sha256": "79eddc8645e51a0e7524832a38ae7d606154fb935b5f78f6aae0adaa069c8ed0",
+  "normalizer": "Sequence(normalizers=[Replace(pattern=Regex(\"\\p{Z}\"), content=\" \"), Replace(pattern=Regex(\"[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f\\x7f-\\x9f]|\\p{Cf}|\\p{Co}|\\p{Cs}|[\\uFE0F]\"), content=\"\")])",
+  "datasets": {
+    "deep-sequoia-nonwiki": {
+      "records": 2084,
+      "max_windows": 1,
+      "undeclared_omissions": 0,
+      "native_deletions": []
+    },
+    "europeana-newspapers-fr": {
+      "records": 512,
+      "max_windows": 1,
+      "undeclared_omissions": 0,
+      "native_deletions": []
+    },
+    "soduco-nested-ner": {
+      "records": 512,
+      "max_windows": 1,
+      "undeclared_omissions": 0,
+      "native_deletions": [
+        {
+          "id": "soduco-nested-ner:Didot_1854a:607:301",
+          "positions": [
+            40
+          ],
+          "within_target_reference": 1
+        },
+        {
+          "id": "soduco-nested-ner:Cambon_almgene_1841:301:334",
+          "positions": [
+            6
+          ],
+          "within_target_reference": 1
+        },
+        {
+          "id": "soduco-nested-ner:Didot_1851a:92:713",
+          "positions": [
+            13
+          ],
+          "within_target_reference": 1
+        },
+        {
+          "id": "soduco-nested-ner:Bottin1_1827:117:436",
+          "positions": [
+            18
+          ],
+          "within_target_reference": 1
+        },
+        {
+          "id": "soduco-nested-ner:Didot_1851a:419:488",
+          "positions": [
+            18,
+            20
+          ],
+          "within_target_reference": 2
+        },
+        {
+          "id": "soduco-nested-ner:Bottin1_1827:117:487",
+          "positions": [
+            14
+          ],
+          "within_target_reference": 1
+        },
+        {
+          "id": "soduco-nested-ner:Didot_1841a:183:336",
+          "positions": [
+            11
+          ],
+          "within_target_reference": 1
+        },
+        {
+          "id": "soduco-nested-ner:Didot_1854a:326:367",
+          "positions": [
+            14
+          ],
+          "within_target_reference": 1
+        },
+        {
+          "id": "soduco-nested-ner:Didot_1841a:542:605",
+          "positions": [
+            7
+          ],
+          "within_target_reference": 1
+        },
+        {
+          "id": "soduco-nested-ner:Bottin1_1837:345:484",
+          "positions": [
+            25
+          ],
+          "within_target_reference": 1
+        },
+        {
+          "id": "soduco-nested-ner:Bottin1_1827:37:475",
+          "positions": [
+            15
+          ],
+          "within_target_reference": 1
+        },
+        {
+          "id": "soduco-nested-ner:Bottin1_1837:114:487",
+          "positions": [
+            11
+          ],
+          "within_target_reference": 1
+        },
+        {
+          "id": "soduco-nested-ner:Didot_1854a:83:465",
+          "positions": [
+            20
+          ],
+          "within_target_reference": 1
+        }
+      ]
+    },
+    "calibration": {
+      "records": 512,
+      "max_windows": 1,
+      "undeclared_omissions": 0,
+      "native_deletions": []
+    }
+  }
+}

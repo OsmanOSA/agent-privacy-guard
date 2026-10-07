@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-07",
+  "user_selected_style": "dark Driftlight-inspired card",
+  "source_status": "implemented; global hook deployment and activation pending",
+  "tests": {"targeted_count": 58, "failures": 0, "errors": 0, "elapsed_seconds": 5.450, "new_appearance_tests": 7, "lifecycle_followup_tests": 10, "lifecycle_followup_failures": 0},
+  "visual_checks": {"preview": "card-preview.png", "renderer": "same WPF control tree as runtime", "preview_creates_no_desktop_window": true, "preview_inspected": true, "rounded_border_and_bottom_margin_checked": true, "live_submission_accepted": true, "live_renderer": "card", "live_content_rendered_acknowledgement": true, "shell_banner_display_callback": false, "human_feedback": "User did not pay attention; human observation of this card remains unconfirmed"},
+  "presentation": ["Privacy Guard header and turquoise shield", "fixed action headline", "sanitized document basename in an inset", "category occurrence counts", "local treatment or grouped-operation footer", "close button"],
+  "renderer_lifetime": {"focus_activated": false, "normal_close_seconds": 10, "close_paused_while_hovered": true, "maximum_seconds": 60, "startup_acknowledgement_budget_seconds": 5, "fallback": "native Windows banner"},
+  "data_transport": "Constant encoded PowerShell and XAML; four validated summary strings through JSON stdin; runtime text assigned to TextBlock properties",
+  "limitations": ["custom WPF card is not a Windows notification-center entry", "custom card does not inherit Windows banner suppression settings", "primary work-area placement; multi-monitor support not established", "foreground checked before bounded renderer startup; exact tab/pane identity not available"],
+  "driftlight_changed": false,
+  "driftlight_permission_controls_imported": false,
+  "new_dependencies": [],
+  "new_appearance_module_maximum_lines": 68,
+  "all_notification_module_maximum_lines": 102,
+  "git_diff_check": "passed",
+  "global_configuration_changed": false,
+  "global_installation_changed": false,
+  "agenticrag_changed": false
+}

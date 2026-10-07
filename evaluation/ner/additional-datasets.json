@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "retrieved_at": "2026-10-06",
+  "scope": "Source discovery and structural audit; three sources evaluated in report-additional-20261006.md, with AjMC reserved. Raw text remains local.",
+  "datasets": [
+    {
+      "id": "deep-sequoia-nonwiki",
+      "origin": "https://deep-sequoia.inria.fr/",
+      "version": "9.2",
+      "license": "LGPL-LR",
+      "commercial_evaluation": true,
+      "status": "evaluated_person_reference",
+      "gold": "Manual typed PARSEME-FR NE in column 11; not noun supersenses in column 12",
+      "task": "PERSON and other typed entities",
+      "observed": {
+        "sentences_total": 3099,
+        "sentences_nonwiki": 2103,
+        "person_annotation_starts_nonwiki": 272
+      },
+      "caveat": "Exclude all frwiki_50.1000 sentence IDs; check Est Republicain overlap with FENEC; validate span reconstruction.",
+      "license_evidence": "https://deep-sequoia.inria.fr/licence/",
+      "assets": [
+        {
+          "file": "sequoia-9.2.tgz",
+          "url": "https://deep-sequoia.inria.fr/download/sequoia-9.2.tgz",
+          "bytes": 4561684,
+          "sha256": "b3932f454ec908ff636349233a7c1d78d205db24a70e417748ab3aad1428def2"
+        },
+        {
+          "file": "sequoia-license.html",
+          "url": "https://deep-sequoia.inria.fr/licence/",
+          "bytes": 18673,
+          "sha256": "c07f9b6a9f0d2ff3b373dcea0b3e0e41f416a8202e21fd3aded6f0749b7932a0"
+        }
+      ],
+      "redistribute_with_product": false,
+      "training_exposure": "Not a WikiNER source partition; model exposure otherwise unknown",
+      "evaluation_report": "report-additional-20261006.md"
+    },
+    {
+      "id": "soduco-nested-ner",
+      "origin": "https://zenodo.org/records/8167628",
+      "version": "v2",
+      "revision": "doi:10.5281/zenodo.8167628",
+      "license": "CC-BY-4.0 for derived text and annotations only",
+      "commercial_evaluation": true,
+      "status": "evaluated_separate_name_or_business_diagnostic",
+      "gold": "Manual nested_ner_xml_ref on corrected text_ocr_ref; projected OCR gold only when alignment flag is valid",
+      "task": "Address and person-or-business names; not pure PERSON",
+      "observed": {
+        "entries": 8765,
+        "books": 18,
+        "pages": 78,
+        "paired_valid_pero_entries": 8445,
+        "per_open_tags": 8772,
+        "spat_open_tags": 8985
+      },
+      "caveat": "PER includes businesses; original Gallica images have separate rights. Flat FTD/nested SoDUCo are one corpus family.",
+      "paper": "https://arxiv.org/html/2302.10204",
+      "assets": [
+        {
+          "file": "soduco.json",
+          "url": "https://zenodo.org/api/records/8167628/files/dataset_SODUCO_nested_ner.json/content",
+          "bytes": 8149323,
+          "sha256": "2e84cefa5a2794d54be67c1ee2223d5cc7c46b31c45f9ab6cf270ddd1c931eb0"
+        },
+        {
+          "file": "soduco-README.md",
+          "url": "https://zenodo.org/api/records/8167628/files/README.md/content",
+          "bytes": 16774,
+          "sha256": "57e410343700d108f6f561d4e4d4a1f3e5cc98d2b7eb76120901b7370248b0c3"
+        }
+      ],
+      "redistribute_with_product": false,
+      "training_exposure": "Not a WikiNER source partition; model exposure otherwise unknown",
+      "evaluation_report": "report-additional-20261006.md"
+    },
+    {
+      "id": "europeana-newspapers-fr",
+      "origin": "https://github.com/EuropeanaNewspapers/ner-corpora",
+      "revision": "6bf838d23112c255fd81431b1187ab30ef6c2d90",
+      "license": "CC0-1.0",
+      "commercial_evaluation": true,
+      "status": "evaluated_person_reference",
+      "gold": "Human PER/LOC/ORG annotation on historical French OCR in IO format",
+      "task": "PERSON; historical/OCR stress test",
+      "observed": {
+        "token_rows": 205916,
+        "person_tagged_tokens": 5667
+      },
+      "caveat": "Authors warn about OCR errors and removed noisy sentence parts. IO lacks explicit begin tags.",
+      "assets": [
+        {
+          "file": "europeana.bio",
+          "url": "https://raw.githubusercontent.com/EuropeanaNewspapers/ner-corpora/6bf838d23112c255fd81431b1187ab30ef6c2d90/enp_FR.bnf.bio/enp_FR.bnf.bio",
+          "bytes": 1542418,
+          "sha256": "730402f0f21c4d538b93a969a8eeedbec37edc49d2133cd18a26b925d93b0961"
+        },
+        {
+          "file": "europeana-README.md",
+          "url": "https://raw.githubusercontent.com/EuropeanaNewspapers/ner-corpora/6bf838d23112c255fd81431b1187ab30ef6c2d90/README.md",
+          "bytes": 3865,
+          "sha256": "7407502a08d2a9a1104d0c1724716cf2c79d5c3c3e7c09db80cb07e9b5e1f21d"
+        },
+        {
+          "file": "europeana-LICENSE.md",
+          "url": "https://raw.githubusercontent.com/EuropeanaNewspapers/ner-corpora/6bf838d23112c255fd81431b1187ab30ef6c2d90/LICENSE.md",
+          "bytes": 58,
+          "sha256": "45cd5e062b49d12c61aa7bf496d985c14aae77dd9d93b993e7df7cf4489e897f"
+        }
+      ],
+      "redistribute_with_product": false,
+      "training_exposure": "Not a WikiNER source partition; model exposure otherwise unknown",
+      "evaluation_report": "report-additional-20261006.md"
+    },
+    {
+      "id": "ajmc-fr-v04",
+      "origin": "https://github.com/AjaxMultiCommentary/AjMC-NE-corpus",
+      "version": "v0.4",
+      "revision": "c78ba8f8efe0ebf4656cdd98505477d392951c3d",
+      "license": "CONFLICT: CC-BY-4.0 in prose/article; CC-BY-NC-SA-4.0 in profile badge",
+      "commercial_evaluation": null,
+      "status": "hold_license_and_release_discrepancy",
+      "gold": "Independent human annotators and curator review; literal coarse/fine NE in French original export",
+      "task": "Historical literary PERSON; mythological entities separate",
+      "observed": {
+        "page_documents": 15,
+        "token_rows": 3053,
+        "person_starts": 81,
+        "real_person_starts": 73,
+        "myth_person_starts": 8
+      },
+      "caveat": "Resolve license notices before product-oriented evaluation; article test token count is 5391 instead of artifact 3053.",
+      "paper": "https://openhumanitiesdata.metajnl.com/articles/10.5334/johd.150",
+      "assets": [
+        {
+          "file": "ajmc-test-fr.tsv",
+          "url": "https://raw.githubusercontent.com/AjaxMultiCommentary/AjMC-NE-corpus/c78ba8f8efe0ebf4656cdd98505477d392951c3d/data/release/v0.4/ajmc-v0.4-test-fr.tsv",
+          "bytes": 106130,
+          "sha256": "b5fd3e3553c34247b9c713c8add47c2d5eed0502d947ba36f4485bd655650045"
+        },
+        {
+          "file": "ajmc-README.md",
+          "url": "https://raw.githubusercontent.com/AjaxMultiCommentary/AjMC-NE-corpus/c78ba8f8efe0ebf4656cdd98505477d392951c3d/README.md",
+          "bytes": 4540,
+          "sha256": "466b8ddcb468749c2c31d495e9e8dd7e333f4ac17e962ca8a9cf2a159c0aafbc"
+        }
+      ],
+      "redistribute_with_product": false,
+      "training_exposure": "Not a WikiNER source partition; model exposure otherwise unknown"
+    }
+  ]
+}

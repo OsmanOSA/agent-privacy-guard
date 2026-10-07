@@ -1,0 +1,224 @@
+{
+  "date": "2026-10-06",
+  "revision": "e539d952f70088b450c300c28ba455da87f2dc4b",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "threads": 4,
+  "provider": "CPUExecutionProvider",
+  "variant": "onnx-fp32",
+  "threshold": 0.5,
+  "window_tokens": 512,
+  "window_overlap": 64,
+  "checked_real_corpus_inputs": {
+    "deep-sequoia-nonwiki": 12,
+    "europeana-newspapers-fr": 12,
+    "soduco-nested-ner": 12
+  },
+  "prediction_drift_count": 0,
+  "prediction_drift": [],
+  "latency_cases": [
+    {
+      "tokens": 498,
+      "windows": 1,
+      "text_sha256": "fdacf65580660cf059ac9f95aa62be360f67e2019559ac35a00b8b87b696afdc",
+      "latency": {
+        "1": {
+          "elapsed_ms": [
+            260.494900001504,
+            230.5345999993733,
+            233.82309999578865
+          ],
+          "median_ms": 233.82309999578865
+        },
+        "2": {
+          "elapsed_ms": [
+            232.22929999610642,
+            240.75019999872893,
+            224.91699999955017
+          ],
+          "median_ms": 232.22929999610642
+        },
+        "4": {
+          "elapsed_ms": [
+            228.51339999760967,
+            238.46630000480218,
+            230.9231000035652
+          ],
+          "median_ms": 230.9231000035652
+        }
+      }
+    },
+    {
+      "tokens": 999,
+      "windows": 3,
+      "text_sha256": "4161836c7b662d9a18db7dfd464916b66fc40480040c0295c37d5b6ca640d21d",
+      "latency": {
+        "1": {
+          "elapsed_ms": [
+            542.4026000036974,
+            531.6822999957367,
+            537.9409000015585
+          ],
+          "median_ms": 537.9409000015585
+        },
+        "2": {
+          "elapsed_ms": [
+            545.1857000007294,
+            517.0987999954377,
+            526.530900002399
+          ],
+          "median_ms": 526.530900002399
+        },
+        "4": {
+          "elapsed_ms": [
+            743.8855000000331,
+            729.4775000045775,
+            745.6707999954233
+          ],
+          "median_ms": 743.8855000000331
+        }
+      }
+    },
+    {
+      "tokens": 1999,
+      "windows": 5,
+      "text_sha256": "1ad2250ea572603a3cf91be209c0e571924e4ec45226fc70a321fc94a079e9ae",
+      "latency": {
+        "1": {
+          "elapsed_ms": [
+            1061.34920000477,
+            1065.485000006447,
+            1062.1190999954706
+          ],
+          "median_ms": 1062.1190999954706
+        },
+        "2": {
+          "elapsed_ms": [
+            1069.0443999992567,
+            1086.6239000024507,
+            1096.5339000031236
+          ],
+          "median_ms": 1086.6239000024507
+        },
+        "4": {
+          "elapsed_ms": [
+            1124.5600000038394,
+            1119.3977000002633,
+            1055.1895999960834
+          ],
+          "median_ms": 1119.3977000002633
+        }
+      }
+    },
+    {
+      "tokens": 3997,
+      "windows": 9,
+      "text_sha256": "9f6246cfd0b06f487921535b253f7d771f2f548421bfe8c1f6469166d110e904",
+      "latency": {
+        "1": {
+          "elapsed_ms": [
+            2150.6055999998352,
+            2087.4555999980657,
+            2174.3123999985983
+          ],
+          "median_ms": 2150.6055999998352
+        },
+        "2": {
+          "elapsed_ms": [
+            2174.6669999993173,
+            2176.758099994913,
+            2172.8998000035062
+          ],
+          "median_ms": 2174.6669999993173
+        },
+        "4": {
+          "elapsed_ms": [
+            2206.1198000010336,
+            2168.200499996601,
+            2294.0027000004193
+          ],
+          "median_ms": 2206.1198000010336
+        }
+      }
+    }
+  ],
+  "isolated_worker_memory": [
+    {
+      "batch_size": 1,
+      "after_load": {
+        "working_set_bytes": 368324608,
+        "peak_working_set_bytes": 464830464,
+        "private_bytes": 715030528
+      },
+      "after_long_inference": {
+        "working_set_bytes": 440647680,
+        "peak_working_set_bytes": 464830464,
+        "private_bytes": 855670784
+      }
+    },
+    {
+      "batch_size": 2,
+      "after_load": {
+        "working_set_bytes": 368365568,
+        "peak_working_set_bytes": 464961536,
+        "private_bytes": 715059200
+      },
+      "after_long_inference": {
+        "working_set_bytes": 501755904,
+        "peak_working_set_bytes": 501755904,
+        "private_bytes": 875503616
+      }
+    },
+    {
+      "batch_size": 4,
+      "after_load": {
+        "working_set_bytes": 368283648,
+        "peak_working_set_bytes": 464879616,
+        "private_bytes": 714956800
+      },
+      "after_long_inference": {
+        "working_set_bytes": 629002240,
+        "peak_working_set_bytes": 629002240,
+        "private_bytes": 1031606272
+      }
+    }
+  ],
+  "passes": 3,
+  "configuration_orders": [
+    [
+      1,
+      2,
+      4
+    ],
+    [
+      2,
+      4,
+      1
+    ],
+    [
+      4,
+      1,
+      2
+    ]
+  ],
+  "scope": "Loaded model tokenization, window inference and decoding; no detection cache, hook, IPC or vault",
+  "limitations": "Single machine and published source for timing; three observations per configuration; system load uncontrolled. Memory is fresh-process peak working set, not model-only memory.",
+  "model_sha256": "666ce15c968ca49874d2449aa9b83164dbb1126090d012dda7c35b2ef3672e1d",
+  "tokenizer_sha256": "87d51d8e30bfe0b07f9042dd67ca7ee52510c0f8f91d103980e9112e83beced1",
+  "harness_sha256": {
+    "tools/check_window_batches.py": "f71e5fb8202799d252d30cae7503ea959a6dd7a830061801e917ba0cc6acbcaa",
+    "evaluation/ner/window_batch.py": "275a12c0d8c5187b1f7081cfc60d72bf7bf44c8c11d30af99e068b9815307e6f",
+    "privacy_guard/service/ner_tokens.py": "b677a32f52a3a6101f5a33ff27bcf25c015241ce463e62e098248d4bb382c022"
+  },
+  "decision": {
+    "retained_batch_size": 1,
+    "reason": "No convincing latency improvement for 1999/3997-token inputs; larger batches increase peak working set, with a material slowdown at 999 tokens for batch four",
+    "production_runtime_modified": false,
+    "deployment_required": false
+  },
+  "runtime_versions": {
+    "numpy": "2.5.3",
+    "onnxruntime": "1.30.0",
+    "tokenizers": "0.22.2"
+  },
+  "source_still_matches_existing_deployment": true
+}

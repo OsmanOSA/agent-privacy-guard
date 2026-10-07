@@ -20,7 +20,7 @@ python -m unittest discover -s tests -t .
 python -m benchmark --spaced
 ```
 
-Tests use temporary directories. The full baseline currently has three shell-launch failures and one optional-model skip; see [the dated report](docs/security/baseline-2026-10-05.md). Preserve a failing baseline in the change evidence; do not silently skip a failing supported-platform check.
+Tests use temporary directories. The Windows suite on 2026-10-07 has 395 tests with no failures and two skips (optional model and unavailable symlink creation). The earlier shell-launch failures are recorded in [the historical baseline](docs/security/baseline-2026-10-05.md). Preserve a failing baseline in the change evidence; do not silently skip a failing supported-platform check.
 
 Keep synthetic Stripe keys compatible with push protection: assemble full-length keys from separate string literals in Python (see `tests/fakes.py`). Static corpus examples use a 16-character suffix, the detector's minimum, instead of a full-length credential-shaped value. Adding `FAKE` alone does not prevent a source scanner from flagging a key.
 
@@ -43,7 +43,11 @@ For model-enabled evaluation, use the model environment's Python. `--spaced` exi
 
 ## Installation is a separate action
 
-Running source tests does not redeploy the installed hook. `python -m privacy_guard install` writes to user directories and Claude Code settings, purges session vaults and may fetch the name model. It can affect a live agent session. Run it only when explicitly working on installation and after passing the relevant checks in the supported shell combination.
+Running source tests does not redeploy the installed hook. `python -m privacy_guard install` writes to user directories and Claude Code settings and may fetch the name model. Compatible updates preserve session vaults; an unknown or incompatible vault format stops installation without deleting them. Uninstall deletes the vaults. Run installation only when explicitly working on it and after passing the relevant checks in the supported shell combination.
+
+The vault format contract is recorded in `vault-format.json` outside the deployed app. Bump `CURRENT_FORMAT` in `claude_code/vault_format.py` whenever the encrypted record layout, token derivation or cipher changes. An unmarked existing installation can be adopted only when its format-related core sources exactly match the incoming package. No automatic migration or destructive reset is included.
+
+The v2 engine reads v1 encrypted files and stores new bound records as DPAPI-encrypted SQLite BLOBs. Keep legacy records authoritative and commit new mappings before returning tokens. SQLite metadata remains visible; do not put plaintext values into database fields, diagnostics or receipts. Cover transaction failures, concurrent collisions and unchanged legacy bytes when changing this storage contract.
 
 Use temporary `--claude-dir` and `--guard-home` paths for installation tests. The current source still uses default runtime locations in several places: temporary install flags alone are not proof of complete runtime isolation. Prefer the existing tests until path isolation is verified.
 

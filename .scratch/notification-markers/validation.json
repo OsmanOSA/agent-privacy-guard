@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-07",
+  "reproduced_failures_before_fix": 4,
+  "full_suite": {"tests": 395, "failures": 0, "errors": 0, "skipped": 2, "seconds": 31.487},
+  "notification_root_cause": "WPF Window desired height measured before content: native HWND 412 x 2 pixels despite ContentRendered",
+  "notification_after": {"width": 412, "height": 242, "native_visible": true, "human_confirmed": true, "human_reply": "La oui"},
+  "placeholder_regressions": ["partial NER predictions", "multiple counters and bracket forms", "old session false positives stay restorable without being reused", "real email containing placeholder prefix", "adjacent names and emails", "secret detection unchanged", "broad name span split around placeholder", "actual hook Read/Write/reread cycle"],
+  "benchmark_same_corpus": {"heuristic_scores_and_findings_unchanged": true, "distilcamembert_scores_and_findings_unchanged": true},
+  "remaining_limits": ["only allowlisted uppercase marker labels and 3-6 digit counters", "automatic source-code restoration remains unsupported", "Windows origin identification remains window-level"],
+  "deployment_receipt": "deployment.json"
+}

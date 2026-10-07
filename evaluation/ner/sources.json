@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "retrieved_at": "2026-10-05",
+  "datasets": [
+    {
+      "id": "wikiner-fr-gold",
+      "revision": "2fecbeee6cdb7214bdffd4360aa5024007b28853",
+      "origin": "https://huggingface.co/datasets/danrun/WikiNER-fr-gold",
+      "license": "CC-BY-4.0",
+      "assets": [
+        {
+          "local_path": "wikiner-fr-gold/corpus.conll",
+          "url": "https://huggingface.co/datasets/danrun/WikiNER-fr-gold/resolve/2fecbeee6cdb7214bdffd4360aa5024007b28853/wikiner-fr-gold.conll",
+          "sha256": "11c9ee8e348f2d70ebf3a0a79334acf2c9d26bc7baadeb46e7722d7fd81362ec",
+          "bytes": 9500317
+        },
+        {
+          "local_path": "wikiner-fr-gold/README.md",
+          "url": "https://huggingface.co/datasets/danrun/WikiNER-fr-gold/resolve/2fecbeee6cdb7214bdffd4360aa5024007b28853/README.md",
+          "sha256": "ee1778e1619d7178ccd8ed4436d45bc948a991dff94b2b6d386fa7859561482b",
+          "bytes": 2223
+        },
+        {
+          "local_path": "wikiner-fr-gold/labels.json",
+          "url": "https://huggingface.co/datasets/danrun/WikiNER-fr-gold/resolve/2fecbeee6cdb7214bdffd4360aa5024007b28853/labels.json",
+          "sha256": "79435d4e962d2032fadd1f662e586f3d4d1b9d5267e044b76465f36640ed9a6b",
+          "bytes": 211
+        }
+      ],
+      "commercial_evaluation": true,
+      "evaluation_status": "active",
+      "redistribute_with_product": false
+    },
+    {
+      "id": "hipe2022-fr",
+      "revision": "147f5bc3c7fb7e5c6b024a9ffd6503cd019fb9ea",
+      "origin": "https://github.com/hipe-eval/HIPE-2022-data",
+      "license": "CC-BY-NC-SA-4.0",
+      "assets": [
+        {
+          "local_path": "hipe2022-fr/dev.tsv",
+          "url": "https://raw.githubusercontent.com/hipe-eval/HIPE-2022-data/147f5bc3c7fb7e5c6b024a9ffd6503cd019fb9ea/data/v2.1/hipe2020/fr/HIPE-2022-v2.1-hipe2020-dev-fr.tsv",
+          "sha256": "a98efbc45cb4e57cfb5431f833a6fbeab7feb6cb353a78032d09b86fbf191510",
+          "bytes": 1134645
+        },
+        {
+          "local_path": "hipe2022-fr/test.tsv",
+          "url": "https://raw.githubusercontent.com/hipe-eval/HIPE-2022-data/147f5bc3c7fb7e5c6b024a9ffd6503cd019fb9ea/data/v2.1/hipe2020/fr/HIPE-2022-v2.1-hipe2020-test-fr.tsv",
+          "sha256": "c3e10f1c9a9b12bae71a40d8148516da3979315a405911474ecfee304bb688a6",
+          "bytes": 1207302
+        },
+        {
+          "local_path": "hipe2022-fr/LICENSE",
+          "url": "https://raw.githubusercontent.com/hipe-eval/HIPE-2022-data/147f5bc3c7fb7e5c6b024a9ffd6503cd019fb9ea/LICENSE",
+          "sha256": "1349a4b6148492b44f629e64eed676612e234fe9a839e4f3b277c1482c8849f1",
+          "bytes": 20849
+        },
+        {
+          "local_path": "hipe2022-fr/README.md",
+          "url": "https://raw.githubusercontent.com/hipe-eval/HIPE-2022-data/147f5bc3c7fb7e5c6b024a9ffd6503cd019fb9ea/documentation/README-hipe2020.md",
+          "sha256": "51a0962eda05b32fc4918be915d658ace5e90cbf56979b43277c13d4072b4d6b",
+          "bytes": 3098
+        }
+      ],
+      "commercial_evaluation": false,
+      "evaluation_status": "excluded_noncommercial",
+      "redistribute_with_product": false,
+      "exclusion_reason": "CC-BY-NC-SA-4.0 does not authorize use primarily directed toward commercial advantage; obtain separate permission before this product-oriented evaluation."
+    },
+    {
+      "id": "fenec-wikinews",
+      "revision": "3a975635d57712096d8ebf859d842042c782837b",
+      "origin": "https://github.com/alicemillour/FENEC",
+      "license": "CC-BY-2.5",
+      "assets": [
+        {
+          "local_path": "fenec/README.md",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/README.md",
+          "sha256": "f876f59b29b581bf1b0fb6e969c97a48df88750eb559afa8190c29e0709fb6a1",
+          "bytes": 2817
+        },
+        {
+          "local_path": "fenec/FENEC/information02-Wikinews.txt",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/FENEC/information02-Wikinews.txt",
+          "sha256": "00d50a3457f22211fb721473d33f03e25f96ec4371c6f39b186abfbae03da25a",
+          "bytes": 5672
+        },
+        {
+          "local_path": "fenec/FENEC/information02-Wikinews.ann",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/FENEC/information02-Wikinews.ann",
+          "sha256": "1e1a4da9885b6f1d2b400eee3360283c161936a66e880878aa2d369571f3440d",
+          "bytes": 4118
+        }
+      ],
+      "commercial_evaluation": true,
+      "evaluation_status": "active",
+      "redistribute_with_product": false,
+      "use": "Inference evaluation only; preserve data attribution and share-alike on redistributed derivatives"
+    },
+    {
+      "id": "fenec-gsd",
+      "revision": "3a975635d57712096d8ebf859d842042c782837b",
+      "origin": "https://github.com/alicemillour/FENEC",
+      "license": "CC-BY-SA-4.0",
+      "assets": [
+        {
+          "local_path": "fenec/README.md",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/README.md",
+          "sha256": "f876f59b29b581bf1b0fb6e969c97a48df88750eb559afa8190c29e0709fb6a1",
+          "bytes": 2817
+        },
+        {
+          "local_path": "fenec/FENEC/multi01-UDFrenchGSD.txt",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/FENEC/multi01-UDFrenchGSD.txt",
+          "sha256": "b1263810a592fc968b6ebdac92da22cccbe5c9ceb79b65b5662714b8af4921ee",
+          "bytes": 5340
+        },
+        {
+          "local_path": "fenec/FENEC/multi01-UDFrenchGSD.ann",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/FENEC/multi01-UDFrenchGSD.ann",
+          "sha256": "6f954817183ce755286ef61bf2fff57dc06713cf6ee9bbae9e95b0f844237a13",
+          "bytes": 3110
+        }
+      ],
+      "commercial_evaluation": true,
+      "evaluation_status": "active",
+      "redistribute_with_product": false,
+      "use": "Inference evaluation only; preserve data attribution and share-alike on redistributed derivatives"
+    },
+    {
+      "id": "fenec-republicain",
+      "revision": "3a975635d57712096d8ebf859d842042c782837b",
+      "origin": "https://github.com/alicemillour/FENEC",
+      "license": "CC-BY-SA-2.0",
+      "assets": [
+        {
+          "local_path": "fenec/README.md",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/README.md",
+          "sha256": "f876f59b29b581bf1b0fb6e969c97a48df88750eb559afa8190c29e0709fb6a1",
+          "bytes": 2817
+        },
+        {
+          "local_path": "fenec/FENEC/information03-LEstRepublicain.txt",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/FENEC/information03-LEstRepublicain.txt",
+          "sha256": "35e1aedb1fef0280e2c1721d185e1514e07534f15b9c3eb8e7388f910be37c44",
+          "bytes": 4766
+        },
+        {
+          "local_path": "fenec/FENEC/information03-LEstRepublicain.ann",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/FENEC/information03-LEstRepublicain.ann",
+          "sha256": "c260f8aaa833d1ae50417451292de8f890342f8622c8794c0e7e6850780f7313",
+          "bytes": 4323
+        }
+      ],
+      "commercial_evaluation": true,
+      "evaluation_status": "active",
+      "redistribute_with_product": false,
+      "use": "Inference evaluation only; preserve data attribution and share-alike on redistributed derivatives"
+    },
+    {
+      "id": "fenec-rhapsodie",
+      "revision": "3a975635d57712096d8ebf859d842042c782837b",
+      "origin": "https://github.com/alicemillour/FENEC",
+      "license": "CC-BY-SA-4.0",
+      "assets": [
+        {
+          "local_path": "fenec/README.md",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/README.md",
+          "sha256": "f876f59b29b581bf1b0fb6e969c97a48df88750eb559afa8190c29e0709fb6a1",
+          "bytes": 2817
+        },
+        {
+          "local_path": "fenec/FENEC/spoken01-Rhapsodie.txt",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/FENEC/spoken01-Rhapsodie.txt",
+          "sha256": "4edf9458b7a206e98a33960d41450a07fc853afd9fc47f845bc16bb367c09147",
+          "bytes": 5263
+        },
+        {
+          "local_path": "fenec/FENEC/spoken01-Rhapsodie.ann",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/FENEC/spoken01-Rhapsodie.ann",
+          "sha256": "6119af895d2059afadf538e7e0988ca4acf84a48b92c789bfd42f953f630bed6",
+          "bytes": 1896
+        },
+        {
+          "local_path": "fenec/FENEC/spoken02-Rhapsodie.txt",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/FENEC/spoken02-Rhapsodie.txt",
+          "sha256": "6e21ac16f8f8e2b91b26876529d82be90caecf2e6cf4c6c129e5a421a91b45f0",
+          "bytes": 5302
+        },
+        {
+          "local_path": "fenec/FENEC/spoken02-Rhapsodie.ann",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/FENEC/spoken02-Rhapsodie.ann",
+          "sha256": "bd6b183c6070d8d7e41dce87ec2621924f08a4740def7c6bb56328cb5e16fb1d",
+          "bytes": 1966
+        },
+        {
+          "local_path": "fenec/FENEC/spoken03-Rhapsodie.txt",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/FENEC/spoken03-Rhapsodie.txt",
+          "sha256": "c0d4a1ea3d1b46a9db4270fe5c8e8294fd0b7e2a7dc61932a3ec1091e24a4b5c",
+          "bytes": 5114
+        },
+        {
+          "local_path": "fenec/FENEC/spoken03-Rhapsodie.ann",
+          "url": "https://raw.githubusercontent.com/alicemillour/FENEC/3a975635d57712096d8ebf859d842042c782837b/FENEC/spoken03-Rhapsodie.ann",
+          "sha256": "a5802c335b71515276039b4f4bfdfc60317209364e192da91cd7508962975024",
+          "bytes": 2027
+        }
+      ],
+      "commercial_evaluation": true,
+      "evaluation_status": "active",
+      "redistribute_with_product": false,
+      "use": "Inference evaluation only; preserve data attribution and share-alike on redistributed derivatives"
+    },
+    {
+      "id": "deep-sequoia-nonwiki",
+      "origin": "https://deep-sequoia.inria.fr/",
+      "license": "LGPL-LR",
+      "revision": "9.2",
+      "assets": [
+        {
+          "local_path": "additional-20261006/sequoia-9.2.tgz",
+          "url": "https://deep-sequoia.inria.fr/download/sequoia-9.2.tgz",
+          "sha256": "b3932f454ec908ff636349233a7c1d78d205db24a70e417748ab3aad1428def2",
+          "bytes": 4561684
+        },
+        {
+          "local_path": "additional-20261006/sequoia-license.html",
+          "url": "https://deep-sequoia.inria.fr/licence/",
+          "sha256": "c07f9b6a9f0d2ff3b373dcea0b3e0e41f416a8202e21fd3aded6f0749b7932a0",
+          "bytes": 18673
+        }
+      ],
+      "commercial_evaluation": true,
+      "evaluation_status": "active",
+      "redistribute_with_product": false,
+      "use": "Local model inference evaluation only; source licensing does not change model or product licensing."
+    },
+    {
+      "id": "soduco-nested-ner",
+      "origin": "https://zenodo.org/records/8167628",
+      "license": "CC-BY-4.0",
+      "revision": "doi:10.5281/zenodo.8167628",
+      "assets": [
+        {
+          "local_path": "additional-20261006/soduco.json",
+          "url": "https://zenodo.org/api/records/8167628/files/dataset_SODUCO_nested_ner.json/content",
+          "sha256": "2e84cefa5a2794d54be67c1ee2223d5cc7c46b31c45f9ab6cf270ddd1c931eb0",
+          "bytes": 8149323
+        },
+        {
+          "local_path": "additional-20261006/soduco-README.md",
+          "url": "https://zenodo.org/api/records/8167628/files/README.md/content",
+          "sha256": "57e410343700d108f6f561d4e4d4a1f3e5cc98d2b7eb76120901b7370248b0c3",
+          "bytes": 16774
+        }
+      ],
+      "commercial_evaluation": true,
+      "evaluation_status": "active",
+      "redistribute_with_product": false,
+      "use": "Local model inference evaluation only; source licensing does not change model or product licensing."
+    },
+    {
+      "id": "europeana-newspapers-fr",
+      "origin": "https://github.com/EuropeanaNewspapers/ner-corpora",
+      "license": "CC0-1.0",
+      "revision": "6bf838d23112c255fd81431b1187ab30ef6c2d90",
+      "assets": [
+        {
+          "local_path": "additional-20261006/europeana.bio",
+          "url": "https://raw.githubusercontent.com/EuropeanaNewspapers/ner-corpora/6bf838d23112c255fd81431b1187ab30ef6c2d90/enp_FR.bnf.bio/enp_FR.bnf.bio",
+          "sha256": "730402f0f21c4d538b93a969a8eeedbec37edc49d2133cd18a26b925d93b0961",
+          "bytes": 1542418
+        },
+        {
+          "local_path": "additional-20261006/europeana-README.md",
+          "url": "https://raw.githubusercontent.com/EuropeanaNewspapers/ner-corpora/6bf838d23112c255fd81431b1187ab30ef6c2d90/README.md",
+          "sha256": "7407502a08d2a9a1104d0c1724716cf2c79d5c3c3e7c09db80cb07e9b5e1f21d",
+          "bytes": 3865
+        },
+        {
+          "local_path": "additional-20261006/europeana-LICENSE.md",
+          "url": "https://raw.githubusercontent.com/EuropeanaNewspapers/ner-corpora/6bf838d23112c255fd81431b1187ab30ef6c2d90/LICENSE.md",
+          "sha256": "45cd5e062b49d12c61aa7bf496d985c14aae77dd9d93b993e7df7cf4489e897f",
+          "bytes": 58
+        }
+      ],
+      "commercial_evaluation": true,
+      "evaluation_status": "active",
+      "redistribute_with_product": false,
+      "use": "Local model inference evaluation only; source licensing does not change model or product licensing."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "status": "implemented and tested locally; global deployment pending",
+  "scope": "Reproduce the user-reported inconsistencies; complete detected name words and propagate their complete spellings within one tool result; remove demonstrated code false positives",
+  "invariants": [
+    "One detector pass per string; no additional model calls or persistent plaintext name index",
+    "Session-key derivation and encrypted vault layout remain unchanged",
+    "Restore the exact original spelling, including case variants",
+    "Secrets, formatted personal data and existing placeholders retain priority",
+    "A detection failure never becomes an uninspected successful result",
+    "No changes to AgenticRAG or the global installed hook at this review stage"
+  ],
+  "limits": [
+    "Propagation is limited to one returned tool result, not previous or future calls",
+    "Exact complete spellings with case variants only; no inference of surname or first-name aliases",
+    "Word completion prevents partial leakage but cannot establish that a detected word is a person",
+    "Historical placeholders remain opaque and are not proof of current cross-session issuance",
+    "Image OCR and structured JSON dictionary-key detection are outside this correction"
+  ],
+  "validation": {
+    "run": 312,
+    "failures": 0,
+    "skipped": 2
+  },
+  "new_regressions": 16,
+  "evidence": "evaluation/ner/detection-consistency-review-20261007.json"
+}

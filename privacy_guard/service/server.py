@@ -23,7 +23,9 @@ from pathlib import Path
 from typing import Callable
 
 from privacy_guard.core.name_detector import NameDetector
+from privacy_guard.service.cached_names import CachedNameDetector
 from privacy_guard.service.channel import ServiceChannel
+from privacy_guard.diagnostics import failure_details, stage
 
 
 def serve(channel: ServiceChannel,
@@ -68,11 +70,15 @@ def _answer(connection: Connection,
 def _find_names(detector: _BackgroundLoad,
                 text: str) -> dict:
     try:
-        findings = detector.get().find_names(text)
+        with stage('model_loading'):
+            names = detector.get()
+        with stage('model_inference'):
+            findings = names.find_names(text)
         return {"findings": [[f.kind, f.start, f.end] for f in findings]}
     except Exception as error:
         # One bad request must not bring the service down; the hook will fail closed.
-        return {"error": type(error).__name__}
+        at, category = failure_details(error)
+        return {"error": category, "stage": at}
 
 
 class _BackgroundLoad:
@@ -97,7 +103,7 @@ class _BackgroundLoad:
 
     def _run(self, load: Callable[[], NameDetector]) -> None:
         try:
-            self._detector = load()
+            self._detector = CachedNameDetector(load())
         except Exception as error:
             self._error = error
         finally:

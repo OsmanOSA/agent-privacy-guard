@@ -1,9 +1,8 @@
 import unittest
-from pathlib import Path
 
 from privacy_guard.core.personal_data_detector import find_personal_data
 
-PLAYGROUND_ENV = Path(__file__).resolve().parent.parent / "playground" / ".env"
+from tests.env_fixture import SYNTHETIC_ENV
 
 
 def detected(text):
@@ -12,7 +11,7 @@ def detected(text):
 
 class PlaygroundEnvTest(unittest.TestCase):
     def test_detects_the_email_and_the_phone(self):
-        env = PLAYGROUND_ENV.read_text(encoding="utf-8")
+        env = SYNTHETIC_ENV
 
         found = detected(env)
 

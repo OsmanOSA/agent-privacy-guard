@@ -1,0 +1,40 @@
+{
+  "deployed": true,
+  "completed_at": "2026-10-07T09:01:48.493987+00:00",
+  "backup_directory": "backups/upgrade-20261007T090147Z",
+  "installer_settings_backup": null,
+  "existing_vault_files": 2,
+  "vault_bytes_unchanged": true,
+  "settings_bytes_unchanged": true,
+  "unrelated_settings_unchanged": true,
+  "export_policy_unchanged": true,
+  "model_configuration_unchanged": true,
+  "vault_format_unchanged": true,
+  "source_matches_deployment": true,
+  "deployed_python_files": 74,
+  "insee_index_sha256": "ad62c4e9bab0f8246fdd642fa2ee038ece7d47286e80db9b008e8bca7e83d832",
+  "insee_counts": {
+    "family": 218982,
+    "given": 155176
+  },
+  "hooks_registered": {
+    "PreToolUse": true,
+    "PostToolUse": true,
+    "PostToolUseFailure": true,
+    "SessionStart": true,
+    "SessionEnd": true
+  },
+  "tests": {
+    "run": 347,
+    "failed": 0,
+    "skipped": 2
+  },
+  "model_ready": true,
+  "windows_desktop_notifications_implemented": false,
+  "network_model_boundary_verified": false,
+  "verified_at": "2026-10-07T09:06:08.275836+00:00",
+  "post_probe_existing_vault_bytes_unchanged": true,
+  "service_loaded_after_upgrade": true,
+  "installed_cycle_receipt": "session-names-insee-installed-cycle-20261007.json",
+  "installed_insee_session_diagnostics_receipt": "session-names-insee-installed-check-20261007.json"
+}

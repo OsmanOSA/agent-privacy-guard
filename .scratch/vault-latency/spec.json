@@ -1,0 +1,26 @@
+{
+  "scope": "Reduce vault file-open overhead using transactional SQLite storage for new encrypted records; deploy and measure the installed hook",
+  "profile": {"warm_hook_ms": 487, "file_open_ms": 415, "dpapi_ms": 29, "mapping_lookups": 63},
+  "invariants": [
+    "Keep DPAPI, category binding and token derivation unchanged",
+    "Read legacy record files without migrating or rewriting them",
+    "Store new payloads as encrypted SQLite BLOBs, never plaintext",
+    "Commit records before releasing protected results",
+    "Atomic insert and collision checks across concurrent hook processes",
+    "Close database connections at operation boundaries for Windows cleanup",
+    "Explicitly version the added storage layout; preserve recognized legacy vaults",
+    "Every supported output still runs rules and pseudonymization; Python remains rules-only"
+  ],
+  "baseline": {"suite_run": 259, "failures": 0, "skipped": 2,
+    "installed_4k_first_ms": 3447, "installed_4k_reread_ms": 1354, "installed_python_1k_ms": 451},
+  "status": "implemented, tested and deployed",
+  "validation": {"suite_run": 267, "failures": 0, "skipped": 2,
+    "coverage": ["encrypted BLOBs", "rollback/retry", "corruption", "lock contention", "concurrent inserts and collisions", "unchanged legacy keys and records", "native installed restoration/reread cycles"]},
+  "installed_medians_ms": {
+    "runs_per_version": 3,
+    "before": {"first_document": 2310, "identical_reread": 675, "python_1k": 293},
+    "after": {"first_document": 1684, "identical_reread": 295, "python_1k": 296}
+  },
+  "evidence": ["evaluation/ner/sqlite-vault-deployment-20261006.json", "evaluation/ner/sqlite-vault-latency-20261006.json", "evaluation/ner/vault-profile-sqlite-20261006.json"],
+  "limitations": "First unseen documents retain inference cost; measurements exclude model warmup and Claude network. No model or detector parameters changed."
+}

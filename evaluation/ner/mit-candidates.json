@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-10-06",
+  "models": [
+    {
+      "id": "spacy-multilingual",
+      "source": "https://github.com/explosion/spacy-models/releases/tag/xx_ent_wiki_sm-3.8.0",
+      "revision": "xx_ent_wiki_sm-3.8.0",
+      "license": "MIT",
+      "training_exposure": "WikiNER; do not use WikiNER as independent test",
+      "variant": "Original spaCy CPU pipeline, native PER spans"
+    },
+    {
+      "id": "hmbert-tiny-fr",
+      "source": "https://huggingface.co/stefan-it/hmbench-icdar-fr-hmbert_tiny-bs8-wsFalse-e10-lr3e-05-poolingfirst-layers-1-crfFalse-2",
+      "revision": "1037ad3af57bc1315fb39c6fdf232f4c3aff5c40",
+      "license": "MIT",
+      "training_exposure": "French ICDAR-Europeana; Europeana test result is exposed diagnostic",
+      "variant": "Published Flair FP32 checkpoint, CPU"
+    },
+    {
+      "id": "moderncamembert-fr",
+      "source": "https://huggingface.co/CATIE-AQ/Moderncamembert_4entities",
+      "revision": "3fbea7e29487a7d357eee64ad0d7ea9313552617",
+      "license": "MIT",
+      "training_exposure": "CATIE-AQ/frenchNER_4entities; source overlap must be reported",
+      "variant": "Original safetensors FP32, PyTorch CPU eager attention"
+    }
+  ]
+}

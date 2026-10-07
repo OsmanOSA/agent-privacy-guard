@@ -13,15 +13,15 @@ from pathlib import Path
 
 from privacy_guard.core.name_detector import (
     CombinedNameDetector,
-    HeuristicNameDetector,
     NameDetector,
-    PlausibleNameFilter,
 )
+from privacy_guard.core.insee_names import local_name_detector
 from privacy_guard.service.channel import DEFAULT_RUN_DIR, ServiceChannel
+from privacy_guard.service.distil_files import DEFAULT_DISTIL_DIR, DISTIL_DIRECTORY
+from privacy_guard.service.ner_policy import requires_model
 from privacy_guard.service.server import serve
 
-# The model loads in ~2 s and holds ~0.6 GB: after an hour without requests the
-# memory is worth more than the next reload, which goes unnoticed.
+# Release model memory after an hour without requests. SessionStart warms it up.
 IDLE_SECONDS = 3600
 LOG_FILE = "service.log"
 
@@ -37,20 +37,26 @@ def main() -> None:
     args = parser.parse_args()
 
     log_file = args.run_dir.parent / "logs" / LOG_FILE
-    serve(ServiceChannel(args.run_dir), lambda: _load_detector(log_file), IDLE_SECONDS)
+    model_dir = args.run_dir.parent / "models" / DISTIL_DIRECTORY
+    serve(ServiceChannel(args.run_dir),
+          lambda: _load_detector(log_file, model_dir, requires_model(args.run_dir.parent)), IDLE_SECONDS)
 
 
-def _load_detector(log_file: Path) -> NameDetector:
+def _load_detector(log_file: Path, model_dir: Path = DEFAULT_DISTIL_DIR,
+                   required: bool = False) -> NameDetector:
     """The heuristic, combined with the NER model when it is installed."""
-    heuristic = HeuristicNameDetector()
-    try:
-        from privacy_guard.service.onnx_name_detector import OnnxNameDetector
-
-        detector = CombinedNameDetector([heuristic, PlausibleNameFilter(OnnxNameDetector())])
-    except Exception as error:
-        _log(log_file, f"NER model unavailable ({type(error).__name__}): names found by the heuristic only")
+    heuristic = local_name_detector(model_dir.parent.parent)
+    if not required and not model_dir.exists():
+        _log(log_file, "DistilCamemBERT not installed: names found by the heuristic only")
         return heuristic
-    _log(log_file, "NER model loaded")
+    try:
+        from privacy_guard.service.distil_name_detector import DistilNameDetector
+
+        detector = CombinedNameDetector([heuristic, DistilNameDetector(model_dir)])
+    except Exception as error:
+        _log(log_file, f"Installed DistilCamemBERT unavailable ({type(error).__name__}): document detection blocked")
+        raise
+    _log(log_file, "DistilCamemBERT FP32 loaded; threshold=0.5; CPU threads=4")
     return detector
 
 

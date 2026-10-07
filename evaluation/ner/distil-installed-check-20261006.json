@@ -1,0 +1,11 @@
+{
+  "installed_native_git_bash_cycle": true,
+  "local_restoration_exact": true,
+  "reread_tokens_stable": true,
+  "python_lines": 1000,
+  "python_read_ms": 451.4640999987023,
+  "published_excerpt_tokens": 3997,
+  "document_first_read_ms": 3447.208999998111,
+  "document_identical_reread_ms": 1354.3204000015976,
+  "scope": "Installed hook subprocess and real service; no Claude model-network observation"
+}

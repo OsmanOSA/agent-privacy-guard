@@ -1,0 +1,2946 @@
+{
+  "schema_version": 1,
+  "run": {
+    "started_at": "2026-10-05T23:46:37.752069+00:00",
+    "models": [
+      "spacy-multilingual",
+      "hmbert-tiny-fr",
+      "moderncamembert-fr"
+    ],
+    "timing_models": [
+      "distilcamembert-base-ner",
+      "spacy-multilingual",
+      "hmbert-tiny-fr",
+      "moderncamembert-fr"
+    ],
+    "machine": {
+      "CPU": {
+        "Name": "AMD Ryzen 5 5600H with Radeon Graphics         ",
+        "NumberOfCores": 6,
+        "NumberOfLogicalProcessors": 12
+      },
+      "RAMBytes": 16477151232,
+      "power_scheme": null,
+      "power_query_status": 1,
+      "power_query_error": "Le mode de gestion, sous-groupe ou param\u00c3\u00a8tre d\u00e2\u20ac\u2122alimentation sp\u00c3\u00a9cifi\u00c3\u00a9 n\u00e2\u20ac\u2122existe pas.",
+      "platform": "Windows-11-10.0.26200-SP0"
+    },
+    "versions": {
+      "python": "3.12.4",
+      "os": "Windows-11-10.0.26200-SP0",
+      "numpy": "2.5.3",
+      "onnxruntime": "1.30.0",
+      "tokenizers": "0.22.2",
+      "torch": "2.14.1+cpu",
+      "gliner": "0.2.29",
+      "transformers": "4.57.6",
+      "spacy": "3.8.11",
+      "flair": "0.15.1"
+    },
+    "cpu_threads": 4,
+    "batch_size": 1,
+    "timing_passes": 3,
+    "timing_orders": [
+      [
+        "distilcamembert-base-ner",
+        "spacy-multilingual",
+        "hmbert-tiny-fr",
+        "moderncamembert-fr"
+      ],
+      [
+        "spacy-multilingual",
+        "hmbert-tiny-fr",
+        "moderncamembert-fr",
+        "distilcamembert-base-ner"
+      ],
+      [
+        "hmbert-tiny-fr",
+        "moderncamembert-fr",
+        "distilcamembert-base-ner",
+        "spacy-multilingual"
+      ]
+    ],
+    "cohort_sha256": "9579eab1a631f8eda4f5362451df7fc457986a7e8266cd9d8b5102b3ad09b237",
+    "registry_sha256": "68b91b220ad376653ed1343e3c3e7e248ecb37fcf9c3437762b2f7c8443f766e",
+    "artifacts_sha256": "c45ebb853bd2a464d52594bc19eb940363abba9447c4d44397f8628734554c7d",
+    "reference_weights_sha256": "666ce15c968ca49874d2449aa9b83164dbb1126090d012dda7c35b2ef3672e1d",
+    "harness_hashes": {
+      "adapters.py": "cef275f8ea80fe5a418fbf48cdf78278f273061ba285fd99b15e15d4dd49e866",
+      "additional_analysis.py": "793eb462f57c0690489458d30b96167b3691e7ba38b09f6cbe816673096be0a2",
+      "additional_cohort.py": "8b92425e31028122d4dcd552a975dd31cc470b039e929af565b1f286aa552735",
+      "additional_report.py": "357c48a115e95e99e69f362ed74539e0cbfd230d2ef2d0f314dc85d166522996",
+      "additional_worker.py": "c097029f6e0a90fbf9343243d8bfa3d1659ab7bc1ddcc3d75f86436e3bb0771c",
+      "aggregate.py": "d774bcf74f2df501cc9b09808b879e505d8c71b4a53d84f383b72d9ad8686793",
+      "check_distil_artifact.py": "cdc3a738cacacff6e8e9f75fc15027ba1131dbfae954ee6a06317a3c769ae1f2",
+      "cohort.py": "512dc27b0dd8ccd2a3a87d2474933585be69e8baf77efcd664cacaa56964a556",
+      "decode.py": "28b49f45437a39255aa3b5113652213fba12865975467136b8dbe70af0349078",
+      "error_analysis.py": "b1a90771993dd96013dfbfc7e72d48fde0d72cf8b2e38a3ca5ffd1f7c644277e",
+      "europeana.py": "239bee735aeccefc94354adfcfbc2b2d9c1fce83c40543b465680ab593640f23",
+      "fenec.py": "36c655d3cd4974f0e3c0a819cd2d3952239ca1f9ca7d7324a3f706a8af2742cc",
+      "fetch.py": "18ffa89be2c92569a5771a7e0ff5ddb77fef62355b41e0ecb4cbb1dfa1b222b8",
+      "fetch_mit.py": "f5922e0ba77d8498e84c5eb34a2c7f3235546c4ec864ad5e4ea86bb19008cd61",
+      "fetch_models.py": "a0b613010e93ff665ff31db025ba67cd54212f73ac80d077a6cf468b7e2a9646",
+      "independent.py": "577b04c122093ae1d82c0fad39159a56d93e204d05ea88032a57e6ccd12477e2",
+      "license_policy.py": "ca2fd66751ba2bb923ee5913c14a9645465f696665b2d31221e244e202daa41c",
+      "metrics.py": "f34a624d54b4868dd7b803170bbda45aa02039a52da661c5e71b789ccc4fcfec",
+      "mit_adapters.py": "fb0e16fa6bf13276e1038544467582bf298a871b509c1e6e4729f8f1a0d4235c",
+      "mit_worker.py": "a8e233869b7ab73d12b06647640ca55c86238186f3b19db5627a1cd2363c8d53",
+      "prepare.py": "ed0f44a042e6ece717fdf35f8a1f8c42a1765585f20509be985cdaccfca4f667",
+      "readers.py": "b86fedb54e23c6fa4c282804b8aa49704b4853a7b17a85194e44aa4fdba2a9fd",
+      "runtime_info.py": "14d86ca8e74b75bed3fab031ce4d158174874c2ddb446efd26c66650367a4a34",
+      "run_additional.py": "5c8a5a5b2040bd2219d368fff7ab9ee02cd926b03d6c52680169c9ae294ee91a",
+      "run_comparison.py": "6c2fcfad28887050dcbb4f7c1336fcbc643aa10c226ccdf2b536cfcdc8179b7e",
+      "run_mit.py": "54700459e56100c2b3c51dae450dccdb1914fc705af8bf8b4c305c555ac9ddf6",
+      "score.py": "951fff821ebca4565f8159675090e5d4b8dc7cd81f5d12c5ccf035abc2bd7d40",
+      "sequoia.py": "224f6b59bdf5241eaea7689c0b0a4de01aa98fb78268c31b57261a139e9f5b3c",
+      "soduco.py": "07fb7d065172163a6469700e0bedeef15dd5074893d3634d58aab770ee2d8757",
+      "tagged_text.py": "d3ea8a41c86f8f351721e3b326c7d8a2c99721499bdab9aa3a33c85550f2596a",
+      "test_additional_reference.py": "4c557f6130a051486d99f6e95fd9f295d91943d47e54644949353ddf23476a9c",
+      "token_model.py": "59f0f9013b9f5044df5cfa66a22a90c461dc127c7758e3abed7a6c01ef023071",
+      "unicode_offsets.py": "0a6e8ec0368347cf25f2edee1546bf8e865a9fd5480883f310949770537b0faa",
+      "worker.py": "936b84aa282aaccee2fe269fb741ccfa7ac50b3252ef3ffd1c8c497196b89cb2",
+      "write_report.py": "ef1ee0696c1a97735bb1107904ad5038e16607cbba5295e25a427e1812d37719",
+      "__init__.py": "0d3c2859ad1282a4e353823206a8d957ce9278b10a73ff1e2a351c144fc57c54"
+    },
+    "execution_harness_hashes_at_resume": {
+      "adapters.py": "cef275f8ea80fe5a418fbf48cdf78278f273061ba285fd99b15e15d4dd49e866",
+      "additional_analysis.py": "793eb462f57c0690489458d30b96167b3691e7ba38b09f6cbe816673096be0a2",
+      "additional_cohort.py": "8b92425e31028122d4dcd552a975dd31cc470b039e929af565b1f286aa552735",
+      "additional_report.py": "357c48a115e95e99e69f362ed74539e0cbfd230d2ef2d0f314dc85d166522996",
+      "additional_worker.py": "c097029f6e0a90fbf9343243d8bfa3d1659ab7bc1ddcc3d75f86436e3bb0771c",
+      "aggregate.py": "d774bcf74f2df501cc9b09808b879e505d8c71b4a53d84f383b72d9ad8686793",
+      "check_distil_artifact.py": "cdc3a738cacacff6e8e9f75fc15027ba1131dbfae954ee6a06317a3c769ae1f2",
+      "cohort.py": "512dc27b0dd8ccd2a3a87d2474933585be69e8baf77efcd664cacaa56964a556",
+      "decode.py": "28b49f45437a39255aa3b5113652213fba12865975467136b8dbe70af0349078",
+      "error_analysis.py": "b1a90771993dd96013dfbfc7e72d48fde0d72cf8b2e38a3ca5ffd1f7c644277e",
+      "europeana.py": "239bee735aeccefc94354adfcfbc2b2d9c1fce83c40543b465680ab593640f23",
+      "fenec.py": "36c655d3cd4974f0e3c0a819cd2d3952239ca1f9ca7d7324a3f706a8af2742cc",
+      "fetch.py": "18ffa89be2c92569a5771a7e0ff5ddb77fef62355b41e0ecb4cbb1dfa1b222b8",
+      "fetch_mit.py": "f5922e0ba77d8498e84c5eb34a2c7f3235546c4ec864ad5e4ea86bb19008cd61",
+      "fetch_models.py": "a0b613010e93ff665ff31db025ba67cd54212f73ac80d077a6cf468b7e2a9646",
+      "independent.py": "577b04c122093ae1d82c0fad39159a56d93e204d05ea88032a57e6ccd12477e2",
+      "license_policy.py": "ca2fd66751ba2bb923ee5913c14a9645465f696665b2d31221e244e202daa41c",
+      "metrics.py": "f34a624d54b4868dd7b803170bbda45aa02039a52da661c5e71b789ccc4fcfec",
+      "mit_adapters.py": "3a383f1fbf57765e42853843041d0cc02a460a2fb53a3c247de05db1bbe5c48a",
+      "mit_analysis.py": "9d0d9b4180b9c1f5281cacee49ee15f2a52b0f337d6f6f2e5e67492b06234c9b",
+      "mit_quality.py": "d7c0bddafa0be942f57be7582bfeef386492f84ff2e34676300433df2a8c8bf1",
+      "mit_report.py": "02338f5efa1d794ecd29244795383b7b52038fb5d54ad1f90d66616f968d7596",
+      "mit_token_model.py": "225c01d1c6b85b2abc954b37a6117ab88a9bee3717126aa3eabb2d59bc942bbc",
+      "mit_worker.py": "ea93329bce135843ebe22a111b6ae4d781f1d01f8dad2fb17e2e8c3fc714beb1",
+      "prepare.py": "ed0f44a042e6ece717fdf35f8a1f8c42a1765585f20509be985cdaccfca4f667",
+      "readers.py": "b86fedb54e23c6fa4c282804b8aa49704b4853a7b17a85194e44aa4fdba2a9fd",
+      "runtime_info.py": "14d86ca8e74b75bed3fab031ce4d158174874c2ddb446efd26c66650367a4a34",
+      "run_additional.py": "5c8a5a5b2040bd2219d368fff7ab9ee02cd926b03d6c52680169c9ae294ee91a",
+      "run_comparison.py": "6c2fcfad28887050dcbb4f7c1336fcbc643aa10c226ccdf2b536cfcdc8179b7e",
+      "run_mit.py": "98ece555b3cfb0ef24cb7ebf3b4d4e8ad14e147ffa481cd036bcfb99b5c8e226",
+      "score.py": "951fff821ebca4565f8159675090e5d4b8dc7cd81f5d12c5ccf035abc2bd7d40",
+      "sequoia.py": "224f6b59bdf5241eaea7689c0b0a4de01aa98fb78268c31b57261a139e9f5b3c",
+      "soduco.py": "07fb7d065172163a6469700e0bedeef15dd5074893d3634d58aab770ee2d8757",
+      "tagged_text.py": "d3ea8a41c86f8f351721e3b326c7d8a2c99721499bdab9aa3a33c85550f2596a",
+      "test_additional_reference.py": "4c557f6130a051486d99f6e95fd9f295d91943d47e54644949353ddf23476a9c",
+      "token_model.py": "59f0f9013b9f5044df5cfa66a22a90c461dc127c7758e3abed7a6c01ef023071",
+      "unicode_offsets.py": "0a6e8ec0368347cf25f2edee1546bf8e865a9fd5480883f310949770537b0faa",
+      "worker.py": "936b84aa282aaccee2fe269fb741ccfa7ac50b3252ef3ffd1c8c497196b89cb2",
+      "write_report.py": "ef1ee0696c1a97735bb1107904ad5038e16607cbba5295e25a427e1812d37719",
+      "__init__.py": "0d3c2859ad1282a4e353823206a8d957ce9278b10a73ff1e2a351c144fc57c54"
+    },
+    "resumed_at": "2026-10-05T23:54:55.399597+00:00",
+    "resume_reason": "Modern native normalizer drops private-use glyphs in 13 SoDUCo inputs; no glyph omissions in retained Sequoia, Europeana or calibration. Inputs, references, weights, thresholds and logits unchanged. Failed corpus rerun in full.",
+    "finished_at": "2026-10-05T23:59:09.715088+00:00"
+  },
+  "cohort": {
+    "seed": "additional-french-reference-20261006-v2",
+    "tasks": {
+      "deep-sequoia-nonwiki": "PERSON",
+      "europeana-newspapers-fr": "PERSON",
+      "soduco-nested-ner": "NAME_OR_BUSINESS"
+    },
+    "exclusions": [
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "annodis.er_00157",
+        "reason": "Discontinuous PERSON reference needs a segment-aware task"
+      },
+      {
+        "dataset": "soduco-nested-ner",
+        "source_id": "Bottin1_1837:114:397",
+        "reason": "Annotated XML text differs from corrected reference text"
+      },
+      {
+        "dataset": "soduco-nested-ner",
+        "source_id": "Bottin3_1854a:74:399",
+        "reason": "Annotated XML text differs from corrected reference text"
+      },
+      {
+        "dataset": "soduco-nested-ner",
+        "source_id": "Bottin3_1854a:74:400",
+        "reason": "Annotated XML text differs from corrected reference text"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-dev_00252",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-dev_00256",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-dev_00446",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-dev_00448",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-dev_00449",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-dev_00450",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-dev_00451",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-dev_00490",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-dev_00496",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-dev_00509",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-dev_00559",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-dev_00569",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-test_00064",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-test_00104",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-test_00141",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-test_00147",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-test_00192",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "deep-sequoia-nonwiki",
+        "source_id": "deep-sequoia-nonwiki:emea-fr-test_00445",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "soduco-nested-ner",
+        "source_id": "soduco-nested-ner:Didot_1851a:639:393",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "soduco-nested-ner",
+        "source_id": "soduco-nested-ner:Didot_1851a:639:397",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "soduco-nested-ner",
+        "source_id": "soduco-nested-ner:Didot_1851a:639:403",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "soduco-nested-ner",
+        "source_id": "soduco-nested-ner:Didot_1851a:639:434",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "soduco-nested-ner",
+        "source_id": "soduco-nested-ner:Didot_1851a:639:440",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "soduco-nested-ner",
+        "source_id": "soduco-nested-ner:Didot_1851a:639:537",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "soduco-nested-ner",
+        "source_id": "soduco-nested-ner:Didot_1851a:639:644",
+        "reason": "Exact duplicate input"
+      },
+      {
+        "dataset": "soduco-nested-ner",
+        "source_id": "soduco-nested-ner:Didot_1851a:639:658",
+        "reason": "Exact duplicate input"
+      }
+    ],
+    "datasets": {
+      "deep-sequoia-nonwiki": {
+        "available_records": 2084,
+        "selected_records": 2084,
+        "gold_entities": 270,
+        "negative_records": 1856,
+        "domains": {
+          "annodis.er": 523,
+          "emea-fr-dev": 562,
+          "emea-fr-test": 438,
+          "Europar.550": 561
+        },
+        "groups": 4,
+        "quality_sha256": "c94b11ac05bb12180cf435f00740405cccde66c75625f06410c0144406415309",
+        "timing_sha256": "4d1ac07fe01deafbc1425c5e94c2719b06b97f77ed78fc7940e8fbeb06b4b7e6"
+      },
+      "europeana-newspapers-fr": {
+        "available_records": 1608,
+        "selected_records": 512,
+        "gold_entities": 1333,
+        "negative_records": 159,
+        "domains": {
+          "historical-newspaper-OCR": 512
+        },
+        "groups": 101,
+        "quality_sha256": "386e5888898742b266a0ce7e496059b4573cef52408c204198cbc3db01cdaad0",
+        "timing_sha256": "5a7e0013802e22b87bb1f8a2ec00f16f616f09c9808033fd0b47895faf5cb086"
+      },
+      "soduco-nested-ner": {
+        "available_records": 8754,
+        "selected_records": 512,
+        "gold_entities": 512,
+        "negative_records": 0,
+        "domains": {
+          "Bottin1_1837": 46,
+          "Didot_1851a": 68,
+          "Didot_1841a": 62,
+          "La_Tynna_1813": 19,
+          "Bottin1_1827": 28,
+          "Bottin3_1854a": 52,
+          "Didot_1854a": 27,
+          "Cambon_almgene_1841": 40,
+          "Favre_et_Duchesne_1798": 15,
+          "DidotBottin_1861a": 16,
+          "Deflandre_1829": 28,
+          "Deflandre_1828": 26,
+          "Duverneuil_et_La_Tynna_1801": 14,
+          "DidotBottin_1860a": 20,
+          "Duverneuil_et_La_Tynna_1805": 17,
+          "Notables_communaux_seine_1801": 7,
+          "Bottin1_1820": 14,
+          "Duverneuil_et_La_Tynna_1806": 13
+        },
+        "groups": 77,
+        "quality_sha256": "94f32724039d1786f3fb594c74fec3f3e89f10e80be639decb3692701a7cc5f5",
+        "timing_sha256": "8f384a4d8fecdf82461864b45d73e86237987ad5845385e32e8231a391dafe49"
+      }
+    },
+    "thresholds": "Transferred unchanged from comparison-20261005 WikiNER calibration",
+    "timing_passes": 3,
+    "timing_inputs_per_dataset": 75,
+    "cpu_threads": 4
+  },
+  "models": {
+    "distilcamembert-base-ner": {
+      "backend": "ONNX Runtime CPU; FP32",
+      "threshold": 0.5,
+      "datasets": {
+        "deep-sequoia-nonwiki": {
+          "task": "PERSON",
+          "quality": {
+            "records": 2084,
+            "gold_entities": 270,
+            "predicted_entities": 307,
+            "exact_true_positives": 204,
+            "gold_characters": 2502,
+            "predicted_characters": 2904,
+            "covered_gold_characters": 2257,
+            "negative_records": 1856,
+            "negative_records_with_predictions": 50,
+            "fully_covered_entities": 235,
+            "exact_precision": 0.6644951140065146,
+            "exact_recall": 0.7555555555555555,
+            "exact_f1": 0.707105719237435,
+            "full_entity_coverage": 0.8703703703703703,
+            "character_recall": 0.9020783373301359,
+            "character_precision": 0.7772038567493113,
+            "negative_record_false_positive_rate": 0.02693965517241379
+          },
+          "confidence": {
+            "unit": "sentence",
+            "groups": 2084,
+            "resamples": 1000,
+            "exact_f1_95": [
+              0.6529861111111112,
+              0.7589743589743589
+            ],
+            "full_coverage_95": [
+              0.8278357410379882,
+              0.9124205098429551
+            ]
+          },
+          "misses": {
+            "complete": 235,
+            "entirely_missed": 30,
+            "partial": 5
+          },
+          "latency_ms": {
+            "observations": 225,
+            "p50": 11.945,
+            "p95": 27.9332,
+            "mean": 13.491447555555554,
+            "sum": 3035.5757,
+            "texts_per_second": 74.12103081468204
+          },
+          "by_domain": {
+            "Europar.550": {
+              "records": 561,
+              "gold_entities": 73,
+              "predicted_entities": 125,
+              "exact_true_positives": 50,
+              "gold_characters": 639,
+              "predicted_characters": 1175,
+              "covered_gold_characters": 629,
+              "negative_records": 502,
+              "negative_records_with_predictions": 39,
+              "fully_covered_entities": 71,
+              "exact_precision": 0.4,
+              "exact_recall": 0.684931506849315,
+              "exact_f1": 0.5050505050505051,
+              "full_entity_coverage": 0.9726027397260274,
+              "character_recall": 0.9843505477308294,
+              "character_precision": 0.5353191489361702,
+              "negative_record_false_positive_rate": 0.07768924302788845
+            },
+            "annodis.er": {
+              "records": 523,
+              "gold_entities": 165,
+              "predicted_entities": 148,
+              "exact_true_positives": 132,
+              "gold_characters": 1701,
+              "predicted_characters": 1552,
+              "covered_gold_characters": 1510,
+              "negative_records": 386,
+              "negative_records_with_predictions": 1,
+              "fully_covered_entities": 142,
+              "exact_precision": 0.8918918918918919,
+              "exact_recall": 0.8,
+              "exact_f1": 0.8434504792332268,
+              "full_entity_coverage": 0.8606060606060606,
+              "character_recall": 0.8877131099353321,
+              "character_precision": 0.9729381443298969,
+              "negative_record_false_positive_rate": 0.0025906735751295338
+            },
+            "emea-fr-dev": {
+              "records": 562,
+              "gold_entities": 0,
+              "predicted_entities": 4,
+              "exact_true_positives": 0,
+              "gold_characters": 0,
+              "predicted_characters": 23,
+              "covered_gold_characters": 0,
+              "negative_records": 562,
+              "negative_records_with_predictions": 4,
+              "exact_precision": 0.0,
+              "exact_recall": null,
+              "exact_f1": 0.0,
+              "full_entity_coverage": null,
+              "character_recall": null,
+              "character_precision": 0.0,
+              "negative_record_false_positive_rate": 0.0071174377224199285
+            },
+            "emea-fr-test": {
+              "records": 438,
+              "gold_entities": 32,
+              "predicted_entities": 30,
+              "exact_true_positives": 22,
+              "gold_characters": 162,
+              "predicted_characters": 154,
+              "covered_gold_characters": 118,
+              "negative_records": 406,
+              "negative_records_with_predictions": 6,
+              "fully_covered_entities": 22,
+              "exact_precision": 0.7333333333333333,
+              "exact_recall": 0.6875,
+              "exact_f1": 0.7096774193548387,
+              "full_entity_coverage": 0.6875,
+              "character_recall": 0.7283950617283951,
+              "character_precision": 0.7662337662337663,
+              "negative_record_false_positive_rate": 0.014778325123152709
+            }
+          }
+        },
+        "europeana-newspapers-fr": {
+          "task": "PERSON",
+          "quality": {
+            "records": 512,
+            "gold_entities": 1333,
+            "predicted_entities": 1499,
+            "exact_true_positives": 916,
+            "gold_characters": 11210,
+            "predicted_characters": 12734,
+            "covered_gold_characters": 10081,
+            "negative_records": 159,
+            "negative_records_with_predictions": 33,
+            "fully_covered_entities": 1153,
+            "exact_precision": 0.6110740493662442,
+            "exact_recall": 0.687171792948237,
+            "exact_f1": 0.6468926553672316,
+            "full_entity_coverage": 0.8649662415603901,
+            "character_recall": 0.8992863514719001,
+            "character_precision": 0.7916601225066751,
+            "negative_record_false_positive_rate": 0.20754716981132076
+          },
+          "confidence": {
+            "unit": "source-token block",
+            "groups": 101,
+            "resamples": 1000,
+            "exact_f1_95": [
+              0.6098712279232383,
+              0.68197061704074
+            ],
+            "full_coverage_95": [
+              0.8330999811725177,
+              0.8979149851812316
+            ]
+          },
+          "misses": {
+            "complete": 1153,
+            "partial": 43,
+            "entirely_missed": 137
+          },
+          "latency_ms": {
+            "observations": 225,
+            "p50": 80.1912,
+            "p95": 112.6333,
+            "mean": 80.60583822222223,
+            "sum": 18136.3136,
+            "texts_per_second": 12.406049264609097
+          },
+          "by_domain": {
+            "historical-newspaper-OCR": {
+              "records": 512,
+              "gold_entities": 1333,
+              "predicted_entities": 1499,
+              "exact_true_positives": 916,
+              "gold_characters": 11210,
+              "predicted_characters": 12734,
+              "covered_gold_characters": 10081,
+              "negative_records": 159,
+              "negative_records_with_predictions": 33,
+              "fully_covered_entities": 1153,
+              "exact_precision": 0.6110740493662442,
+              "exact_recall": 0.687171792948237,
+              "exact_f1": 0.6468926553672316,
+              "full_entity_coverage": 0.8649662415603901,
+              "character_recall": 0.8992863514719001,
+              "character_precision": 0.7916601225066751,
+              "negative_record_false_positive_rate": 0.20754716981132076
+            }
+          }
+        },
+        "soduco-nested-ner": {
+          "task": "NAME_OR_BUSINESS",
+          "quality": {
+            "records": 512,
+            "gold_entities": 512,
+            "predicted_entities": 642,
+            "exact_true_positives": 240,
+            "gold_characters": 5181,
+            "predicted_characters": 4502,
+            "covered_gold_characters": 3462,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 241,
+            "exact_precision": 0.37383177570093457,
+            "exact_recall": 0.46875,
+            "exact_f1": 0.41594454072790293,
+            "full_entity_coverage": 0.470703125,
+            "character_recall": 0.6682107701215981,
+            "character_precision": 0.7689915593069747,
+            "negative_record_false_positive_rate": null
+          },
+          "confidence": {
+            "unit": "source page",
+            "groups": 77,
+            "resamples": 1000,
+            "exact_f1_95": [
+              0.36493766937669375,
+              0.46679154530124173
+            ],
+            "full_coverage_95": [
+              0.4126123379477038,
+              0.53020760538495
+            ]
+          },
+          "misses": {
+            "complete": 241,
+            "entirely_missed": 84,
+            "partial": 187
+          },
+          "latency_ms": {
+            "observations": 225,
+            "p50": 9.4969,
+            "p95": 16.3852,
+            "mean": 10.464088444444444,
+            "sum": 2354.4199,
+            "texts_per_second": 95.56494149577992
+          },
+          "by_domain": {
+            "Bottin1_1820": {
+              "records": 14,
+              "gold_entities": 14,
+              "predicted_entities": 18,
+              "exact_true_positives": 7,
+              "gold_characters": 136,
+              "predicted_characters": 140,
+              "covered_gold_characters": 103,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 7,
+              "exact_precision": 0.3888888888888889,
+              "exact_recall": 0.5,
+              "exact_f1": 0.4375,
+              "full_entity_coverage": 0.5,
+              "character_recall": 0.7573529411764706,
+              "character_precision": 0.7357142857142858,
+              "negative_record_false_positive_rate": null
+            },
+            "Bottin1_1827": {
+              "records": 28,
+              "gold_entities": 28,
+              "predicted_entities": 47,
+              "exact_true_positives": 11,
+              "gold_characters": 369,
+              "predicted_characters": 348,
+              "covered_gold_characters": 261,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 11,
+              "exact_precision": 0.23404255319148937,
+              "exact_recall": 0.39285714285714285,
+              "exact_f1": 0.29333333333333333,
+              "full_entity_coverage": 0.39285714285714285,
+              "character_recall": 0.7073170731707317,
+              "character_precision": 0.75,
+              "negative_record_false_positive_rate": null
+            },
+            "Bottin1_1837": {
+              "records": 46,
+              "gold_entities": 46,
+              "predicted_entities": 53,
+              "exact_true_positives": 19,
+              "gold_characters": 573,
+              "predicted_characters": 427,
+              "covered_gold_characters": 386,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 19,
+              "exact_precision": 0.3584905660377358,
+              "exact_recall": 0.41304347826086957,
+              "exact_f1": 0.3838383838383838,
+              "full_entity_coverage": 0.41304347826086957,
+              "character_recall": 0.6736474694589878,
+              "character_precision": 0.9039812646370023,
+              "negative_record_false_positive_rate": null
+            },
+            "Bottin3_1854a": {
+              "records": 52,
+              "gold_entities": 52,
+              "predicted_entities": 74,
+              "exact_true_positives": 24,
+              "gold_characters": 549,
+              "predicted_characters": 511,
+              "covered_gold_characters": 440,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 24,
+              "exact_precision": 0.32432432432432434,
+              "exact_recall": 0.46153846153846156,
+              "exact_f1": 0.38095238095238093,
+              "full_entity_coverage": 0.46153846153846156,
+              "character_recall": 0.8014571948998178,
+              "character_precision": 0.8610567514677103,
+              "negative_record_false_positive_rate": null
+            },
+            "Cambon_almgene_1841": {
+              "records": 40,
+              "gold_entities": 40,
+              "predicted_entities": 51,
+              "exact_true_positives": 21,
+              "gold_characters": 342,
+              "predicted_characters": 364,
+              "covered_gold_characters": 248,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 21,
+              "exact_precision": 0.4117647058823529,
+              "exact_recall": 0.525,
+              "exact_f1": 0.46153846153846156,
+              "full_entity_coverage": 0.525,
+              "character_recall": 0.7251461988304093,
+              "character_precision": 0.6813186813186813,
+              "negative_record_false_positive_rate": null
+            },
+            "Deflandre_1828": {
+              "records": 26,
+              "gold_entities": 26,
+              "predicted_entities": 30,
+              "exact_true_positives": 16,
+              "gold_characters": 190,
+              "predicted_characters": 190,
+              "covered_gold_characters": 134,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 16,
+              "exact_precision": 0.5333333333333333,
+              "exact_recall": 0.6153846153846154,
+              "exact_f1": 0.5714285714285714,
+              "full_entity_coverage": 0.6153846153846154,
+              "character_recall": 0.7052631578947368,
+              "character_precision": 0.7052631578947368,
+              "negative_record_false_positive_rate": null
+            },
+            "Deflandre_1829": {
+              "records": 28,
+              "gold_entities": 28,
+              "predicted_entities": 29,
+              "exact_true_positives": 14,
+              "gold_characters": 207,
+              "predicted_characters": 169,
+              "covered_gold_characters": 118,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 14,
+              "exact_precision": 0.4827586206896552,
+              "exact_recall": 0.5,
+              "exact_f1": 0.49122807017543857,
+              "full_entity_coverage": 0.5,
+              "character_recall": 0.5700483091787439,
+              "character_precision": 0.6982248520710059,
+              "negative_record_false_positive_rate": null
+            },
+            "DidotBottin_1860a": {
+              "records": 20,
+              "gold_entities": 20,
+              "predicted_entities": 22,
+              "exact_true_positives": 7,
+              "gold_characters": 293,
+              "predicted_characters": 179,
+              "covered_gold_characters": 141,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 7,
+              "exact_precision": 0.3181818181818182,
+              "exact_recall": 0.35,
+              "exact_f1": 0.3333333333333333,
+              "full_entity_coverage": 0.35,
+              "character_recall": 0.4812286689419795,
+              "character_precision": 0.7877094972067039,
+              "negative_record_false_positive_rate": null
+            },
+            "DidotBottin_1861a": {
+              "records": 16,
+              "gold_entities": 16,
+              "predicted_entities": 21,
+              "exact_true_positives": 6,
+              "gold_characters": 143,
+              "predicted_characters": 135,
+              "covered_gold_characters": 99,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 6,
+              "exact_precision": 0.2857142857142857,
+              "exact_recall": 0.375,
+              "exact_f1": 0.32432432432432434,
+              "full_entity_coverage": 0.375,
+              "character_recall": 0.6923076923076923,
+              "character_precision": 0.7333333333333333,
+              "negative_record_false_positive_rate": null
+            },
+            "Didot_1841a": {
+              "records": 62,
+              "gold_entities": 62,
+              "predicted_entities": 69,
+              "exact_true_positives": 34,
+              "gold_characters": 623,
+              "predicted_characters": 489,
+              "covered_gold_characters": 438,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 34,
+              "exact_precision": 0.4927536231884058,
+              "exact_recall": 0.5483870967741935,
+              "exact_f1": 0.5190839694656488,
+              "full_entity_coverage": 0.5483870967741935,
+              "character_recall": 0.7030497592295345,
+              "character_precision": 0.8957055214723927,
+              "negative_record_false_positive_rate": null
+            },
+            "Didot_1851a": {
+              "records": 68,
+              "gold_entities": 68,
+              "predicted_entities": 75,
+              "exact_true_positives": 25,
+              "gold_characters": 654,
+              "predicted_characters": 496,
+              "covered_gold_characters": 414,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 25,
+              "exact_precision": 0.3333333333333333,
+              "exact_recall": 0.36764705882352944,
+              "exact_f1": 0.34965034965034963,
+              "full_entity_coverage": 0.36764705882352944,
+              "character_recall": 0.6330275229357798,
+              "character_precision": 0.8346774193548387,
+              "negative_record_false_positive_rate": null
+            },
+            "Didot_1854a": {
+              "records": 27,
+              "gold_entities": 27,
+              "predicted_entities": 28,
+              "exact_true_positives": 6,
+              "gold_characters": 343,
+              "predicted_characters": 196,
+              "covered_gold_characters": 166,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 6,
+              "exact_precision": 0.21428571428571427,
+              "exact_recall": 0.2222222222222222,
+              "exact_f1": 0.21818181818181817,
+              "full_entity_coverage": 0.2222222222222222,
+              "character_recall": 0.4839650145772595,
+              "character_precision": 0.8469387755102041,
+              "negative_record_false_positive_rate": null
+            },
+            "Duverneuil_et_La_Tynna_1801": {
+              "records": 14,
+              "gold_entities": 14,
+              "predicted_entities": 23,
+              "exact_true_positives": 8,
+              "gold_characters": 123,
+              "predicted_characters": 160,
+              "covered_gold_characters": 81,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 8,
+              "exact_precision": 0.34782608695652173,
+              "exact_recall": 0.5714285714285714,
+              "exact_f1": 0.43243243243243246,
+              "full_entity_coverage": 0.5714285714285714,
+              "character_recall": 0.6585365853658537,
+              "character_precision": 0.50625,
+              "negative_record_false_positive_rate": null
+            },
+            "Duverneuil_et_La_Tynna_1805": {
+              "records": 17,
+              "gold_entities": 17,
+              "predicted_entities": 39,
+              "exact_true_positives": 15,
+              "gold_characters": 153,
+              "predicted_characters": 287,
+              "covered_gold_characters": 143,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 15,
+              "exact_precision": 0.38461538461538464,
+              "exact_recall": 0.8823529411764706,
+              "exact_f1": 0.5357142857142857,
+              "full_entity_coverage": 0.8823529411764706,
+              "character_recall": 0.934640522875817,
+              "character_precision": 0.49825783972125437,
+              "negative_record_false_positive_rate": null
+            },
+            "Duverneuil_et_La_Tynna_1806": {
+              "records": 13,
+              "gold_entities": 13,
+              "predicted_entities": 28,
+              "exact_true_positives": 11,
+              "gold_characters": 91,
+              "predicted_characters": 143,
+              "covered_gold_characters": 81,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 11,
+              "exact_precision": 0.39285714285714285,
+              "exact_recall": 0.8461538461538461,
+              "exact_f1": 0.5365853658536586,
+              "full_entity_coverage": 0.8461538461538461,
+              "character_recall": 0.8901098901098901,
+              "character_precision": 0.5664335664335665,
+              "negative_record_false_positive_rate": null
+            },
+            "Favre_et_Duchesne_1798": {
+              "records": 15,
+              "gold_entities": 15,
+              "predicted_entities": 12,
+              "exact_true_positives": 4,
+              "gold_characters": 125,
+              "predicted_characters": 89,
+              "covered_gold_characters": 49,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 5,
+              "exact_precision": 0.3333333333333333,
+              "exact_recall": 0.26666666666666666,
+              "exact_f1": 0.2962962962962963,
+              "full_entity_coverage": 0.3333333333333333,
+              "character_recall": 0.392,
+              "character_precision": 0.550561797752809,
+              "negative_record_false_positive_rate": null
+            },
+            "La_Tynna_1813": {
+              "records": 19,
+              "gold_entities": 19,
+              "predicted_entities": 18,
+              "exact_true_positives": 7,
+              "gold_characters": 209,
+              "predicted_characters": 136,
+              "covered_gold_characters": 117,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 7,
+              "exact_precision": 0.3888888888888889,
+              "exact_recall": 0.3684210526315789,
+              "exact_f1": 0.3783783783783784,
+              "full_entity_coverage": 0.3684210526315789,
+              "character_recall": 0.5598086124401914,
+              "character_precision": 0.8602941176470589,
+              "negative_record_false_positive_rate": null
+            },
+            "Notables_communaux_seine_1801": {
+              "records": 7,
+              "gold_entities": 7,
+              "predicted_entities": 5,
+              "exact_true_positives": 5,
+              "gold_characters": 58,
+              "predicted_characters": 43,
+              "covered_gold_characters": 43,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 5,
+              "exact_precision": 1.0,
+              "exact_recall": 0.7142857142857143,
+              "exact_f1": 0.8333333333333334,
+              "full_entity_coverage": 0.7142857142857143,
+              "character_recall": 0.7413793103448276,
+              "character_precision": 1.0,
+              "negative_record_false_positive_rate": null
+            }
+          }
+        }
+      },
+      "peak_process_memory_bytes": 462381056,
+      "timing_prediction_mismatches": 0,
+      "quality_predictions_sha256": {
+        "deep-sequoia-nonwiki": "006ccbf916f7c9304dd2e177c6196f6843a15bb35359c79ebce12844d95b18d4",
+        "europeana-newspapers-fr": "cb413909f7cf66d6b81439f7df56258d905c52d29d57e814189a8571cf104fb2",
+        "soduco-nested-ner": "b7e0e187ca2feef907e1c1298d45f3c92e34237d301b1d0be072d59cb7e3e355"
+      }
+    },
+    "spacy-multilingual": {
+      "backend": "spaCy 3.8 CPU; xx_ent_wiki_sm 3.8.0 native NER",
+      "threshold": 0.6,
+      "datasets": {
+        "deep-sequoia-nonwiki": {
+          "task": "PERSON",
+          "quality": {
+            "records": 2084,
+            "gold_entities": 270,
+            "predicted_entities": 544,
+            "exact_true_positives": 146,
+            "gold_characters": 2502,
+            "predicted_characters": 5888,
+            "covered_gold_characters": 2082,
+            "negative_records": 1856,
+            "negative_records_with_predictions": 268,
+            "fully_covered_entities": 209,
+            "exact_precision": 0.26838235294117646,
+            "exact_recall": 0.5407407407407407,
+            "exact_f1": 0.35872235872235875,
+            "full_entity_coverage": 0.774074074074074,
+            "character_recall": 0.8321342925659473,
+            "character_precision": 0.35360054347826086,
+            "negative_record_false_positive_rate": 0.14439655172413793
+          },
+          "confidence": {
+            "unit": "sentence",
+            "groups": 2084,
+            "resamples": 1000,
+            "exact_f1_95": [
+              0.31090458840134383,
+              0.40766094702950373
+            ],
+            "full_coverage_95": [
+              0.7222168597168597,
+              0.8267737402965972
+            ]
+          },
+          "misses": {
+            "complete": 209,
+            "entirely_missed": 61
+          },
+          "latency_ms": {
+            "observations": 225,
+            "p50": 2.9933,
+            "p95": 5.7958,
+            "mean": 3.136588,
+            "sum": 705.7323,
+            "texts_per_second": 318.81777268802915
+          },
+          "by_domain": {
+            "Europar.550": {
+              "records": 561,
+              "gold_entities": 73,
+              "predicted_entities": 170,
+              "exact_true_positives": 24,
+              "gold_characters": 639,
+              "predicted_characters": 2107,
+              "covered_gold_characters": 593,
+              "negative_records": 502,
+              "negative_records_with_predictions": 82,
+              "fully_covered_entities": 67,
+              "exact_precision": 0.1411764705882353,
+              "exact_recall": 0.3287671232876712,
+              "exact_f1": 0.19753086419753085,
+              "full_entity_coverage": 0.9178082191780822,
+              "character_recall": 0.9280125195618153,
+              "character_precision": 0.28144280968201235,
+              "negative_record_false_positive_rate": 0.16334661354581673
+            },
+            "annodis.er": {
+              "records": 523,
+              "gold_entities": 165,
+              "predicted_entities": 191,
+              "exact_true_positives": 122,
+              "gold_characters": 1701,
+              "predicted_characters": 1984,
+              "covered_gold_characters": 1484,
+              "negative_records": 386,
+              "negative_records_with_predictions": 32,
+              "fully_covered_entities": 141,
+              "exact_precision": 0.6387434554973822,
+              "exact_recall": 0.7393939393939394,
+              "exact_f1": 0.6853932584269663,
+              "full_entity_coverage": 0.8545454545454545,
+              "character_recall": 0.8724279835390947,
+              "character_precision": 0.7479838709677419,
+              "negative_record_false_positive_rate": 0.08290155440414508
+            },
+            "emea-fr-dev": {
+              "records": 562,
+              "gold_entities": 0,
+              "predicted_entities": 45,
+              "exact_true_positives": 0,
+              "gold_characters": 0,
+              "predicted_characters": 386,
+              "covered_gold_characters": 0,
+              "negative_records": 562,
+              "negative_records_with_predictions": 38,
+              "exact_precision": 0.0,
+              "exact_recall": null,
+              "exact_f1": 0.0,
+              "full_entity_coverage": null,
+              "character_recall": null,
+              "character_precision": 0.0,
+              "negative_record_false_positive_rate": 0.06761565836298933
+            },
+            "emea-fr-test": {
+              "records": 438,
+              "gold_entities": 32,
+              "predicted_entities": 138,
+              "exact_true_positives": 0,
+              "gold_characters": 162,
+              "predicted_characters": 1411,
+              "covered_gold_characters": 5,
+              "negative_records": 406,
+              "negative_records_with_predictions": 116,
+              "fully_covered_entities": 1,
+              "exact_precision": 0.0,
+              "exact_recall": 0.0,
+              "exact_f1": 0.0,
+              "full_entity_coverage": 0.03125,
+              "character_recall": 0.030864197530864196,
+              "character_precision": 0.003543586109142452,
+              "negative_record_false_positive_rate": 0.2857142857142857
+            }
+          }
+        },
+        "europeana-newspapers-fr": {
+          "task": "PERSON",
+          "quality": {
+            "records": 512,
+            "gold_entities": 1333,
+            "predicted_entities": 1326,
+            "exact_true_positives": 560,
+            "gold_characters": 11210,
+            "predicted_characters": 12246,
+            "covered_gold_characters": 7973,
+            "negative_records": 159,
+            "negative_records_with_predictions": 66,
+            "fully_covered_entities": 894,
+            "exact_precision": 0.42232277526395173,
+            "exact_recall": 0.42010502625656415,
+            "exact_f1": 0.4212109815720196,
+            "full_entity_coverage": 0.6706676669167292,
+            "character_recall": 0.7112399643175736,
+            "character_precision": 0.6510697370569982,
+            "negative_record_false_positive_rate": 0.41509433962264153
+          },
+          "confidence": {
+            "unit": "source-token block",
+            "groups": 101,
+            "resamples": 1000,
+            "exact_f1_95": [
+              0.3722689573921931,
+              0.4698103605424254
+            ],
+            "full_coverage_95": [
+              0.617705032902754,
+              0.725845449781573
+            ]
+          },
+          "misses": {
+            "complete": 894,
+            "entirely_missed": 424,
+            "partial": 15
+          },
+          "latency_ms": {
+            "observations": 225,
+            "p50": 11.8111,
+            "p95": 14.0278,
+            "mean": 12.134534666666665,
+            "sum": 2730.2702999999997,
+            "texts_per_second": 82.40942297910944
+          },
+          "by_domain": {
+            "historical-newspaper-OCR": {
+              "records": 512,
+              "gold_entities": 1333,
+              "predicted_entities": 1326,
+              "exact_true_positives": 560,
+              "gold_characters": 11210,
+              "predicted_characters": 12246,
+              "covered_gold_characters": 7973,
+              "negative_records": 159,
+              "negative_records_with_predictions": 66,
+              "fully_covered_entities": 894,
+              "exact_precision": 0.42232277526395173,
+              "exact_recall": 0.42010502625656415,
+              "exact_f1": 0.4212109815720196,
+              "full_entity_coverage": 0.6706676669167292,
+              "character_recall": 0.7112399643175736,
+              "character_precision": 0.6510697370569982,
+              "negative_record_false_positive_rate": 0.41509433962264153
+            }
+          }
+        },
+        "soduco-nested-ner": {
+          "task": "NAME_OR_BUSINESS",
+          "quality": {
+            "records": 512,
+            "gold_entities": 512,
+            "predicted_entities": 466,
+            "exact_true_positives": 131,
+            "gold_characters": 5181,
+            "predicted_characters": 3600,
+            "covered_gold_characters": 2151,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 131,
+            "exact_precision": 0.2811158798283262,
+            "exact_recall": 0.255859375,
+            "exact_f1": 0.26789366053169733,
+            "full_entity_coverage": 0.255859375,
+            "character_recall": 0.4151708164447018,
+            "character_precision": 0.5975,
+            "negative_record_false_positive_rate": null
+          },
+          "confidence": {
+            "unit": "source page",
+            "groups": 77,
+            "resamples": 1000,
+            "exact_f1_95": [
+              0.21960113762486128,
+              0.31529825347066726
+            ],
+            "full_coverage_95": [
+              0.20599131658675066,
+              0.30816595059076257
+            ]
+          },
+          "misses": {
+            "entirely_missed": 255,
+            "complete": 131,
+            "partial": 126
+          },
+          "latency_ms": {
+            "observations": 225,
+            "p50": 2.5131,
+            "p95": 3.7972,
+            "mean": 2.6861626666666667,
+            "sum": 604.3866,
+            "texts_per_second": 372.27827354213343
+          },
+          "by_domain": {
+            "Bottin1_1820": {
+              "records": 14,
+              "gold_entities": 14,
+              "predicted_entities": 14,
+              "exact_true_positives": 6,
+              "gold_characters": 136,
+              "predicted_characters": 128,
+              "covered_gold_characters": 91,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 6,
+              "exact_precision": 0.42857142857142855,
+              "exact_recall": 0.42857142857142855,
+              "exact_f1": 0.42857142857142855,
+              "full_entity_coverage": 0.42857142857142855,
+              "character_recall": 0.6691176470588235,
+              "character_precision": 0.7109375,
+              "negative_record_false_positive_rate": null
+            },
+            "Bottin1_1827": {
+              "records": 28,
+              "gold_entities": 28,
+              "predicted_entities": 20,
+              "exact_true_positives": 4,
+              "gold_characters": 369,
+              "predicted_characters": 154,
+              "covered_gold_characters": 111,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 4,
+              "exact_precision": 0.2,
+              "exact_recall": 0.14285714285714285,
+              "exact_f1": 0.16666666666666666,
+              "full_entity_coverage": 0.14285714285714285,
+              "character_recall": 0.3008130081300813,
+              "character_precision": 0.7207792207792207,
+              "negative_record_false_positive_rate": null
+            },
+            "Bottin1_1837": {
+              "records": 46,
+              "gold_entities": 46,
+              "predicted_entities": 32,
+              "exact_true_positives": 6,
+              "gold_characters": 573,
+              "predicted_characters": 265,
+              "covered_gold_characters": 206,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 6,
+              "exact_precision": 0.1875,
+              "exact_recall": 0.13043478260869565,
+              "exact_f1": 0.15384615384615385,
+              "full_entity_coverage": 0.13043478260869565,
+              "character_recall": 0.35951134380453753,
+              "character_precision": 0.7773584905660378,
+              "negative_record_false_positive_rate": null
+            },
+            "Bottin3_1854a": {
+              "records": 52,
+              "gold_entities": 52,
+              "predicted_entities": 63,
+              "exact_true_positives": 7,
+              "gold_characters": 549,
+              "predicted_characters": 463,
+              "covered_gold_characters": 270,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 7,
+              "exact_precision": 0.1111111111111111,
+              "exact_recall": 0.1346153846153846,
+              "exact_f1": 0.12173913043478261,
+              "full_entity_coverage": 0.1346153846153846,
+              "character_recall": 0.4918032786885246,
+              "character_precision": 0.5831533477321814,
+              "negative_record_false_positive_rate": null
+            },
+            "Cambon_almgene_1841": {
+              "records": 40,
+              "gold_entities": 40,
+              "predicted_entities": 31,
+              "exact_true_positives": 10,
+              "gold_characters": 342,
+              "predicted_characters": 213,
+              "covered_gold_characters": 147,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 10,
+              "exact_precision": 0.3225806451612903,
+              "exact_recall": 0.25,
+              "exact_f1": 0.28169014084507044,
+              "full_entity_coverage": 0.25,
+              "character_recall": 0.4298245614035088,
+              "character_precision": 0.6901408450704225,
+              "negative_record_false_positive_rate": null
+            },
+            "Deflandre_1828": {
+              "records": 26,
+              "gold_entities": 26,
+              "predicted_entities": 17,
+              "exact_true_positives": 4,
+              "gold_characters": 190,
+              "predicted_characters": 153,
+              "covered_gold_characters": 38,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 4,
+              "exact_precision": 0.23529411764705882,
+              "exact_recall": 0.15384615384615385,
+              "exact_f1": 0.18604651162790697,
+              "full_entity_coverage": 0.15384615384615385,
+              "character_recall": 0.2,
+              "character_precision": 0.24836601307189543,
+              "negative_record_false_positive_rate": null
+            },
+            "Deflandre_1829": {
+              "records": 28,
+              "gold_entities": 28,
+              "predicted_entities": 16,
+              "exact_true_positives": 3,
+              "gold_characters": 207,
+              "predicted_characters": 106,
+              "covered_gold_characters": 42,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 3,
+              "exact_precision": 0.1875,
+              "exact_recall": 0.10714285714285714,
+              "exact_f1": 0.13636363636363635,
+              "full_entity_coverage": 0.10714285714285714,
+              "character_recall": 0.2028985507246377,
+              "character_precision": 0.39622641509433965,
+              "negative_record_false_positive_rate": null
+            },
+            "DidotBottin_1860a": {
+              "records": 20,
+              "gold_entities": 20,
+              "predicted_entities": 15,
+              "exact_true_positives": 5,
+              "gold_characters": 293,
+              "predicted_characters": 114,
+              "covered_gold_characters": 99,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 5,
+              "exact_precision": 0.3333333333333333,
+              "exact_recall": 0.25,
+              "exact_f1": 0.2857142857142857,
+              "full_entity_coverage": 0.25,
+              "character_recall": 0.3378839590443686,
+              "character_precision": 0.868421052631579,
+              "negative_record_false_positive_rate": null
+            },
+            "DidotBottin_1861a": {
+              "records": 16,
+              "gold_entities": 16,
+              "predicted_entities": 17,
+              "exact_true_positives": 4,
+              "gold_characters": 143,
+              "predicted_characters": 118,
+              "covered_gold_characters": 70,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 4,
+              "exact_precision": 0.23529411764705882,
+              "exact_recall": 0.25,
+              "exact_f1": 0.24242424242424243,
+              "full_entity_coverage": 0.25,
+              "character_recall": 0.48951048951048953,
+              "character_precision": 0.5932203389830508,
+              "negative_record_false_positive_rate": null
+            },
+            "Didot_1841a": {
+              "records": 62,
+              "gold_entities": 62,
+              "predicted_entities": 45,
+              "exact_true_positives": 15,
+              "gold_characters": 623,
+              "predicted_characters": 332,
+              "covered_gold_characters": 220,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 15,
+              "exact_precision": 0.3333333333333333,
+              "exact_recall": 0.24193548387096775,
+              "exact_f1": 0.2803738317757009,
+              "full_entity_coverage": 0.24193548387096775,
+              "character_recall": 0.35313001605136435,
+              "character_precision": 0.6626506024096386,
+              "negative_record_false_positive_rate": null
+            },
+            "Didot_1851a": {
+              "records": 68,
+              "gold_entities": 68,
+              "predicted_entities": 61,
+              "exact_true_positives": 17,
+              "gold_characters": 654,
+              "predicted_characters": 450,
+              "covered_gold_characters": 293,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 17,
+              "exact_precision": 0.2786885245901639,
+              "exact_recall": 0.25,
+              "exact_f1": 0.26356589147286824,
+              "full_entity_coverage": 0.25,
+              "character_recall": 0.44801223241590216,
+              "character_precision": 0.6511111111111111,
+              "negative_record_false_positive_rate": null
+            },
+            "Didot_1854a": {
+              "records": 27,
+              "gold_entities": 27,
+              "predicted_entities": 30,
+              "exact_true_positives": 8,
+              "gold_characters": 343,
+              "predicted_characters": 198,
+              "covered_gold_characters": 161,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 8,
+              "exact_precision": 0.26666666666666666,
+              "exact_recall": 0.2962962962962963,
+              "exact_f1": 0.2807017543859649,
+              "full_entity_coverage": 0.2962962962962963,
+              "character_recall": 0.46938775510204084,
+              "character_precision": 0.8131313131313131,
+              "negative_record_false_positive_rate": null
+            },
+            "Duverneuil_et_La_Tynna_1801": {
+              "records": 14,
+              "gold_entities": 14,
+              "predicted_entities": 20,
+              "exact_true_positives": 5,
+              "gold_characters": 123,
+              "predicted_characters": 172,
+              "covered_gold_characters": 52,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 5,
+              "exact_precision": 0.25,
+              "exact_recall": 0.35714285714285715,
+              "exact_f1": 0.29411764705882354,
+              "full_entity_coverage": 0.35714285714285715,
+              "character_recall": 0.42276422764227645,
+              "character_precision": 0.3023255813953488,
+              "negative_record_false_positive_rate": null
+            },
+            "Duverneuil_et_La_Tynna_1805": {
+              "records": 17,
+              "gold_entities": 17,
+              "predicted_entities": 29,
+              "exact_true_positives": 12,
+              "gold_characters": 153,
+              "predicted_characters": 277,
+              "covered_gold_characters": 104,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 12,
+              "exact_precision": 0.41379310344827586,
+              "exact_recall": 0.7058823529411765,
+              "exact_f1": 0.5217391304347826,
+              "full_entity_coverage": 0.7058823529411765,
+              "character_recall": 0.6797385620915033,
+              "character_precision": 0.37545126353790614,
+              "negative_record_false_positive_rate": null
+            },
+            "Duverneuil_et_La_Tynna_1806": {
+              "records": 13,
+              "gold_entities": 13,
+              "predicted_entities": 22,
+              "exact_true_positives": 12,
+              "gold_characters": 91,
+              "predicted_characters": 192,
+              "covered_gold_characters": 79,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 12,
+              "exact_precision": 0.5454545454545454,
+              "exact_recall": 0.9230769230769231,
+              "exact_f1": 0.6857142857142857,
+              "full_entity_coverage": 0.9230769230769231,
+              "character_recall": 0.8681318681318682,
+              "character_precision": 0.4114583333333333,
+              "negative_record_false_positive_rate": null
+            },
+            "Favre_et_Duchesne_1798": {
+              "records": 15,
+              "gold_entities": 15,
+              "predicted_entities": 12,
+              "exact_true_positives": 3,
+              "gold_characters": 125,
+              "predicted_characters": 79,
+              "covered_gold_characters": 43,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 3,
+              "exact_precision": 0.25,
+              "exact_recall": 0.2,
+              "exact_f1": 0.2222222222222222,
+              "full_entity_coverage": 0.2,
+              "character_recall": 0.344,
+              "character_precision": 0.5443037974683544,
+              "negative_record_false_positive_rate": null
+            },
+            "La_Tynna_1813": {
+              "records": 19,
+              "gold_entities": 19,
+              "predicted_entities": 16,
+              "exact_true_positives": 6,
+              "gold_characters": 209,
+              "predicted_characters": 130,
+              "covered_gold_characters": 92,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 6,
+              "exact_precision": 0.375,
+              "exact_recall": 0.3157894736842105,
+              "exact_f1": 0.34285714285714286,
+              "full_entity_coverage": 0.3157894736842105,
+              "character_recall": 0.44019138755980863,
+              "character_precision": 0.7076923076923077,
+              "negative_record_false_positive_rate": null
+            },
+            "Notables_communaux_seine_1801": {
+              "records": 7,
+              "gold_entities": 7,
+              "predicted_entities": 6,
+              "exact_true_positives": 4,
+              "gold_characters": 58,
+              "predicted_characters": 56,
+              "covered_gold_characters": 33,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 4,
+              "exact_precision": 0.6666666666666666,
+              "exact_recall": 0.5714285714285714,
+              "exact_f1": 0.6153846153846154,
+              "full_entity_coverage": 0.5714285714285714,
+              "character_recall": 0.5689655172413793,
+              "character_precision": 0.5892857142857143,
+              "negative_record_false_positive_rate": null
+            }
+          }
+        }
+      },
+      "peak_process_memory_bytes": 664903680,
+      "timing_prediction_mismatches": 0,
+      "quality_predictions_sha256": {
+        "deep-sequoia-nonwiki": "8227b6c901508f47b2dfe5eb0985d09dbff13f5e282fb84abe909755828414d9",
+        "europeana-newspapers-fr": "35d3de5aa37958bc8fb2a96edaaa1cbd1448682a4b0976beb13f963f342c323b",
+        "soduco-nested-ner": "a61e7c03ad81fe03334c556aeac11edf15b33ab8a071d1534d308387ffdf201a"
+      }
+    },
+    "hmbert-tiny-fr": {
+      "backend": "Flair 0.15.1 PyTorch CPU FP32; published hmBERT Tiny French NER",
+      "threshold": 0.25,
+      "datasets": {
+        "deep-sequoia-nonwiki": {
+          "task": "PERSON",
+          "quality": {
+            "records": 2084,
+            "gold_entities": 270,
+            "predicted_entities": 455,
+            "exact_true_positives": 167,
+            "gold_characters": 2502,
+            "predicted_characters": 3682,
+            "covered_gold_characters": 1779,
+            "negative_records": 1856,
+            "negative_records_with_predictions": 197,
+            "fully_covered_entities": 167,
+            "exact_precision": 0.367032967032967,
+            "exact_recall": 0.6185185185185185,
+            "exact_f1": 0.4606896551724138,
+            "full_entity_coverage": 0.6185185185185185,
+            "character_recall": 0.7110311750599521,
+            "character_precision": 0.4831613253666486,
+            "negative_record_false_positive_rate": 0.10614224137931035
+          },
+          "confidence": {
+            "unit": "sentence",
+            "groups": 2084,
+            "resamples": 1000,
+            "exact_f1_95": [
+              0.41174249155855697,
+              0.509386436151235
+            ],
+            "full_coverage_95": [
+              0.5575691862866584,
+              0.673992673992674
+            ]
+          },
+          "misses": {
+            "complete": 167,
+            "partial": 32,
+            "entirely_missed": 71
+          },
+          "latency_ms": {
+            "observations": 225,
+            "p50": 3.6023,
+            "p95": 5.9192,
+            "mean": 3.7896244444444447,
+            "sum": 852.6655000000001,
+            "texts_per_second": 263.87839076402173
+          },
+          "by_domain": {
+            "Europar.550": {
+              "records": 561,
+              "gold_entities": 73,
+              "predicted_entities": 72,
+              "exact_true_positives": 42,
+              "gold_characters": 639,
+              "predicted_characters": 575,
+              "covered_gold_characters": 408,
+              "negative_records": 502,
+              "negative_records_with_predictions": 17,
+              "fully_covered_entities": 42,
+              "exact_precision": 0.5833333333333334,
+              "exact_recall": 0.5753424657534246,
+              "exact_f1": 0.5793103448275863,
+              "full_entity_coverage": 0.5753424657534246,
+              "character_recall": 0.6384976525821596,
+              "character_precision": 0.7095652173913043,
+              "negative_record_false_positive_rate": 0.03386454183266932
+            },
+            "annodis.er": {
+              "records": 523,
+              "gold_entities": 165,
+              "predicted_entities": 223,
+              "exact_true_positives": 111,
+              "gold_characters": 1701,
+              "predicted_characters": 2005,
+              "covered_gold_characters": 1299,
+              "negative_records": 386,
+              "negative_records_with_predictions": 48,
+              "fully_covered_entities": 111,
+              "exact_precision": 0.4977578475336323,
+              "exact_recall": 0.6727272727272727,
+              "exact_f1": 0.5721649484536082,
+              "full_entity_coverage": 0.6727272727272727,
+              "character_recall": 0.763668430335097,
+              "character_precision": 0.6478802992518703,
+              "negative_record_false_positive_rate": 0.12435233160621761
+            },
+            "emea-fr-dev": {
+              "records": 562,
+              "gold_entities": 0,
+              "predicted_entities": 114,
+              "exact_true_positives": 0,
+              "gold_characters": 0,
+              "predicted_characters": 801,
+              "covered_gold_characters": 0,
+              "negative_records": 562,
+              "negative_records_with_predictions": 103,
+              "exact_precision": 0.0,
+              "exact_recall": null,
+              "exact_f1": 0.0,
+              "full_entity_coverage": null,
+              "character_recall": null,
+              "character_precision": 0.0,
+              "negative_record_false_positive_rate": 0.18327402135231316
+            },
+            "emea-fr-test": {
+              "records": 438,
+              "gold_entities": 32,
+              "predicted_entities": 46,
+              "exact_true_positives": 14,
+              "gold_characters": 162,
+              "predicted_characters": 301,
+              "covered_gold_characters": 72,
+              "negative_records": 406,
+              "negative_records_with_predictions": 29,
+              "fully_covered_entities": 14,
+              "exact_precision": 0.30434782608695654,
+              "exact_recall": 0.4375,
+              "exact_f1": 0.358974358974359,
+              "full_entity_coverage": 0.4375,
+              "character_recall": 0.4444444444444444,
+              "character_precision": 0.23920265780730898,
+              "negative_record_false_positive_rate": 0.07142857142857142
+            }
+          }
+        },
+        "europeana-newspapers-fr": {
+          "task": "PERSON",
+          "quality": {
+            "records": 512,
+            "gold_entities": 1333,
+            "predicted_entities": 1468,
+            "exact_true_positives": 821,
+            "gold_characters": 11210,
+            "predicted_characters": 11647,
+            "covered_gold_characters": 7942,
+            "negative_records": 159,
+            "negative_records_with_predictions": 53,
+            "fully_covered_entities": 833,
+            "exact_precision": 0.5592643051771117,
+            "exact_recall": 0.6159039759939985,
+            "exact_f1": 0.5862192074259193,
+            "full_entity_coverage": 0.6249062265566392,
+            "character_recall": 0.7084745762711865,
+            "character_precision": 0.6818923327895595,
+            "negative_record_false_positive_rate": 0.3333333333333333
+          },
+          "confidence": {
+            "unit": "source-token block",
+            "groups": 101,
+            "resamples": 1000,
+            "exact_f1_95": [
+              0.5443286302710999,
+              0.6262846797960531
+            ],
+            "full_coverage_95": [
+              0.5876215920797062,
+              0.661996023641749
+            ]
+          },
+          "misses": {
+            "entirely_missed": 354,
+            "partial": 146,
+            "complete": 833
+          },
+          "latency_ms": {
+            "observations": 225,
+            "p50": 8.6362,
+            "p95": 11.1679,
+            "mean": 8.566834666666667,
+            "sum": 1927.5378,
+            "texts_per_second": 116.72922834509393
+          },
+          "by_domain": {
+            "historical-newspaper-OCR": {
+              "records": 512,
+              "gold_entities": 1333,
+              "predicted_entities": 1468,
+              "exact_true_positives": 821,
+              "gold_characters": 11210,
+              "predicted_characters": 11647,
+              "covered_gold_characters": 7942,
+              "negative_records": 159,
+              "negative_records_with_predictions": 53,
+              "fully_covered_entities": 833,
+              "exact_precision": 0.5592643051771117,
+              "exact_recall": 0.6159039759939985,
+              "exact_f1": 0.5862192074259193,
+              "full_entity_coverage": 0.6249062265566392,
+              "character_recall": 0.7084745762711865,
+              "character_precision": 0.6818923327895595,
+              "negative_record_false_positive_rate": 0.3333333333333333
+            }
+          }
+        },
+        "soduco-nested-ner": {
+          "task": "NAME_OR_BUSINESS",
+          "quality": {
+            "records": 512,
+            "gold_entities": 512,
+            "predicted_entities": 734,
+            "exact_true_positives": 284,
+            "gold_characters": 5181,
+            "predicted_characters": 5216,
+            "covered_gold_characters": 3589,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 285,
+            "exact_precision": 0.3869209809264305,
+            "exact_recall": 0.5546875,
+            "exact_f1": 0.45585874799357945,
+            "full_entity_coverage": 0.556640625,
+            "character_recall": 0.6927234124686354,
+            "character_precision": 0.6880751533742331,
+            "negative_record_false_positive_rate": null
+          },
+          "confidence": {
+            "unit": "source page",
+            "groups": 77,
+            "resamples": 1000,
+            "exact_f1_95": [
+              0.4083809275761353,
+              0.5046999421296295
+            ],
+            "full_coverage_95": [
+              0.5010682636880089,
+              0.6142293592250266
+            ]
+          },
+          "misses": {
+            "complete": 285,
+            "partial": 169,
+            "entirely_missed": 58
+          },
+          "latency_ms": {
+            "observations": 225,
+            "p50": 3.3984,
+            "p95": 4.218,
+            "mean": 3.3741306666666664,
+            "sum": 759.1794,
+            "texts_per_second": 296.37263603306417
+          },
+          "by_domain": {
+            "Bottin1_1820": {
+              "records": 14,
+              "gold_entities": 14,
+              "predicted_entities": 21,
+              "exact_true_positives": 8,
+              "gold_characters": 136,
+              "predicted_characters": 139,
+              "covered_gold_characters": 109,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 8,
+              "exact_precision": 0.38095238095238093,
+              "exact_recall": 0.5714285714285714,
+              "exact_f1": 0.45714285714285713,
+              "full_entity_coverage": 0.5714285714285714,
+              "character_recall": 0.8014705882352942,
+              "character_precision": 0.7841726618705036,
+              "negative_record_false_positive_rate": null
+            },
+            "Bottin1_1827": {
+              "records": 28,
+              "gold_entities": 28,
+              "predicted_entities": 42,
+              "exact_true_positives": 9,
+              "gold_characters": 369,
+              "predicted_characters": 300,
+              "covered_gold_characters": 193,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 9,
+              "exact_precision": 0.21428571428571427,
+              "exact_recall": 0.32142857142857145,
+              "exact_f1": 0.2571428571428571,
+              "full_entity_coverage": 0.32142857142857145,
+              "character_recall": 0.5230352303523035,
+              "character_precision": 0.6433333333333333,
+              "negative_record_false_positive_rate": null
+            },
+            "Bottin1_1837": {
+              "records": 46,
+              "gold_entities": 46,
+              "predicted_entities": 68,
+              "exact_true_positives": 21,
+              "gold_characters": 573,
+              "predicted_characters": 535,
+              "covered_gold_characters": 384,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 21,
+              "exact_precision": 0.3088235294117647,
+              "exact_recall": 0.45652173913043476,
+              "exact_f1": 0.3684210526315789,
+              "full_entity_coverage": 0.45652173913043476,
+              "character_recall": 0.6701570680628273,
+              "character_precision": 0.7177570093457943,
+              "negative_record_false_positive_rate": null
+            },
+            "Bottin3_1854a": {
+              "records": 52,
+              "gold_entities": 52,
+              "predicted_entities": 86,
+              "exact_true_positives": 26,
+              "gold_characters": 549,
+              "predicted_characters": 597,
+              "covered_gold_characters": 433,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 26,
+              "exact_precision": 0.3023255813953488,
+              "exact_recall": 0.5,
+              "exact_f1": 0.37681159420289856,
+              "full_entity_coverage": 0.5,
+              "character_recall": 0.7887067395264117,
+              "character_precision": 0.7252931323283082,
+              "negative_record_false_positive_rate": null
+            },
+            "Cambon_almgene_1841": {
+              "records": 40,
+              "gold_entities": 40,
+              "predicted_entities": 54,
+              "exact_true_positives": 22,
+              "gold_characters": 342,
+              "predicted_characters": 379,
+              "covered_gold_characters": 250,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 22,
+              "exact_precision": 0.4074074074074074,
+              "exact_recall": 0.55,
+              "exact_f1": 0.46808510638297873,
+              "full_entity_coverage": 0.55,
+              "character_recall": 0.7309941520467836,
+              "character_precision": 0.6596306068601583,
+              "negative_record_false_positive_rate": null
+            },
+            "Deflandre_1828": {
+              "records": 26,
+              "gold_entities": 26,
+              "predicted_entities": 31,
+              "exact_true_positives": 18,
+              "gold_characters": 190,
+              "predicted_characters": 201,
+              "covered_gold_characters": 140,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 18,
+              "exact_precision": 0.5806451612903226,
+              "exact_recall": 0.6923076923076923,
+              "exact_f1": 0.631578947368421,
+              "full_entity_coverage": 0.6923076923076923,
+              "character_recall": 0.7368421052631579,
+              "character_precision": 0.6965174129353234,
+              "negative_record_false_positive_rate": null
+            },
+            "Deflandre_1829": {
+              "records": 28,
+              "gold_entities": 28,
+              "predicted_entities": 26,
+              "exact_true_positives": 12,
+              "gold_characters": 207,
+              "predicted_characters": 170,
+              "covered_gold_characters": 90,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 12,
+              "exact_precision": 0.46153846153846156,
+              "exact_recall": 0.42857142857142855,
+              "exact_f1": 0.4444444444444444,
+              "full_entity_coverage": 0.42857142857142855,
+              "character_recall": 0.43478260869565216,
+              "character_precision": 0.5294117647058824,
+              "negative_record_false_positive_rate": null
+            },
+            "DidotBottin_1860a": {
+              "records": 20,
+              "gold_entities": 20,
+              "predicted_entities": 23,
+              "exact_true_positives": 11,
+              "gold_characters": 293,
+              "predicted_characters": 199,
+              "covered_gold_characters": 144,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 11,
+              "exact_precision": 0.4782608695652174,
+              "exact_recall": 0.55,
+              "exact_f1": 0.5116279069767442,
+              "full_entity_coverage": 0.55,
+              "character_recall": 0.49146757679180886,
+              "character_precision": 0.7236180904522613,
+              "negative_record_false_positive_rate": null
+            },
+            "DidotBottin_1861a": {
+              "records": 16,
+              "gold_entities": 16,
+              "predicted_entities": 20,
+              "exact_true_positives": 7,
+              "gold_characters": 143,
+              "predicted_characters": 127,
+              "covered_gold_characters": 101,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 7,
+              "exact_precision": 0.35,
+              "exact_recall": 0.4375,
+              "exact_f1": 0.3888888888888889,
+              "full_entity_coverage": 0.4375,
+              "character_recall": 0.7062937062937062,
+              "character_precision": 0.7952755905511811,
+              "negative_record_false_positive_rate": null
+            },
+            "Didot_1841a": {
+              "records": 62,
+              "gold_entities": 62,
+              "predicted_entities": 87,
+              "exact_true_positives": 38,
+              "gold_characters": 623,
+              "predicted_characters": 635,
+              "covered_gold_characters": 465,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 39,
+              "exact_precision": 0.4367816091954023,
+              "exact_recall": 0.6129032258064516,
+              "exact_f1": 0.5100671140939598,
+              "full_entity_coverage": 0.6290322580645161,
+              "character_recall": 0.7463884430176565,
+              "character_precision": 0.7322834645669292,
+              "negative_record_false_positive_rate": null
+            },
+            "Didot_1851a": {
+              "records": 68,
+              "gold_entities": 68,
+              "predicted_entities": 106,
+              "exact_true_positives": 36,
+              "gold_characters": 654,
+              "predicted_characters": 720,
+              "covered_gold_characters": 453,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 36,
+              "exact_precision": 0.33962264150943394,
+              "exact_recall": 0.5294117647058824,
+              "exact_f1": 0.41379310344827586,
+              "full_entity_coverage": 0.5294117647058824,
+              "character_recall": 0.6926605504587156,
+              "character_precision": 0.6291666666666667,
+              "negative_record_false_positive_rate": null
+            },
+            "Didot_1854a": {
+              "records": 27,
+              "gold_entities": 27,
+              "predicted_entities": 41,
+              "exact_true_positives": 11,
+              "gold_characters": 343,
+              "predicted_characters": 290,
+              "covered_gold_characters": 207,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 11,
+              "exact_precision": 0.2682926829268293,
+              "exact_recall": 0.4074074074074074,
+              "exact_f1": 0.3235294117647059,
+              "full_entity_coverage": 0.4074074074074074,
+              "character_recall": 0.6034985422740525,
+              "character_precision": 0.7137931034482758,
+              "negative_record_false_positive_rate": null
+            },
+            "Duverneuil_et_La_Tynna_1801": {
+              "records": 14,
+              "gold_entities": 14,
+              "predicted_entities": 24,
+              "exact_true_positives": 8,
+              "gold_characters": 123,
+              "predicted_characters": 132,
+              "covered_gold_characters": 79,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 8,
+              "exact_precision": 0.3333333333333333,
+              "exact_recall": 0.5714285714285714,
+              "exact_f1": 0.42105263157894735,
+              "full_entity_coverage": 0.5714285714285714,
+              "character_recall": 0.6422764227642277,
+              "character_precision": 0.5984848484848485,
+              "negative_record_false_positive_rate": null
+            },
+            "Duverneuil_et_La_Tynna_1805": {
+              "records": 17,
+              "gold_entities": 17,
+              "predicted_entities": 28,
+              "exact_true_positives": 15,
+              "gold_characters": 153,
+              "predicted_characters": 203,
+              "covered_gold_characters": 143,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 15,
+              "exact_precision": 0.5357142857142857,
+              "exact_recall": 0.8823529411764706,
+              "exact_f1": 0.6666666666666666,
+              "full_entity_coverage": 0.8823529411764706,
+              "character_recall": 0.934640522875817,
+              "character_precision": 0.7044334975369458,
+              "negative_record_false_positive_rate": null
+            },
+            "Duverneuil_et_La_Tynna_1806": {
+              "records": 13,
+              "gold_entities": 13,
+              "predicted_entities": 23,
+              "exact_true_positives": 12,
+              "gold_characters": 91,
+              "predicted_characters": 178,
+              "covered_gold_characters": 84,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 12,
+              "exact_precision": 0.5217391304347826,
+              "exact_recall": 0.9230769230769231,
+              "exact_f1": 0.6666666666666666,
+              "full_entity_coverage": 0.9230769230769231,
+              "character_recall": 0.9230769230769231,
+              "character_precision": 0.47191011235955055,
+              "negative_record_false_positive_rate": null
+            },
+            "Favre_et_Duchesne_1798": {
+              "records": 15,
+              "gold_entities": 15,
+              "predicted_entities": 22,
+              "exact_true_positives": 13,
+              "gold_characters": 125,
+              "predicted_characters": 160,
+              "covered_gold_characters": 112,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 13,
+              "exact_precision": 0.5909090909090909,
+              "exact_recall": 0.8666666666666667,
+              "exact_f1": 0.7027027027027027,
+              "full_entity_coverage": 0.8666666666666667,
+              "character_recall": 0.896,
+              "character_precision": 0.7,
+              "negative_record_false_positive_rate": null
+            },
+            "La_Tynna_1813": {
+              "records": 19,
+              "gold_entities": 19,
+              "predicted_entities": 26,
+              "exact_true_positives": 11,
+              "gold_characters": 209,
+              "predicted_characters": 199,
+              "covered_gold_characters": 150,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 11,
+              "exact_precision": 0.4230769230769231,
+              "exact_recall": 0.5789473684210527,
+              "exact_f1": 0.4888888888888889,
+              "full_entity_coverage": 0.5789473684210527,
+              "character_recall": 0.7177033492822966,
+              "character_precision": 0.7537688442211056,
+              "negative_record_false_positive_rate": null
+            },
+            "Notables_communaux_seine_1801": {
+              "records": 7,
+              "gold_entities": 7,
+              "predicted_entities": 6,
+              "exact_true_positives": 6,
+              "gold_characters": 58,
+              "predicted_characters": 52,
+              "covered_gold_characters": 52,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 6,
+              "exact_precision": 1.0,
+              "exact_recall": 0.8571428571428571,
+              "exact_f1": 0.9230769230769231,
+              "full_entity_coverage": 0.8571428571428571,
+              "character_recall": 0.896551724137931,
+              "character_precision": 1.0,
+              "negative_record_false_positive_rate": null
+            }
+          }
+        }
+      },
+      "peak_process_memory_bytes": 492957696,
+      "timing_prediction_mismatches": 0,
+      "quality_predictions_sha256": {
+        "deep-sequoia-nonwiki": "203495bb9406c36893bf43ff3462d7f5250ab497b0a4c78df7f2803a6dbfb17f",
+        "europeana-newspapers-fr": "17cd358b02cd8873974087d0a01a92a447e960803dff6bee8576a45f92be9d8e",
+        "soduco-nested-ner": "7839f8351c5d7f2efc76ed4b67ec5ae4c2f5eae348079ca8d075ebf586125554"
+      }
+    },
+    "moderncamembert-fr": {
+      "backend": "PyTorch CPU FP32 eager; ModernCamemBERT; complete 512-token windows, stride 64",
+      "threshold": 0.6,
+      "datasets": {
+        "deep-sequoia-nonwiki": {
+          "task": "PERSON",
+          "quality": {
+            "records": 2084,
+            "gold_entities": 270,
+            "predicted_entities": 276,
+            "exact_true_positives": 188,
+            "gold_characters": 2502,
+            "predicted_characters": 2697,
+            "covered_gold_characters": 2098,
+            "negative_records": 1856,
+            "negative_records_with_predictions": 43,
+            "fully_covered_entities": 207,
+            "exact_precision": 0.6811594202898551,
+            "exact_recall": 0.6962962962962963,
+            "exact_f1": 0.6886446886446886,
+            "full_entity_coverage": 0.7666666666666667,
+            "character_recall": 0.8385291766586731,
+            "character_precision": 0.7779013718946978,
+            "negative_record_false_positive_rate": 0.023168103448275863
+          },
+          "confidence": {
+            "unit": "sentence",
+            "groups": 2084,
+            "resamples": 1000,
+            "exact_f1_95": [
+              0.6311831076724694,
+              0.7398256021264871
+            ],
+            "full_coverage_95": [
+              0.7116547184567257,
+              0.8196766513982643
+            ]
+          },
+          "misses": {
+            "complete": 207,
+            "entirely_missed": 61,
+            "partial": 2
+          },
+          "latency_ms": {
+            "observations": 225,
+            "p50": 67.7044,
+            "p95": 122.515,
+            "mean": 71.28618355555555,
+            "sum": 16039.3913,
+            "texts_per_second": 14.027963766929236
+          },
+          "by_domain": {
+            "Europar.550": {
+              "records": 561,
+              "gold_entities": 73,
+              "predicted_entities": 127,
+              "exact_true_positives": 55,
+              "gold_characters": 639,
+              "predicted_characters": 1166,
+              "covered_gold_characters": 621,
+              "negative_records": 502,
+              "negative_records_with_predictions": 35,
+              "fully_covered_entities": 70,
+              "exact_precision": 0.4330708661417323,
+              "exact_recall": 0.7534246575342466,
+              "exact_f1": 0.55,
+              "full_entity_coverage": 0.958904109589041,
+              "character_recall": 0.971830985915493,
+              "character_precision": 0.532590051457976,
+              "negative_record_false_positive_rate": 0.0697211155378486
+            },
+            "annodis.er": {
+              "records": 523,
+              "gold_entities": 165,
+              "predicted_entities": 148,
+              "exact_true_positives": 133,
+              "gold_characters": 1701,
+              "predicted_characters": 1525,
+              "covered_gold_characters": 1477,
+              "negative_records": 386,
+              "negative_records_with_predictions": 7,
+              "fully_covered_entities": 137,
+              "exact_precision": 0.8986486486486487,
+              "exact_recall": 0.806060606060606,
+              "exact_f1": 0.8498402555910544,
+              "full_entity_coverage": 0.8303030303030303,
+              "character_recall": 0.8683127572016461,
+              "character_precision": 0.9685245901639344,
+              "negative_record_false_positive_rate": 0.018134715025906734
+            },
+            "emea-fr-dev": {
+              "records": 562,
+              "gold_entities": 0,
+              "predicted_entities": 1,
+              "exact_true_positives": 0,
+              "gold_characters": 0,
+              "predicted_characters": 6,
+              "covered_gold_characters": 0,
+              "negative_records": 562,
+              "negative_records_with_predictions": 1,
+              "exact_precision": 0.0,
+              "exact_recall": null,
+              "exact_f1": 0.0,
+              "full_entity_coverage": null,
+              "character_recall": null,
+              "character_precision": 0.0,
+              "negative_record_false_positive_rate": 0.0017793594306049821
+            },
+            "emea-fr-test": {
+              "records": 438,
+              "gold_entities": 32,
+              "predicted_entities": 0,
+              "exact_true_positives": 0,
+              "gold_characters": 162,
+              "predicted_characters": 0,
+              "covered_gold_characters": 0,
+              "negative_records": 406,
+              "negative_records_with_predictions": 0,
+              "exact_precision": null,
+              "exact_recall": 0.0,
+              "exact_f1": 0.0,
+              "full_entity_coverage": 0.0,
+              "character_recall": 0.0,
+              "character_precision": null,
+              "negative_record_false_positive_rate": 0.0
+            }
+          }
+        },
+        "europeana-newspapers-fr": {
+          "task": "PERSON",
+          "quality": {
+            "records": 512,
+            "gold_entities": 1333,
+            "predicted_entities": 969,
+            "exact_true_positives": 660,
+            "gold_characters": 11210,
+            "predicted_characters": 8358,
+            "covered_gold_characters": 7420,
+            "negative_records": 159,
+            "negative_records_with_predictions": 13,
+            "fully_covered_entities": 774,
+            "exact_precision": 0.6811145510835913,
+            "exact_recall": 0.4951237809452363,
+            "exact_f1": 0.573414422241529,
+            "full_entity_coverage": 0.5806451612903226,
+            "character_recall": 0.6619090098126673,
+            "character_precision": 0.8877721943048577,
+            "negative_record_false_positive_rate": 0.08176100628930817
+          },
+          "confidence": {
+            "unit": "source-token block",
+            "groups": 101,
+            "resamples": 1000,
+            "exact_f1_95": [
+              0.5195800625241007,
+              0.6242077982104525
+            ],
+            "full_coverage_95": [
+              0.507650992083928,
+              0.6578888712515045
+            ]
+          },
+          "misses": {
+            "complete": 774,
+            "partial": 94,
+            "entirely_missed": 465
+          },
+          "latency_ms": {
+            "observations": 225,
+            "p50": 267.1337,
+            "p95": 348.8705,
+            "mean": 272.7008093333334,
+            "sum": 61357.682100000005,
+            "texts_per_second": 3.667022486822395
+          },
+          "by_domain": {
+            "historical-newspaper-OCR": {
+              "records": 512,
+              "gold_entities": 1333,
+              "predicted_entities": 969,
+              "exact_true_positives": 660,
+              "gold_characters": 11210,
+              "predicted_characters": 8358,
+              "covered_gold_characters": 7420,
+              "negative_records": 159,
+              "negative_records_with_predictions": 13,
+              "fully_covered_entities": 774,
+              "exact_precision": 0.6811145510835913,
+              "exact_recall": 0.4951237809452363,
+              "exact_f1": 0.573414422241529,
+              "full_entity_coverage": 0.5806451612903226,
+              "character_recall": 0.6619090098126673,
+              "character_precision": 0.8877721943048577,
+              "negative_record_false_positive_rate": 0.08176100628930817
+            }
+          }
+        },
+        "soduco-nested-ner": {
+          "task": "NAME_OR_BUSINESS",
+          "quality": {
+            "records": 512,
+            "gold_entities": 512,
+            "predicted_entities": 269,
+            "exact_true_positives": 73,
+            "gold_characters": 5181,
+            "predicted_characters": 2041,
+            "covered_gold_characters": 1345,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 73,
+            "exact_precision": 0.27137546468401486,
+            "exact_recall": 0.142578125,
+            "exact_f1": 0.18693982074263765,
+            "full_entity_coverage": 0.142578125,
+            "character_recall": 0.2596023933603551,
+            "character_precision": 0.6589906908378246,
+            "negative_record_false_positive_rate": null
+          },
+          "confidence": {
+            "unit": "source page",
+            "groups": 77,
+            "resamples": 1000,
+            "exact_f1_95": [
+              0.14399262422360248,
+              0.22831023730614516
+            ],
+            "full_coverage_95": [
+              0.10564263030076593,
+              0.1764831305656591
+            ]
+          },
+          "misses": {
+            "entirely_missed": 344,
+            "complete": 73,
+            "partial": 95
+          },
+          "latency_ms": {
+            "observations": 225,
+            "p50": 60.9155,
+            "p95": 86.3238,
+            "mean": 63.49178577777778,
+            "sum": 14285.6518,
+            "texts_per_second": 15.750068890801328
+          },
+          "by_domain": {
+            "Bottin1_1820": {
+              "records": 14,
+              "gold_entities": 14,
+              "predicted_entities": 7,
+              "exact_true_positives": 3,
+              "gold_characters": 136,
+              "predicted_characters": 55,
+              "covered_gold_characters": 48,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 3,
+              "exact_precision": 0.42857142857142855,
+              "exact_recall": 0.21428571428571427,
+              "exact_f1": 0.2857142857142857,
+              "full_entity_coverage": 0.21428571428571427,
+              "character_recall": 0.35294117647058826,
+              "character_precision": 0.8727272727272727,
+              "negative_record_false_positive_rate": null
+            },
+            "Bottin1_1827": {
+              "records": 28,
+              "gold_entities": 28,
+              "predicted_entities": 18,
+              "exact_true_positives": 2,
+              "gold_characters": 369,
+              "predicted_characters": 155,
+              "covered_gold_characters": 76,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 2,
+              "exact_precision": 0.1111111111111111,
+              "exact_recall": 0.07142857142857142,
+              "exact_f1": 0.08695652173913043,
+              "full_entity_coverage": 0.07142857142857142,
+              "character_recall": 0.20596205962059622,
+              "character_precision": 0.49032258064516127,
+              "negative_record_false_positive_rate": null
+            },
+            "Bottin1_1837": {
+              "records": 46,
+              "gold_entities": 46,
+              "predicted_entities": 25,
+              "exact_true_positives": 6,
+              "gold_characters": 573,
+              "predicted_characters": 224,
+              "covered_gold_characters": 180,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 6,
+              "exact_precision": 0.24,
+              "exact_recall": 0.13043478260869565,
+              "exact_f1": 0.16901408450704225,
+              "full_entity_coverage": 0.13043478260869565,
+              "character_recall": 0.31413612565445026,
+              "character_precision": 0.8035714285714286,
+              "negative_record_false_positive_rate": null
+            },
+            "Bottin3_1854a": {
+              "records": 52,
+              "gold_entities": 52,
+              "predicted_entities": 34,
+              "exact_true_positives": 9,
+              "gold_characters": 549,
+              "predicted_characters": 219,
+              "covered_gold_characters": 152,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 9,
+              "exact_precision": 0.2647058823529412,
+              "exact_recall": 0.17307692307692307,
+              "exact_f1": 0.20930232558139536,
+              "full_entity_coverage": 0.17307692307692307,
+              "character_recall": 0.2768670309653916,
+              "character_precision": 0.6940639269406392,
+              "negative_record_false_positive_rate": null
+            },
+            "Cambon_almgene_1841": {
+              "records": 40,
+              "gold_entities": 40,
+              "predicted_entities": 19,
+              "exact_true_positives": 4,
+              "gold_characters": 342,
+              "predicted_characters": 135,
+              "covered_gold_characters": 80,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 4,
+              "exact_precision": 0.21052631578947367,
+              "exact_recall": 0.1,
+              "exact_f1": 0.13559322033898305,
+              "full_entity_coverage": 0.1,
+              "character_recall": 0.23391812865497075,
+              "character_precision": 0.5925925925925926,
+              "negative_record_false_positive_rate": null
+            },
+            "Deflandre_1828": {
+              "records": 26,
+              "gold_entities": 26,
+              "predicted_entities": 10,
+              "exact_true_positives": 4,
+              "gold_characters": 190,
+              "predicted_characters": 64,
+              "covered_gold_characters": 32,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 4,
+              "exact_precision": 0.4,
+              "exact_recall": 0.15384615384615385,
+              "exact_f1": 0.2222222222222222,
+              "full_entity_coverage": 0.15384615384615385,
+              "character_recall": 0.16842105263157894,
+              "character_precision": 0.5,
+              "negative_record_false_positive_rate": null
+            },
+            "Deflandre_1829": {
+              "records": 28,
+              "gold_entities": 28,
+              "predicted_entities": 4,
+              "exact_true_positives": 1,
+              "gold_characters": 207,
+              "predicted_characters": 30,
+              "covered_gold_characters": 17,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 1,
+              "exact_precision": 0.25,
+              "exact_recall": 0.03571428571428571,
+              "exact_f1": 0.0625,
+              "full_entity_coverage": 0.03571428571428571,
+              "character_recall": 0.0821256038647343,
+              "character_precision": 0.5666666666666667,
+              "negative_record_false_positive_rate": null
+            },
+            "DidotBottin_1860a": {
+              "records": 20,
+              "gold_entities": 20,
+              "predicted_entities": 5,
+              "exact_true_positives": 1,
+              "gold_characters": 293,
+              "predicted_characters": 34,
+              "covered_gold_characters": 13,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 1,
+              "exact_precision": 0.2,
+              "exact_recall": 0.05,
+              "exact_f1": 0.08,
+              "full_entity_coverage": 0.05,
+              "character_recall": 0.04436860068259386,
+              "character_precision": 0.38235294117647056,
+              "negative_record_false_positive_rate": null
+            },
+            "DidotBottin_1861a": {
+              "records": 16,
+              "gold_entities": 16,
+              "predicted_entities": 8,
+              "exact_true_positives": 3,
+              "gold_characters": 143,
+              "predicted_characters": 56,
+              "covered_gold_characters": 34,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 3,
+              "exact_precision": 0.375,
+              "exact_recall": 0.1875,
+              "exact_f1": 0.25,
+              "full_entity_coverage": 0.1875,
+              "character_recall": 0.23776223776223776,
+              "character_precision": 0.6071428571428571,
+              "negative_record_false_positive_rate": null
+            },
+            "Didot_1841a": {
+              "records": 62,
+              "gold_entities": 62,
+              "predicted_entities": 33,
+              "exact_true_positives": 10,
+              "gold_characters": 623,
+              "predicted_characters": 246,
+              "covered_gold_characters": 180,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 10,
+              "exact_precision": 0.30303030303030304,
+              "exact_recall": 0.16129032258064516,
+              "exact_f1": 0.21052631578947367,
+              "full_entity_coverage": 0.16129032258064516,
+              "character_recall": 0.28892455858747995,
+              "character_precision": 0.7317073170731707,
+              "negative_record_false_positive_rate": null
+            },
+            "Didot_1851a": {
+              "records": 68,
+              "gold_entities": 68,
+              "predicted_entities": 44,
+              "exact_true_positives": 14,
+              "gold_characters": 654,
+              "predicted_characters": 360,
+              "covered_gold_characters": 240,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 14,
+              "exact_precision": 0.3181818181818182,
+              "exact_recall": 0.20588235294117646,
+              "exact_f1": 0.25,
+              "full_entity_coverage": 0.20588235294117646,
+              "character_recall": 0.3669724770642202,
+              "character_precision": 0.6666666666666666,
+              "negative_record_false_positive_rate": null
+            },
+            "Didot_1854a": {
+              "records": 27,
+              "gold_entities": 27,
+              "predicted_entities": 15,
+              "exact_true_positives": 1,
+              "gold_characters": 343,
+              "predicted_characters": 104,
+              "covered_gold_characters": 69,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 1,
+              "exact_precision": 0.06666666666666667,
+              "exact_recall": 0.037037037037037035,
+              "exact_f1": 0.047619047619047616,
+              "full_entity_coverage": 0.037037037037037035,
+              "character_recall": 0.20116618075801748,
+              "character_precision": 0.6634615384615384,
+              "negative_record_false_positive_rate": null
+            },
+            "Duverneuil_et_La_Tynna_1801": {
+              "records": 14,
+              "gold_entities": 14,
+              "predicted_entities": 9,
+              "exact_true_positives": 3,
+              "gold_characters": 123,
+              "predicted_characters": 63,
+              "covered_gold_characters": 40,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 3,
+              "exact_precision": 0.3333333333333333,
+              "exact_recall": 0.21428571428571427,
+              "exact_f1": 0.2608695652173913,
+              "full_entity_coverage": 0.21428571428571427,
+              "character_recall": 0.3252032520325203,
+              "character_precision": 0.6349206349206349,
+              "negative_record_false_positive_rate": null
+            },
+            "Duverneuil_et_La_Tynna_1805": {
+              "records": 17,
+              "gold_entities": 17,
+              "predicted_entities": 10,
+              "exact_true_positives": 1,
+              "gold_characters": 153,
+              "predicted_characters": 86,
+              "covered_gold_characters": 43,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 1,
+              "exact_precision": 0.1,
+              "exact_recall": 0.058823529411764705,
+              "exact_f1": 0.07407407407407407,
+              "full_entity_coverage": 0.058823529411764705,
+              "character_recall": 0.28104575163398693,
+              "character_precision": 0.5,
+              "negative_record_false_positive_rate": null
+            },
+            "Duverneuil_et_La_Tynna_1806": {
+              "records": 13,
+              "gold_entities": 13,
+              "predicted_entities": 8,
+              "exact_true_positives": 3,
+              "gold_characters": 91,
+              "predicted_characters": 60,
+              "covered_gold_characters": 22,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 3,
+              "exact_precision": 0.375,
+              "exact_recall": 0.23076923076923078,
+              "exact_f1": 0.2857142857142857,
+              "full_entity_coverage": 0.23076923076923078,
+              "character_recall": 0.24175824175824176,
+              "character_precision": 0.36666666666666664,
+              "negative_record_false_positive_rate": null
+            },
+            "Favre_et_Duchesne_1798": {
+              "records": 15,
+              "gold_entities": 15,
+              "predicted_entities": 5,
+              "exact_true_positives": 0,
+              "gold_characters": 125,
+              "predicted_characters": 35,
+              "covered_gold_characters": 10,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "exact_precision": 0.0,
+              "exact_recall": 0.0,
+              "exact_f1": 0.0,
+              "full_entity_coverage": 0.0,
+              "character_recall": 0.08,
+              "character_precision": 0.2857142857142857,
+              "negative_record_false_positive_rate": null
+            },
+            "La_Tynna_1813": {
+              "records": 19,
+              "gold_entities": 19,
+              "predicted_entities": 9,
+              "exact_true_positives": 4,
+              "gold_characters": 209,
+              "predicted_characters": 75,
+              "covered_gold_characters": 75,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 4,
+              "exact_precision": 0.4444444444444444,
+              "exact_recall": 0.21052631578947367,
+              "exact_f1": 0.2857142857142857,
+              "full_entity_coverage": 0.21052631578947367,
+              "character_recall": 0.3588516746411483,
+              "character_precision": 1.0,
+              "negative_record_false_positive_rate": null
+            },
+            "Notables_communaux_seine_1801": {
+              "records": 7,
+              "gold_entities": 7,
+              "predicted_entities": 6,
+              "exact_true_positives": 4,
+              "gold_characters": 58,
+              "predicted_characters": 40,
+              "covered_gold_characters": 34,
+              "negative_records": 0,
+              "negative_records_with_predictions": 0,
+              "fully_covered_entities": 4,
+              "exact_precision": 0.6666666666666666,
+              "exact_recall": 0.5714285714285714,
+              "exact_f1": 0.6153846153846154,
+              "full_entity_coverage": 0.5714285714285714,
+              "character_recall": 0.5862068965517241,
+              "character_precision": 0.85,
+              "negative_record_false_positive_rate": null
+            }
+          }
+        }
+      },
+      "peak_process_memory_bytes": 961482752,
+      "timing_prediction_mismatches": 0,
+      "quality_predictions_sha256": {
+        "deep-sequoia-nonwiki": "29c5e2a9c5dc632463693364203cdf2328cee6b9718b7c0f71785f59bb996f28",
+        "europeana-newspapers-fr": "8bbca11cc1b3acfd744659d19191ac7eb183301c297a40500ca25f14fb162e3b",
+        "soduco-nested-ner": "6163659bf97bf417120ed8713b496185241405536a7398ca1de4d59d43cd0894"
+      }
+    }
+  },
+  "normalization_audit": {
+    "tokenizer_sha256": "79eddc8645e51a0e7524832a38ae7d606154fb935b5f78f6aae0adaa069c8ed0",
+    "normalizer": "Sequence(normalizers=[Replace(pattern=Regex(\"\\p{Z}\"), content=\" \"), Replace(pattern=Regex(\"[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f\\x7f-\\x9f]|\\p{Cf}|\\p{Co}|\\p{Cs}|[\\uFE0F]\"), content=\"\")])",
+    "datasets": {
+      "deep-sequoia-nonwiki": {
+        "records": 2084,
+        "max_windows": 1,
+        "undeclared_omissions": 0,
+        "native_deletions": []
+      },
+      "europeana-newspapers-fr": {
+        "records": 512,
+        "max_windows": 1,
+        "undeclared_omissions": 0,
+        "native_deletions": []
+      },
+      "soduco-nested-ner": {
+        "records": 512,
+        "max_windows": 1,
+        "undeclared_omissions": 0,
+        "native_deletions": [
+          {
+            "id": "soduco-nested-ner:Didot_1854a:607:301",
+            "positions": [
+              40
+            ],
+            "within_target_reference": 1
+          },
+          {
+            "id": "soduco-nested-ner:Cambon_almgene_1841:301:334",
+            "positions": [
+              6
+            ],
+            "within_target_reference": 1
+          },
+          {
+            "id": "soduco-nested-ner:Didot_1851a:92:713",
+            "positions": [
+              13
+            ],
+            "within_target_reference": 1
+          },
+          {
+            "id": "soduco-nested-ner:Bottin1_1827:117:436",
+            "positions": [
+              18
+            ],
+            "within_target_reference": 1
+          },
+          {
+            "id": "soduco-nested-ner:Didot_1851a:419:488",
+            "positions": [
+              18,
+              20
+            ],
+            "within_target_reference": 2
+          },
+          {
+            "id": "soduco-nested-ner:Bottin1_1827:117:487",
+            "positions": [
+              14
+            ],
+            "within_target_reference": 1
+          },
+          {
+            "id": "soduco-nested-ner:Didot_1841a:183:336",
+            "positions": [
+              11
+            ],
+            "within_target_reference": 1
+          },
+          {
+            "id": "soduco-nested-ner:Didot_1854a:326:367",
+            "positions": [
+              14
+            ],
+            "within_target_reference": 1
+          },
+          {
+            "id": "soduco-nested-ner:Didot_1841a:542:605",
+            "positions": [
+              7
+            ],
+            "within_target_reference": 1
+          },
+          {
+            "id": "soduco-nested-ner:Bottin1_1837:345:484",
+            "positions": [
+              25
+            ],
+            "within_target_reference": 1
+          },
+          {
+            "id": "soduco-nested-ner:Bottin1_1827:37:475",
+            "positions": [
+              15
+            ],
+            "within_target_reference": 1
+          },
+          {
+            "id": "soduco-nested-ner:Bottin1_1837:114:487",
+            "positions": [
+              11
+            ],
+            "within_target_reference": 1
+          },
+          {
+            "id": "soduco-nested-ner:Didot_1854a:83:465",
+            "positions": [
+              20
+            ],
+            "within_target_reference": 1
+          }
+        ]
+      },
+      "calibration": {
+        "records": 512,
+        "max_windows": 1,
+        "undeclared_omissions": 0,
+        "native_deletions": []
+      }
+    }
+  },
+  "paired_exact_f1_difference_vs_distil_95": {
+    "spacy-multilingual": {
+      "deep-sequoia-nonwiki": [
+        -0.3955317239960658,
+        -0.2991277580814243
+      ],
+      "europeana-newspapers-fr": [
+        -0.26874228311976767,
+        -0.1886206065015185
+      ],
+      "soduco-nested-ner": [
+        -0.2025974279212483,
+        -0.0974312074541031
+      ]
+    },
+    "hmbert-tiny-fr": {
+      "deep-sequoia-nonwiki": [
+        -0.3101008362728174,
+        -0.17713331890871004
+      ],
+      "europeana-newspapers-fr": [
+        -0.10268869342964423,
+        -0.018588625158028525
+      ],
+      "soduco-nested-ner": [
+        0.014235934335667857,
+        0.06984547616232106
+      ]
+    },
+    "moderncamembert-fr": {
+      "deep-sequoia-nonwiki": [
+        -0.06908080025055266,
+        0.0351284546552985
+      ],
+      "europeana-newspapers-fr": [
+        -0.12658209572974008,
+        -0.023820303940691852
+      ],
+      "soduco-nested-ner": [
+        -0.2775721135051585,
+        -0.1854997056982374
+      ]
+    }
+  },
+  "limitations": [
+    "PERSON only; SoDUCo NAME_OR_BUSINESS remains a separate diagnostic",
+    "hmBERT trained on ICDAR-Europeana; its Europeana score is exposed, not independent",
+    "Different native CPU backends: deployment comparison, not intrinsic architecture speed",
+    "WikiNER threshold calibration reused for new models; no three-corpus test tuning",
+    "spaCy confidence 1.0 is a sentinel; its native PER output has no calibrated span confidence",
+    "DistilCamemBERT quality predictions reused unchanged; timing remeasured in this run",
+    "Modern tokenizer natively deletes 14 private-use glyphs in 13 SoDUCo references; source and gold kept unchanged, no artificial span expansion",
+    "Warm timing includes tokenization, all inference windows and decoding; excludes model loading and full hook",
+    "No generated input or reference data; model training and evaluation data are distinct issues"
+  ]
+}

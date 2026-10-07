@@ -1,0 +1,31 @@
+Name detection on documents: heuristic only (model unavailable: ModuleNotFoundError)  |  corpus run in 0.0 s
+
+category     expected   recall   found  precision
+address             4     100%       4       100%
+banking             6     100%       6       100%
+birth_date          4     100%       4       100%
+email              21     100%      21       100%
+identifier          2     100%       2       100%
+name               35      54%      19       100%
+phone               8     100%       8       100%
+secret              7     100%       7       100%
+
+Missed (leaks): 16
+  bug_report.md:3    name        S·o·p·h·i·e· ·L·e·f·è·v·r·e
+  bug_report.md:8    name        É·l·o·ï·s·e· ·D·u·b·o·i·s·-·L·a·m·b·e·r·t
+  contrat_prestation.md:6    name        N·a·t·h·a·l·i·e· ·P·e·r·r·i·n
+  contrat_prestation.md:9    name        J·u·l·i·e·n· ·C·a·r·p·e·n·t·i·e·r
+  contrat_prestation.md:28   name        N·a·t·h·a·l·i·e· ·P·e·r·r·i·n
+  contrat_prestation.md:28   name        J·u·l·i·e·n· ·C·a·r·p·e·n·t·i·e·r
+  courrier.txt:1    name        A·m·é·l·i·e· ·R·o·u·s·s·e·a·u
+  courrier.txt:16   name        K·a·r·i·m· ·B·e·n·a·l·i
+  courrier.txt:22   name        A·m·é·l·i·e· ·R·o·u·s·s·e·a·u
+  cv_thomas_girard.md:1    name        T·h·o·m·a·s· ·G·i·r·a·r·d
+  cv_thomas_girard.md:10   name        I·s·a·b·e·l·l·e· ·M·o·r·e·a·u
+  cv_thomas_girard.md:25   name        M·a·r·c· ·L·e·f·e·b·v·r·e
+  readme_project.md:30   name        C·a·m·i·l·l·e· ·F·o·n·t·a·i·n·e
+  readme_project.md:31   name        R·a·h·u·l· ·M·e·h·t·a
+  readme_project.md:35   name        I·n·è·s· ·B·a·r·b·i·e·r
+  traceback.log:12   name        L·u·c·a·s· ·M·o·r·e·l
+
+False alarms (noise): 0

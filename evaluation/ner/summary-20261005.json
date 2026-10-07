@@ -1,0 +1,2153 @@
+{
+  "schema_version": 1,
+  "study": "comparison-20261005",
+  "run": {
+    "started_at": "2026-10-05T22:23:10.401259+00:00",
+    "machine": {
+      "CPU": {
+        "Name": "AMD Ryzen 5 5600H with Radeon Graphics         ",
+        "NumberOfCores": 6,
+        "NumberOfLogicalProcessors": 12
+      },
+      "RAMBytes": 16477151232,
+      "power_scheme": null,
+      "power_query_status": 1,
+      "power_query_error": "Le mode de gestion, sous-groupe ou param\u00e8tre d\u2019alimentation sp\u00e9cifi\u00e9 n\u2019existe pas.",
+      "platform": "Windows-11-10.0.26200-SP0"
+    },
+    "versions": {
+      "python": "3.12.4",
+      "os": "Windows-11-10.0.26200-SP0",
+      "numpy": "2.5.3",
+      "onnxruntime": "1.30.0",
+      "tokenizers": "0.22.2",
+      "torch": "2.14.1+cpu",
+      "gliner": "0.2.29",
+      "transformers": "4.57.6"
+    },
+    "batch_size": 1,
+    "intra_op_threads": 4,
+    "inter_op_threads": {
+      "token_classifier_onnx": 1,
+      "legacy_pytorch": 1,
+      "current_gliner2": "ORT default; sequential execution"
+    },
+    "timing_passes": 3,
+    "quality_model_order": [
+      "gliner2-privacy-filter-PII-multi",
+      "masker-mini",
+      "nym-pii-multilingual-small",
+      "distilcamembert-base-ner",
+      "gliner_multi_pii-v1"
+    ],
+    "timing_model_orders": [
+      [
+        "gliner2-privacy-filter-PII-multi",
+        "masker-mini",
+        "nym-pii-multilingual-small",
+        "distilcamembert-base-ner",
+        "gliner_multi_pii-v1"
+      ],
+      [
+        "masker-mini",
+        "nym-pii-multilingual-small",
+        "distilcamembert-base-ner",
+        "gliner_multi_pii-v1",
+        "gliner2-privacy-filter-PII-multi"
+      ],
+      [
+        "nym-pii-multilingual-small",
+        "distilcamembert-base-ner",
+        "gliner_multi_pii-v1",
+        "gliner2-privacy-filter-PII-multi",
+        "masker-mini"
+      ]
+    ],
+    "notes": "Quality and independent phases finish before controlled latency; no prediction cache",
+    "active_artifacts": {
+      "gliner2-privacy-filter-PII-multi": {
+        "sha256": "a0da9404e04da3b832f89cd92f81fc9d3fe8a160d8f645fae57805b7efc71986",
+        "bytes": 266613325
+      },
+      "masker-mini": {
+        "sha256": "338b7c2daf15168441a93c175b1fe6b364fef9a6ef7dee65e00c9159a76fdfae",
+        "bytes": 22344556
+      },
+      "nym-pii-multilingual-small": {
+        "sha256": "139006aea2cbd8e709d322f056232570de54661f624143be4893aaa387190286",
+        "bytes": 138730982
+      },
+      "distilcamembert-base-ner": {
+        "sha256": "666ce15c968ca49874d2449aa9b83164dbb1126090d012dda7c35b2ef3672e1d",
+        "bytes": 270089674
+      },
+      "gliner_multi_pii-v1": {
+        "sha256": "3003753fba99e40645cf088c7367a2c6211fc174897dc64f1f9c147c29d18d2d",
+        "bytes": 1155900362
+      }
+    },
+    "cached_backbone_files": {
+      "hf-cache\\hub\\models--microsoft--mdeberta-v3-base\\snapshots\\a0484667b22365f84929a935b5e50a51f71f159d\\config.json": "bcffcd343dc5efa5ef2d5a58d2b405eed108f01cc45b48d0a907b333ec41801f",
+      "hf-cache\\hub\\models--microsoft--mdeberta-v3-base\\snapshots\\a0484667b22365f84929a935b5e50a51f71f159d\\spm.model": "13c8d666d62a7bc4ac8f040aab68e942c861f93303156cc28f5c7e885d86d6e3",
+      "hf-cache\\hub\\models--microsoft--mdeberta-v3-base\\snapshots\\a0484667b22365f84929a935b5e50a51f71f159d\\tokenizer_config.json": "3f3978e0c036f2c2588cac34a6047cbb0af0b0dc1814254e291028529805496d"
+    },
+    "baseline_implementation_sha256": "d192c7aac614bb3e75638355368c12dd18e9c2fb22f1ad51eac7c36ff732b244",
+    "harness_hashes": {
+      "adapters.py": "cef275f8ea80fe5a418fbf48cdf78278f273061ba285fd99b15e15d4dd49e866",
+      "aggregate.py": "a01aa483766903c07800e764fdf6faf2658af53126a6d9bb90ac1ec28c353bb1",
+      "check_distil_artifact.py": "cdc3a738cacacff6e8e9f75fc15027ba1131dbfae954ee6a06317a3c769ae1f2",
+      "cohort.py": "512dc27b0dd8ccd2a3a87d2474933585be69e8baf77efcd664cacaa56964a556",
+      "decode.py": "28b49f45437a39255aa3b5113652213fba12865975467136b8dbe70af0349078",
+      "fenec.py": "36c655d3cd4974f0e3c0a819cd2d3952239ca1f9ca7d7324a3f706a8af2742cc",
+      "fetch.py": "18ffa89be2c92569a5771a7e0ff5ddb77fef62355b41e0ecb4cbb1dfa1b222b8",
+      "fetch_models.py": "a0b613010e93ff665ff31db025ba67cd54212f73ac80d077a6cf468b7e2a9646",
+      "independent.py": "577b04c122093ae1d82c0fad39159a56d93e204d05ea88032a57e6ccd12477e2",
+      "license_policy.py": "42db11b74bee1eeb081852adc81947427494ffac8c3fed10afa41a4ca9fd1dd6",
+      "metrics.py": "f34a624d54b4868dd7b803170bbda45aa02039a52da661c5e71b789ccc4fcfec",
+      "prepare.py": "c5a2f24de19a42351a0b173e8cba0867c349c3c41b0bc83046802eb36ebed3c6",
+      "readers.py": "b86fedb54e23c6fa4c282804b8aa49704b4853a7b17a85194e44aa4fdba2a9fd",
+      "runtime_info.py": "14d86ca8e74b75bed3fab031ce4d158174874c2ddb446efd26c66650367a4a34",
+      "run_comparison.py": "6c2fcfad28887050dcbb4f7c1336fcbc643aa10c226ccdf2b536cfcdc8179b7e",
+      "score.py": "951fff821ebca4565f8159675090e5d4b8dc7cd81f5d12c5ccf035abc2bd7d40",
+      "tagged_text.py": "4b1ceb54b6ba86ac680c17e1cd7ef587b8b0376b21f342cc2e9741323cf3e384",
+      "token_model.py": "94640c61ded6aa3437d13bf907d002be6bfea27cbd28efeb93c4246f5e772e42",
+      "worker.py": "936b84aa282aaccee2fe269fb741ccfa7ac50b3252ef3ffd1c8c497196b89cb2",
+      "__init__.py": "0d3c2859ad1282a4e353823206a8d957ce9278b10a73ff1e2a351c144fc57c54"
+    },
+    "finished_at": "2026-10-05T22:30:07.176975+00:00"
+  },
+  "analysis_harness_hashes": {
+    "adapters.py": "cef275f8ea80fe5a418fbf48cdf78278f273061ba285fd99b15e15d4dd49e866",
+    "aggregate.py": "d774bcf74f2df501cc9b09808b879e505d8c71b4a53d84f383b72d9ad8686793",
+    "check_distil_artifact.py": "cdc3a738cacacff6e8e9f75fc15027ba1131dbfae954ee6a06317a3c769ae1f2",
+    "cohort.py": "512dc27b0dd8ccd2a3a87d2474933585be69e8baf77efcd664cacaa56964a556",
+    "decode.py": "28b49f45437a39255aa3b5113652213fba12865975467136b8dbe70af0349078",
+    "error_analysis.py": "b1a90771993dd96013dfbfc7e72d48fde0d72cf8b2e38a3ca5ffd1f7c644277e",
+    "fenec.py": "36c655d3cd4974f0e3c0a819cd2d3952239ca1f9ca7d7324a3f706a8af2742cc",
+    "fetch.py": "18ffa89be2c92569a5771a7e0ff5ddb77fef62355b41e0ecb4cbb1dfa1b222b8",
+    "fetch_models.py": "a0b613010e93ff665ff31db025ba67cd54212f73ac80d077a6cf468b7e2a9646",
+    "independent.py": "577b04c122093ae1d82c0fad39159a56d93e204d05ea88032a57e6ccd12477e2",
+    "license_policy.py": "42db11b74bee1eeb081852adc81947427494ffac8c3fed10afa41a4ca9fd1dd6",
+    "metrics.py": "f34a624d54b4868dd7b803170bbda45aa02039a52da661c5e71b789ccc4fcfec",
+    "prepare.py": "c5a2f24de19a42351a0b173e8cba0867c349c3c41b0bc83046802eb36ebed3c6",
+    "readers.py": "b86fedb54e23c6fa4c282804b8aa49704b4853a7b17a85194e44aa4fdba2a9fd",
+    "runtime_info.py": "14d86ca8e74b75bed3fab031ce4d158174874c2ddb446efd26c66650367a4a34",
+    "run_comparison.py": "6c2fcfad28887050dcbb4f7c1336fcbc643aa10c226ccdf2b536cfcdc8179b7e",
+    "score.py": "951fff821ebca4565f8159675090e5d4b8dc7cd81f5d12c5ccf035abc2bd7d40",
+    "tagged_text.py": "4b1ceb54b6ba86ac680c17e1cd7ef587b8b0376b21f342cc2e9741323cf3e384",
+    "token_model.py": "94640c61ded6aa3437d13bf907d002be6bfea27cbd28efeb93c4246f5e772e42",
+    "worker.py": "936b84aa282aaccee2fe269fb741ccfa7ac50b3252ef3ffd1c8c497196b89cb2",
+    "write_report.py": "ef1ee0696c1a97735bb1107904ad5038e16607cbba5295e25a427e1812d37719",
+    "__init__.py": "0d3c2859ad1282a4e353823206a8d957ce9278b10a73ff1e2a351c144fc57c54"
+  },
+  "wikiner_cohort": {
+    "seed": "privacy-guard-french-ner-20261005-v1",
+    "source_sha256": "ec2359a32d8c182a8de97d913a52258dfb5feae0fda5f03933bf12d1a8770ff6",
+    "purpose": "Initial person recognition comparison; not the full gold corpus.",
+    "cpu_threads": 4,
+    "threshold_grid": [
+      0.15,
+      0.25,
+      0.4,
+      0.5,
+      0.6
+    ],
+    "selection_metric": "exact_f1; ties resolved by full coverage then precision",
+    "timing_passes": 3,
+    "samples": {
+      "calibration": {
+        "records": 512,
+        "sha256": "f3a5b8651706ebd7a0478a7f9437642869cef382015af32284ac31edc86a418e",
+        "person_mentions": 314,
+        "negative_records": 310,
+        "length_bands": {
+          "short_lt128": 263,
+          "medium_128_511": 249
+        }
+      },
+      "quality": {
+        "records": 2000,
+        "sha256": "b873a1b727eb5baef97e9333a132e4c1c4708fea97a9a2ef50747335f614748f",
+        "person_mentions": 1216,
+        "negative_records": 1182,
+        "length_bands": {
+          "short_lt128": 970,
+          "medium_128_511": 1025,
+          "long_ge512": 5
+        }
+      },
+      "timing": {
+        "records": 300,
+        "sha256": "eb710f5d112f10cae9ab06f629d21d7e17315f93269308fa75500673223dba82",
+        "person_mentions": 202,
+        "negative_records": 162,
+        "length_bands": {
+          "medium_128_511": 154,
+          "short_lt128": 145,
+          "long_ge512": 1
+        }
+      }
+    }
+  },
+  "fenec_cohort": {
+    "revision": "3a975635d57712096d8ebf859d842042c782837b",
+    "documents": 6,
+    "characters": 30579,
+    "person_mentions": 72,
+    "datasets": {
+      "fenec-wikinews": {
+        "documents": 1,
+        "source_labels": {
+          "org.ent": 14,
+          "time.date.rel": 6,
+          "amount": 12,
+          "time.date.abs": 18,
+          "loc.adm.nat": 11,
+          "func.coll": 6,
+          "org.adm": 1,
+          "prod.soft": 1,
+          "pers.coll": 1,
+          "loc.phys.geo": 1,
+          "pers.ind": 9,
+          "prod.object": 8,
+          "event": 4,
+          "loc.adm.town": 3,
+          "loc.phys.astro": 4,
+          "loc.adm.reg": 1,
+          "loc.phys.hydro": 1,
+          "loc.adm.sup": 1,
+          "prod.award": 1,
+          "prod.media": 1,
+          "func.ind": 2
+        }
+      },
+      "fenec-gsd": {
+        "documents": 1,
+        "source_labels": {
+          "loc.adm.town": 15,
+          "loc.phys.hydro": 1,
+          "pers.ind": 8,
+          "prod.art": 3,
+          "time.date.abs": 9,
+          "loc.adm.nat": 2,
+          "amount": 12,
+          "org.ent": 4,
+          "org.adm": 2,
+          "func.ind": 5,
+          "func.coll": 2,
+          "time.date.rel": 4,
+          "loc.adm.sup": 1,
+          "loc.phys.geo": 2,
+          "loc.add.phys": 1,
+          "event": 3,
+          "loc.adm.reg": 3,
+          "pers.coll": 1,
+          "prod.award": 1,
+          "loc.fac": 1
+        }
+      },
+      "fenec-republicain": {
+        "documents": 1,
+        "source_labels": {
+          "org.ent": 13,
+          "loc.oro": 4,
+          "loc.add.elec": 4,
+          "time.hour.abs": 11,
+          "loc.adm.reg": 11,
+          "pers.coll": 2,
+          "func.coll": 4,
+          "pers.ind": 10,
+          "func.ind": 6,
+          "loc.adm.town": 13,
+          "org.adm": 1,
+          "time.date.abs": 3,
+          "loc.adm.nat": 2,
+          "amount": 12,
+          "prod.art": 2,
+          "prod.media": 2,
+          "loc.add.phys": 3,
+          "event": 1,
+          "loc.fac": 1,
+          "time.date.rel": 1
+        }
+      },
+      "fenec-rhapsodie": {
+        "documents": 3,
+        "source_labels": {
+          "loc.adm.town": 18,
+          "prod.media": 4,
+          "time.date.abs": 9,
+          "time.hour.abs": 7,
+          "loc.oro": 9,
+          "pers.ind": 30,
+          "amount": 7,
+          "func.coll": 4,
+          "func.ind": 5,
+          "loc.phys.geo": 1,
+          "prod.art": 4,
+          "loc.adm.sup": 6,
+          "loc.adm.nat": 10,
+          "loc.other": 1,
+          "pers.coll": 11,
+          "org.ent": 12,
+          "loc.fac": 3,
+          "time.date.rel": 6,
+          "org.adm": 1,
+          "event": 1,
+          "loc.adm.reg": 4,
+          "loc.add.phys": 1
+        }
+      }
+    },
+    "sha256": "3c12c6dcaff0d54ab1dcfdc52a007b9b2034203f9a570665f18afff44447efd6",
+    "mapping": "All pers.* to PERSON; roles func.* excluded",
+    "selection": "All six FENEC v1 non-WikiNER documents declaring CC BY or CC BY-SA in the source table",
+    "exposure_note": "Different source from WikiNER; not a guarantee of absence from model pretraining"
+  },
+  "models": {
+    "gliner2-privacy-filter-PII-multi": {
+      "backend": "ONNX Runtime CPU; current person-only INT4 export",
+      "threshold": 0.6,
+      "wikiner": {
+        "records": 2000,
+        "gold_entities": 1216,
+        "predicted_entities": 1666,
+        "exact_true_positives": 1125,
+        "gold_characters": 12712,
+        "predicted_characters": 16711,
+        "covered_gold_characters": 12295,
+        "negative_records": 1182,
+        "negative_records_with_predictions": 284,
+        "fully_covered_entities": 1166,
+        "exact_precision": 0.6752701080432173,
+        "exact_recall": 0.9251644736842105,
+        "exact_f1": 0.7807078417765441,
+        "full_entity_coverage": 0.9588815789473685,
+        "character_recall": 0.967196349905601,
+        "character_precision": 0.7357429238226318,
+        "negative_record_false_positive_rate": 0.24027072758037224
+      },
+      "common_threshold_0_5": {
+        "records": 2000,
+        "gold_entities": 1216,
+        "predicted_entities": 1768,
+        "exact_true_positives": 1131,
+        "gold_characters": 12712,
+        "predicted_characters": 17711,
+        "covered_gold_characters": 12373,
+        "negative_records": 1182,
+        "negative_records_with_predictions": 327,
+        "fully_covered_entities": 1174,
+        "exact_precision": 0.6397058823529411,
+        "exact_recall": 0.9300986842105263,
+        "exact_f1": 0.7580428954423593,
+        "full_entity_coverage": 0.9654605263157895,
+        "character_recall": 0.9733322844556325,
+        "character_precision": 0.6986053864829767,
+        "negative_record_false_positive_rate": 0.2766497461928934
+      },
+      "fenec": {
+        "records": 6,
+        "gold_entities": 72,
+        "predicted_entities": 64,
+        "exact_true_positives": 42,
+        "gold_characters": 813,
+        "predicted_characters": 671,
+        "covered_gold_characters": 501,
+        "negative_records": 0,
+        "negative_records_with_predictions": 0,
+        "fully_covered_entities": 46,
+        "exact_precision": 0.65625,
+        "exact_recall": 0.5833333333333334,
+        "exact_f1": 0.6176470588235294,
+        "full_entity_coverage": 0.6388888888888888,
+        "character_recall": 0.6162361623616236,
+        "character_precision": 0.7466467958271237,
+        "negative_record_false_positive_rate": null
+      },
+      "fenec_by_dataset": {
+        "fenec-gsd": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 9,
+            "predicted_entities": 11,
+            "exact_true_positives": 6,
+            "gold_characters": 107,
+            "predicted_characters": 141,
+            "covered_gold_characters": 95,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 7,
+            "exact_precision": 0.5454545454545454,
+            "exact_recall": 0.6666666666666666,
+            "exact_f1": 0.6,
+            "full_entity_coverage": 0.7777777777777778,
+            "character_recall": 0.8878504672897196,
+            "character_precision": 0.6737588652482269,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-republicain": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 12,
+            "predicted_entities": 11,
+            "exact_true_positives": 9,
+            "gold_characters": 173,
+            "predicted_characters": 133,
+            "covered_gold_characters": 126,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 9,
+            "exact_precision": 0.8181818181818182,
+            "exact_recall": 0.75,
+            "exact_f1": 0.782608695652174,
+            "full_entity_coverage": 0.75,
+            "character_recall": 0.7283236994219653,
+            "character_precision": 0.9473684210526315,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-rhapsodie": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 3,
+            "gold_entities": 41,
+            "predicted_entities": 32,
+            "exact_true_positives": 22,
+            "gold_characters": 399,
+            "predicted_characters": 315,
+            "covered_gold_characters": 229,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 25,
+            "exact_precision": 0.6875,
+            "exact_recall": 0.5365853658536586,
+            "exact_f1": 0.6027397260273972,
+            "full_entity_coverage": 0.6097560975609756,
+            "character_recall": 0.5739348370927319,
+            "character_precision": 0.726984126984127,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-wikinews": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 10,
+            "predicted_entities": 10,
+            "exact_true_positives": 5,
+            "gold_characters": 134,
+            "predicted_characters": 82,
+            "covered_gold_characters": 51,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 5,
+            "exact_precision": 0.5,
+            "exact_recall": 0.5,
+            "exact_f1": 0.5,
+            "full_entity_coverage": 0.5,
+            "character_recall": 0.3805970149253731,
+            "character_precision": 0.6219512195121951,
+            "negative_record_false_positive_rate": null
+          }
+        }
+      },
+      "fenec_individual_person_only": {
+        "records": 6,
+        "gold_entities": 57,
+        "predicted_entities": 64,
+        "exact_true_positives": 41,
+        "gold_characters": 586,
+        "predicted_characters": 671,
+        "covered_gold_characters": 496,
+        "negative_records": 0,
+        "negative_records_with_predictions": 0,
+        "fully_covered_entities": 45,
+        "exact_precision": 0.640625,
+        "exact_recall": 0.7192982456140351,
+        "exact_f1": 0.6776859504132231,
+        "full_entity_coverage": 0.7894736842105263,
+        "character_recall": 0.8464163822525598,
+        "character_precision": 0.7391952309985097,
+        "negative_record_false_positive_rate": null
+      },
+      "confidence_95": {
+        "wikiner": {
+          "exact_f1": [
+            0.7567730271375832,
+            0.8032664321684891
+          ],
+          "full_entity_coverage": [
+            0.9468506948763279,
+            0.9694294662633672
+          ]
+        },
+        "fenec": {
+          "exact_f1": [
+            0.5526315789473685,
+            0.7017543859649122
+          ],
+          "full_entity_coverage": [
+            0.5471269296740995,
+            0.7647058823529411
+          ]
+        }
+      },
+      "coverage_errors": {
+        "wikiner": {
+          "PERSON": {
+            "complete": 1166,
+            "mentions": 1216,
+            "missed_entirely": 44,
+            "partial": 6
+          }
+        },
+        "fenec": {
+          "pers.coll": {
+            "missed_entirely": 14,
+            "mentions": 15,
+            "complete": 1
+          },
+          "pers.ind": {
+            "missed_entirely": 11,
+            "mentions": 57,
+            "complete": 45,
+            "partial": 1
+          }
+        }
+      },
+      "latency_ms": {
+        "observations": 900,
+        "p50": 78.66085000000001,
+        "p95": 153.5826,
+        "mean": 85.81374655555555,
+        "sum": 77232.3719,
+        "texts_per_second": 11.653144631700739
+      },
+      "latency_by_length": {
+        "short_lt128": {
+          "observations": 435,
+          "p50": 57.8309,
+          "p95": 84.6399,
+          "mean": 59.47688436781609,
+          "sum": 25872.4447,
+          "texts_per_second": 16.813254605197784
+        },
+        "medium_128_511": {
+          "observations": 462,
+          "p50": 99.90254999999999,
+          "p95": 175.7386,
+          "mean": 108.94840281385282,
+          "sum": 50334.1621,
+          "texts_per_second": 9.17865681526861
+        },
+        "long_ge512": {
+          "observations": 3,
+          "p50": 328.1789,
+          "p95": 371.0468,
+          "mean": 341.92170000000004,
+          "sum": 1025.7651,
+          "texts_per_second": 2.924646198237783
+        }
+      },
+      "wikiner_by_length": {
+        "short_lt128": {
+          "records": 970,
+          "gold_entities": 427,
+          "predicted_entities": 620,
+          "exact_true_positives": 390,
+          "gold_characters": 4220,
+          "predicted_characters": 5801,
+          "covered_gold_characters": 4054,
+          "negative_records": 614,
+          "negative_records_with_predictions": 136,
+          "fully_covered_entities": 405,
+          "exact_precision": 0.6290322580645161,
+          "exact_recall": 0.9133489461358314,
+          "exact_f1": 0.7449856733524355,
+          "full_entity_coverage": 0.9484777517564403,
+          "character_recall": 0.9606635071090047,
+          "character_precision": 0.6988450267195311,
+          "negative_record_false_positive_rate": 0.22149837133550487
+        },
+        "medium_128_511": {
+          "records": 1025,
+          "gold_entities": 786,
+          "predicted_entities": 1037,
+          "exact_true_positives": 732,
+          "gold_characters": 8456,
+          "predicted_characters": 10829,
+          "covered_gold_characters": 8205,
+          "negative_records": 564,
+          "negative_records_with_predictions": 146,
+          "fully_covered_entities": 758,
+          "exact_precision": 0.7058823529411765,
+          "exact_recall": 0.9312977099236641,
+          "exact_f1": 0.8030718595721339,
+          "full_entity_coverage": 0.9643765903307888,
+          "character_recall": 0.9703169347209082,
+          "character_precision": 0.7576876904607998,
+          "negative_record_false_positive_rate": 0.25886524822695034
+        },
+        "long_ge512": {
+          "records": 5,
+          "gold_entities": 3,
+          "predicted_entities": 9,
+          "exact_true_positives": 3,
+          "gold_characters": 36,
+          "predicted_characters": 81,
+          "covered_gold_characters": 36,
+          "negative_records": 4,
+          "negative_records_with_predictions": 2,
+          "fully_covered_entities": 3,
+          "exact_precision": 0.3333333333333333,
+          "exact_recall": 1.0,
+          "exact_f1": 0.5,
+          "full_entity_coverage": 1.0,
+          "character_recall": 1.0,
+          "character_precision": 0.4444444444444444,
+          "negative_record_false_positive_rate": 0.5
+        }
+      },
+      "latency_by_pass": [
+        {
+          "observations": 300,
+          "p50": 74.175,
+          "p95": 142.5917,
+          "mean": 81.52298933333334,
+          "sum": 24456.896800000002,
+          "texts_per_second": 12.266478550132328
+        },
+        {
+          "observations": 300,
+          "p50": 85.60725,
+          "p95": 163.6668,
+          "mean": 92.63702633333332,
+          "sum": 27791.1079,
+          "texts_per_second": 10.794819734408646
+        },
+        {
+          "observations": 300,
+          "p50": 76.80404999999999,
+          "p95": 146.3093,
+          "mean": 83.28122400000001,
+          "sum": 24984.3672,
+          "texts_per_second": 12.00750843911708
+        }
+      ],
+      "model_load_ms_by_pass": [
+        1835.49739999944,
+        1954.37099999981,
+        1890.1826000001165
+      ],
+      "peak_process_memory_bytes": 768008192,
+      "weights_bytes": 266613325,
+      "artifact_sha256": "a0da9404e04da3b832f89cd92f81fc9d3fe8a160d8f645fae57805b7efc71986",
+      "timing_prediction_mismatches": 0,
+      "timing_process_cpu_seconds": 307.796875
+    },
+    "masker-mini": {
+      "backend": "ONNX Runtime CPU; INT4",
+      "threshold": 0.25,
+      "wikiner": {
+        "records": 2000,
+        "gold_entities": 1216,
+        "predicted_entities": 1266,
+        "exact_true_positives": 1170,
+        "gold_characters": 12712,
+        "predicted_characters": 12875,
+        "covered_gold_characters": 12418,
+        "negative_records": 1182,
+        "negative_records_with_predictions": 36,
+        "fully_covered_entities": 1174,
+        "exact_precision": 0.9241706161137441,
+        "exact_recall": 0.962171052631579,
+        "exact_f1": 0.9427880741337631,
+        "full_entity_coverage": 0.9654605263157895,
+        "character_recall": 0.9768722466960352,
+        "character_precision": 0.9645048543689321,
+        "negative_record_false_positive_rate": 0.030456852791878174
+      },
+      "common_threshold_0_5": {
+        "records": 2000,
+        "gold_entities": 1216,
+        "predicted_entities": 1259,
+        "exact_true_positives": 1159,
+        "gold_characters": 12712,
+        "predicted_characters": 12771,
+        "covered_gold_characters": 12363,
+        "negative_records": 1182,
+        "negative_records_with_predictions": 33,
+        "fully_covered_entities": 1161,
+        "exact_precision": 0.920571882446386,
+        "exact_recall": 0.953125,
+        "exact_f1": 0.9365656565656566,
+        "full_entity_coverage": 0.9547697368421053,
+        "character_recall": 0.9725456261799874,
+        "character_precision": 0.9680526192154099,
+        "negative_record_false_positive_rate": 0.027918781725888325
+      },
+      "fenec": {
+        "records": 6,
+        "gold_entities": 72,
+        "predicted_entities": 63,
+        "exact_true_positives": 41,
+        "gold_characters": 813,
+        "predicted_characters": 635,
+        "covered_gold_characters": 556,
+        "negative_records": 0,
+        "negative_records_with_predictions": 0,
+        "fully_covered_entities": 47,
+        "exact_precision": 0.6507936507936508,
+        "exact_recall": 0.5694444444444444,
+        "exact_f1": 0.6074074074074074,
+        "full_entity_coverage": 0.6527777777777778,
+        "character_recall": 0.6838868388683886,
+        "character_precision": 0.8755905511811024,
+        "negative_record_false_positive_rate": null
+      },
+      "fenec_by_dataset": {
+        "fenec-gsd": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 9,
+            "predicted_entities": 4,
+            "exact_true_positives": 3,
+            "gold_characters": 107,
+            "predicted_characters": 49,
+            "covered_gold_characters": 49,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 3,
+            "exact_precision": 0.75,
+            "exact_recall": 0.3333333333333333,
+            "exact_f1": 0.46153846153846156,
+            "full_entity_coverage": 0.3333333333333333,
+            "character_recall": 0.45794392523364486,
+            "character_precision": 1.0,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-republicain": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 12,
+            "predicted_entities": 15,
+            "exact_true_positives": 8,
+            "gold_characters": 173,
+            "predicted_characters": 140,
+            "covered_gold_characters": 123,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 8,
+            "exact_precision": 0.5333333333333333,
+            "exact_recall": 0.6666666666666666,
+            "exact_f1": 0.5925925925925926,
+            "full_entity_coverage": 0.6666666666666666,
+            "character_recall": 0.7109826589595376,
+            "character_precision": 0.8785714285714286,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-rhapsodie": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 3,
+            "gold_entities": 41,
+            "predicted_entities": 36,
+            "exact_true_positives": 25,
+            "gold_characters": 399,
+            "predicted_characters": 363,
+            "covered_gold_characters": 304,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 30,
+            "exact_precision": 0.6944444444444444,
+            "exact_recall": 0.6097560975609756,
+            "exact_f1": 0.6493506493506493,
+            "full_entity_coverage": 0.7317073170731707,
+            "character_recall": 0.7619047619047619,
+            "character_precision": 0.837465564738292,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-wikinews": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 10,
+            "predicted_entities": 8,
+            "exact_true_positives": 5,
+            "gold_characters": 134,
+            "predicted_characters": 83,
+            "covered_gold_characters": 80,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 6,
+            "exact_precision": 0.625,
+            "exact_recall": 0.5,
+            "exact_f1": 0.5555555555555556,
+            "full_entity_coverage": 0.6,
+            "character_recall": 0.5970149253731343,
+            "character_precision": 0.963855421686747,
+            "negative_record_false_positive_rate": null
+          }
+        }
+      },
+      "fenec_individual_person_only": {
+        "records": 6,
+        "gold_entities": 57,
+        "predicted_entities": 63,
+        "exact_true_positives": 38,
+        "gold_characters": 586,
+        "predicted_characters": 635,
+        "covered_gold_characters": 498,
+        "negative_records": 0,
+        "negative_records_with_predictions": 0,
+        "fully_covered_entities": 44,
+        "exact_precision": 0.6031746031746031,
+        "exact_recall": 0.6666666666666666,
+        "exact_f1": 0.6333333333333333,
+        "full_entity_coverage": 0.7719298245614035,
+        "character_recall": 0.8498293515358362,
+        "character_precision": 0.784251968503937,
+        "negative_record_false_positive_rate": null
+      },
+      "confidence_95": {
+        "wikiner": {
+          "exact_f1": [
+            0.9297855316840554,
+            0.9548396194536144
+          ],
+          "full_entity_coverage": [
+            0.9551941138446328,
+            0.9759254983309311
+          ]
+        },
+        "fenec": {
+          "exact_f1": [
+            0.5517241379310345,
+            0.6788990825688074
+          ],
+          "full_entity_coverage": [
+            0.5272488038277512,
+            0.7619249394673123
+          ]
+        }
+      },
+      "coverage_errors": {
+        "wikiner": {
+          "PERSON": {
+            "complete": 1174,
+            "mentions": 1216,
+            "missed_entirely": 18,
+            "partial": 24
+          }
+        },
+        "fenec": {
+          "pers.coll": {
+            "missed_entirely": 8,
+            "mentions": 15,
+            "complete": 3,
+            "partial": 4
+          },
+          "pers.ind": {
+            "complete": 44,
+            "mentions": 57,
+            "missed_entirely": 9,
+            "partial": 4
+          }
+        }
+      },
+      "latency_ms": {
+        "observations": 900,
+        "p50": 6.0233,
+        "p95": 10.4942,
+        "mean": 6.487545888888889,
+        "sum": 5838.7913,
+        "texts_per_second": 154.14149157891634
+      },
+      "latency_by_length": {
+        "short_lt128": {
+          "observations": 435,
+          "p50": 4.7974,
+          "p95": 6.6356,
+          "mean": 4.864574252873564,
+          "sum": 2116.0898,
+          "texts_per_second": 205.5678355427071
+        },
+        "medium_128_511": {
+          "observations": 462,
+          "p50": 7.45565,
+          "p95": 12.2356,
+          "mean": 7.908078787878788,
+          "sum": 3653.5324,
+          "texts_per_second": 126.45296371259771
+        },
+        "long_ge512": {
+          "observations": 3,
+          "p50": 23.4395,
+          "p95": 23.9215,
+          "mean": 23.056366666666666,
+          "sum": 69.1691,
+          "texts_per_second": 43.37196811871197
+        }
+      },
+      "wikiner_by_length": {
+        "short_lt128": {
+          "records": 970,
+          "gold_entities": 427,
+          "predicted_entities": 444,
+          "exact_true_positives": 410,
+          "gold_characters": 4220,
+          "predicted_characters": 4254,
+          "covered_gold_characters": 4102,
+          "negative_records": 614,
+          "negative_records_with_predictions": 16,
+          "fully_covered_entities": 411,
+          "exact_precision": 0.9234234234234234,
+          "exact_recall": 0.9601873536299765,
+          "exact_f1": 0.9414466130884042,
+          "full_entity_coverage": 0.9625292740046838,
+          "character_recall": 0.9720379146919431,
+          "character_precision": 0.9642689233662435,
+          "negative_record_false_positive_rate": 0.026058631921824105
+        },
+        "medium_128_511": {
+          "records": 1025,
+          "gold_entities": 786,
+          "predicted_entities": 819,
+          "exact_true_positives": 757,
+          "gold_characters": 8456,
+          "predicted_characters": 8585,
+          "covered_gold_characters": 8280,
+          "negative_records": 564,
+          "negative_records_with_predictions": 20,
+          "fully_covered_entities": 760,
+          "exact_precision": 0.9242979242979243,
+          "exact_recall": 0.9631043256997456,
+          "exact_f1": 0.9433021806853582,
+          "full_entity_coverage": 0.9669211195928753,
+          "character_recall": 0.97918637653737,
+          "character_precision": 0.9644729178800233,
+          "negative_record_false_positive_rate": 0.03546099290780142
+        },
+        "long_ge512": {
+          "records": 5,
+          "gold_entities": 3,
+          "predicted_entities": 3,
+          "exact_true_positives": 3,
+          "gold_characters": 36,
+          "predicted_characters": 36,
+          "covered_gold_characters": 36,
+          "negative_records": 4,
+          "negative_records_with_predictions": 0,
+          "fully_covered_entities": 3,
+          "exact_precision": 1.0,
+          "exact_recall": 1.0,
+          "exact_f1": 1.0,
+          "full_entity_coverage": 1.0,
+          "character_recall": 1.0,
+          "character_precision": 1.0,
+          "negative_record_false_positive_rate": 0.0
+        }
+      },
+      "latency_by_pass": [
+        {
+          "observations": 300,
+          "p50": 6.11925,
+          "p95": 11.2276,
+          "mean": 6.567932333333333,
+          "sum": 1970.3797,
+          "texts_per_second": 152.25491817643066
+        },
+        {
+          "observations": 300,
+          "p50": 6.024,
+          "p95": 10.4811,
+          "mean": 6.503393000000001,
+          "sum": 1951.0179000000003,
+          "texts_per_second": 153.76588805259038
+        },
+        {
+          "observations": 300,
+          "p50": 5.9021,
+          "p95": 10.1586,
+          "mean": 6.391312333333333,
+          "sum": 1917.3936999999999,
+          "texts_per_second": 156.4623895447242
+        }
+      ],
+      "model_load_ms_by_pass": [
+        185.80420000034792,
+        172.66930000005232,
+        209.22969999992347
+      ],
+      "peak_process_memory_bytes": 140836864,
+      "weights_bytes": 22344556,
+      "artifact_sha256": "338b7c2daf15168441a93c175b1fe6b364fef9a6ef7dee65e00c9159a76fdfae",
+      "timing_prediction_mismatches": 0,
+      "timing_process_cpu_seconds": 23.3125
+    },
+    "nym-pii-multilingual-small": {
+      "backend": "ONNX Runtime CPU; int8-folder export",
+      "threshold": 0.4,
+      "wikiner": {
+        "records": 2000,
+        "gold_entities": 1216,
+        "predicted_entities": 949,
+        "exact_true_positives": 732,
+        "gold_characters": 12712,
+        "predicted_characters": 10557,
+        "covered_gold_characters": 9990,
+        "negative_records": 1182,
+        "negative_records_with_predictions": 34,
+        "fully_covered_entities": 840,
+        "exact_precision": 0.7713382507903056,
+        "exact_recall": 0.6019736842105263,
+        "exact_f1": 0.6762124711316397,
+        "full_entity_coverage": 0.6907894736842105,
+        "character_recall": 0.7858716173694147,
+        "character_precision": 0.9462915601023018,
+        "negative_record_false_positive_rate": 0.028764805414551606
+      },
+      "common_threshold_0_5": {
+        "records": 2000,
+        "gold_entities": 1216,
+        "predicted_entities": 919,
+        "exact_true_positives": 717,
+        "gold_characters": 12712,
+        "predicted_characters": 10274,
+        "covered_gold_characters": 9798,
+        "negative_records": 1182,
+        "negative_records_with_predictions": 28,
+        "fully_covered_entities": 814,
+        "exact_precision": 0.780195865070729,
+        "exact_recall": 0.5896381578947368,
+        "exact_f1": 0.6716627634660421,
+        "full_entity_coverage": 0.6694078947368421,
+        "character_recall": 0.7707677784770296,
+        "character_precision": 0.9536694568814483,
+        "negative_record_false_positive_rate": 0.023688663282571912
+      },
+      "fenec": {
+        "records": 6,
+        "gold_entities": 72,
+        "predicted_entities": 48,
+        "exact_true_positives": 34,
+        "gold_characters": 813,
+        "predicted_characters": 487,
+        "covered_gold_characters": 403,
+        "negative_records": 0,
+        "negative_records_with_predictions": 0,
+        "fully_covered_entities": 37,
+        "exact_precision": 0.7083333333333334,
+        "exact_recall": 0.4722222222222222,
+        "exact_f1": 0.5666666666666667,
+        "full_entity_coverage": 0.5138888888888888,
+        "character_recall": 0.4956949569495695,
+        "character_precision": 0.8275154004106776,
+        "negative_record_false_positive_rate": null
+      },
+      "fenec_by_dataset": {
+        "fenec-gsd": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 9,
+            "predicted_entities": 6,
+            "exact_true_positives": 5,
+            "gold_characters": 107,
+            "predicted_characters": 72,
+            "covered_gold_characters": 62,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 5,
+            "exact_precision": 0.8333333333333334,
+            "exact_recall": 0.5555555555555556,
+            "exact_f1": 0.6666666666666666,
+            "full_entity_coverage": 0.5555555555555556,
+            "character_recall": 0.5794392523364486,
+            "character_precision": 0.8611111111111112,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-republicain": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 12,
+            "predicted_entities": 10,
+            "exact_true_positives": 7,
+            "gold_characters": 173,
+            "predicted_characters": 107,
+            "covered_gold_characters": 91,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 7,
+            "exact_precision": 0.7,
+            "exact_recall": 0.5833333333333334,
+            "exact_f1": 0.6363636363636364,
+            "full_entity_coverage": 0.5833333333333334,
+            "character_recall": 0.5260115606936416,
+            "character_precision": 0.8504672897196262,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-rhapsodie": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 3,
+            "gold_entities": 41,
+            "predicted_entities": 24,
+            "exact_true_positives": 19,
+            "gold_characters": 399,
+            "predicted_characters": 226,
+            "covered_gold_characters": 193,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 19,
+            "exact_precision": 0.7916666666666666,
+            "exact_recall": 0.4634146341463415,
+            "exact_f1": 0.5846153846153846,
+            "full_entity_coverage": 0.4634146341463415,
+            "character_recall": 0.48370927318295737,
+            "character_precision": 0.8539823008849557,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-wikinews": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 10,
+            "predicted_entities": 8,
+            "exact_true_positives": 3,
+            "gold_characters": 134,
+            "predicted_characters": 82,
+            "covered_gold_characters": 57,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 6,
+            "exact_precision": 0.375,
+            "exact_recall": 0.3,
+            "exact_f1": 0.3333333333333333,
+            "full_entity_coverage": 0.6,
+            "character_recall": 0.4253731343283582,
+            "character_precision": 0.6951219512195121,
+            "negative_record_false_positive_rate": null
+          }
+        }
+      },
+      "fenec_individual_person_only": {
+        "records": 6,
+        "gold_entities": 57,
+        "predicted_entities": 48,
+        "exact_true_positives": 33,
+        "gold_characters": 586,
+        "predicted_characters": 487,
+        "covered_gold_characters": 398,
+        "negative_records": 0,
+        "negative_records_with_predictions": 0,
+        "fully_covered_entities": 36,
+        "exact_precision": 0.6875,
+        "exact_recall": 0.5789473684210527,
+        "exact_f1": 0.6285714285714286,
+        "full_entity_coverage": 0.631578947368421,
+        "character_recall": 0.6791808873720137,
+        "character_precision": 0.8172484599589322,
+        "negative_record_false_positive_rate": null
+      },
+      "confidence_95": {
+        "wikiner": {
+          "exact_f1": [
+            0.645484554927011,
+            0.7055582930407582
+          ],
+          "full_entity_coverage": [
+            0.6557922101261494,
+            0.7215708503886308
+          ]
+        },
+        "fenec": {
+          "exact_f1": [
+            0.4375,
+            0.6470588235294118
+          ],
+          "full_entity_coverage": [
+            0.4165948275862069,
+            0.6363636363636364
+          ]
+        }
+      },
+      "coverage_errors": {
+        "wikiner": {
+          "PERSON": {
+            "complete": 840,
+            "mentions": 1216,
+            "missed_entirely": 331,
+            "partial": 45
+          }
+        },
+        "fenec": {
+          "pers.coll": {
+            "missed_entirely": 14,
+            "mentions": 15,
+            "complete": 1
+          },
+          "pers.ind": {
+            "complete": 36,
+            "mentions": 57,
+            "missed_entirely": 19,
+            "partial": 2
+          }
+        }
+      },
+      "latency_ms": {
+        "observations": 900,
+        "p50": 13.693999999999999,
+        "p95": 26.4902,
+        "mean": 14.891758000000001,
+        "sum": 13402.5822,
+        "texts_per_second": 67.15123896050419
+      },
+      "latency_by_length": {
+        "short_lt128": {
+          "observations": 435,
+          "p50": 10.6618,
+          "p95": 15.5316,
+          "mean": 10.898838620689654,
+          "sum": 4740.9947999999995,
+          "texts_per_second": 91.7528954049897
+        },
+        "medium_128_511": {
+          "observations": 462,
+          "p50": 16.96915,
+          "p95": 29.7151,
+          "mean": 18.399826406926405,
+          "sum": 8500.719799999999,
+          "texts_per_second": 54.34833883125992
+        },
+        "long_ge512": {
+          "observations": 3,
+          "p50": 47.0763,
+          "p95": 68.0298,
+          "mean": 53.62253333333333,
+          "sum": 160.86759999999998,
+          "texts_per_second": 18.648876467355766
+        }
+      },
+      "wikiner_by_length": {
+        "short_lt128": {
+          "records": 970,
+          "gold_entities": 427,
+          "predicted_entities": 325,
+          "exact_true_positives": 233,
+          "gold_characters": 4220,
+          "predicted_characters": 3430,
+          "covered_gold_characters": 3197,
+          "negative_records": 614,
+          "negative_records_with_predictions": 15,
+          "fully_covered_entities": 282,
+          "exact_precision": 0.7169230769230769,
+          "exact_recall": 0.5456674473067916,
+          "exact_f1": 0.6196808510638298,
+          "full_entity_coverage": 0.6604215456674473,
+          "character_recall": 0.7575829383886256,
+          "character_precision": 0.932069970845481,
+          "negative_record_false_positive_rate": 0.024429967426710098
+        },
+        "medium_128_511": {
+          "records": 1025,
+          "gold_entities": 786,
+          "predicted_entities": 621,
+          "exact_true_positives": 496,
+          "gold_characters": 8456,
+          "predicted_characters": 7091,
+          "covered_gold_characters": 6757,
+          "negative_records": 564,
+          "negative_records_with_predictions": 19,
+          "fully_covered_entities": 555,
+          "exact_precision": 0.7987117552334944,
+          "exact_recall": 0.6310432569974554,
+          "exact_f1": 0.7050461975835111,
+          "full_entity_coverage": 0.7061068702290076,
+          "character_recall": 0.799077578051088,
+          "character_precision": 0.9528980397687209,
+          "negative_record_false_positive_rate": 0.03368794326241135
+        },
+        "long_ge512": {
+          "records": 5,
+          "gold_entities": 3,
+          "predicted_entities": 3,
+          "exact_true_positives": 3,
+          "gold_characters": 36,
+          "predicted_characters": 36,
+          "covered_gold_characters": 36,
+          "negative_records": 4,
+          "negative_records_with_predictions": 0,
+          "fully_covered_entities": 3,
+          "exact_precision": 1.0,
+          "exact_recall": 1.0,
+          "exact_f1": 1.0,
+          "full_entity_coverage": 1.0,
+          "character_recall": 1.0,
+          "character_precision": 1.0,
+          "negative_record_false_positive_rate": 0.0
+        }
+      },
+      "latency_by_pass": [
+        {
+          "observations": 300,
+          "p50": 13.3033,
+          "p95": 25.1129,
+          "mean": 14.31678033333333,
+          "sum": 4295.034099999999,
+          "texts_per_second": 69.84810667743012
+        },
+        {
+          "observations": 300,
+          "p50": 12.249600000000001,
+          "p95": 23.8723,
+          "mean": 13.732881333333331,
+          "sum": 4119.8643999999995,
+          "texts_per_second": 72.81793060956085
+        },
+        {
+          "observations": 300,
+          "p50": 15.44715,
+          "p95": 28.4944,
+          "mean": 16.625612333333333,
+          "sum": 4987.6837,
+          "texts_per_second": 60.14816055797604
+        }
+      ],
+      "model_load_ms_by_pass": [
+        1563.3121999999275,
+        1517.2903000002407,
+        1721.4017000005697
+      ],
+      "peak_process_memory_bytes": 395190272,
+      "weights_bytes": 138730982,
+      "artifact_sha256": "139006aea2cbd8e709d322f056232570de54661f624143be4893aaa387190286",
+      "timing_prediction_mismatches": 0,
+      "timing_process_cpu_seconds": 53.515625
+    },
+    "distilcamembert-base-ner": {
+      "backend": "ONNX Runtime CPU; FP32",
+      "threshold": 0.5,
+      "wikiner": {
+        "records": 2000,
+        "gold_entities": 1216,
+        "predicted_entities": 1167,
+        "exact_true_positives": 1136,
+        "gold_characters": 12712,
+        "predicted_characters": 12383,
+        "covered_gold_characters": 12181,
+        "negative_records": 1182,
+        "negative_records_with_predictions": 10,
+        "fully_covered_entities": 1144,
+        "exact_precision": 0.9734361610968295,
+        "exact_recall": 0.9342105263157895,
+        "exact_f1": 0.9534200587494754,
+        "full_entity_coverage": 0.9407894736842105,
+        "character_recall": 0.9582284455632474,
+        "character_precision": 0.9836873132520391,
+        "negative_record_false_positive_rate": 0.008460236886632826
+      },
+      "common_threshold_0_5": {
+        "records": 2000,
+        "gold_entities": 1216,
+        "predicted_entities": 1167,
+        "exact_true_positives": 1136,
+        "gold_characters": 12712,
+        "predicted_characters": 12383,
+        "covered_gold_characters": 12181,
+        "negative_records": 1182,
+        "negative_records_with_predictions": 10,
+        "fully_covered_entities": 1144,
+        "exact_precision": 0.9734361610968295,
+        "exact_recall": 0.9342105263157895,
+        "exact_f1": 0.9534200587494754,
+        "full_entity_coverage": 0.9407894736842105,
+        "character_recall": 0.9582284455632474,
+        "character_precision": 0.9836873132520391,
+        "negative_record_false_positive_rate": 0.008460236886632826
+      },
+      "fenec": {
+        "records": 6,
+        "gold_entities": 72,
+        "predicted_entities": 52,
+        "exact_true_positives": 37,
+        "gold_characters": 813,
+        "predicted_characters": 570,
+        "covered_gold_characters": 479,
+        "negative_records": 0,
+        "negative_records_with_predictions": 0,
+        "fully_covered_entities": 44,
+        "exact_precision": 0.7115384615384616,
+        "exact_recall": 0.5138888888888888,
+        "exact_f1": 0.5967741935483871,
+        "full_entity_coverage": 0.6111111111111112,
+        "character_recall": 0.5891758917589176,
+        "character_precision": 0.8403508771929824,
+        "negative_record_false_positive_rate": null
+      },
+      "fenec_by_dataset": {
+        "fenec-gsd": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 9,
+            "predicted_entities": 9,
+            "exact_true_positives": 3,
+            "gold_characters": 107,
+            "predicted_characters": 110,
+            "covered_gold_characters": 73,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 5,
+            "exact_precision": 0.3333333333333333,
+            "exact_recall": 0.3333333333333333,
+            "exact_f1": 0.3333333333333333,
+            "full_entity_coverage": 0.5555555555555556,
+            "character_recall": 0.6822429906542056,
+            "character_precision": 0.6636363636363637,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-republicain": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 12,
+            "predicted_entities": 12,
+            "exact_true_positives": 9,
+            "gold_characters": 173,
+            "predicted_characters": 138,
+            "covered_gold_characters": 126,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 9,
+            "exact_precision": 0.75,
+            "exact_recall": 0.75,
+            "exact_f1": 0.75,
+            "full_entity_coverage": 0.75,
+            "character_recall": 0.7283236994219653,
+            "character_precision": 0.9130434782608695,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-rhapsodie": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 3,
+            "gold_entities": 41,
+            "predicted_entities": 28,
+            "exact_true_positives": 22,
+            "gold_characters": 399,
+            "predicted_characters": 289,
+            "covered_gold_characters": 247,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 27,
+            "exact_precision": 0.7857142857142857,
+            "exact_recall": 0.5365853658536586,
+            "exact_f1": 0.6376811594202898,
+            "full_entity_coverage": 0.6585365853658537,
+            "character_recall": 0.6190476190476191,
+            "character_precision": 0.8546712802768166,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-wikinews": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 10,
+            "predicted_entities": 3,
+            "exact_true_positives": 3,
+            "gold_characters": 134,
+            "predicted_characters": 33,
+            "covered_gold_characters": 33,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 3,
+            "exact_precision": 1.0,
+            "exact_recall": 0.3,
+            "exact_f1": 0.46153846153846156,
+            "full_entity_coverage": 0.3,
+            "character_recall": 0.2462686567164179,
+            "character_precision": 1.0,
+            "negative_record_false_positive_rate": null
+          }
+        }
+      },
+      "fenec_individual_person_only": {
+        "records": 6,
+        "gold_entities": 57,
+        "predicted_entities": 52,
+        "exact_true_positives": 36,
+        "gold_characters": 586,
+        "predicted_characters": 570,
+        "covered_gold_characters": 474,
+        "negative_records": 0,
+        "negative_records_with_predictions": 0,
+        "fully_covered_entities": 43,
+        "exact_precision": 0.6923076923076923,
+        "exact_recall": 0.631578947368421,
+        "exact_f1": 0.6605504587155964,
+        "full_entity_coverage": 0.7543859649122807,
+        "character_recall": 0.8088737201365188,
+        "character_precision": 0.8315789473684211,
+        "negative_record_false_positive_rate": null
+      },
+      "confidence_95": {
+        "wikiner": {
+          "exact_f1": [
+            0.9426218646816892,
+            0.963456947116825
+          ],
+          "full_entity_coverage": [
+            0.9250804270481731,
+            0.9553961036370993
+          ]
+        },
+        "fenec": {
+          "exact_f1": [
+            0.47540983606557374,
+            0.6990291262135923
+          ],
+          "full_entity_coverage": [
+            0.4642857142857143,
+            0.7046147450110865
+          ]
+        }
+      },
+      "coverage_errors": {
+        "wikiner": {
+          "PERSON": {
+            "complete": 1144,
+            "mentions": 1216,
+            "missed_entirely": 69,
+            "partial": 3
+          }
+        },
+        "fenec": {
+          "pers.coll": {
+            "missed_entirely": 14,
+            "mentions": 15,
+            "complete": 1
+          },
+          "pers.ind": {
+            "missed_entirely": 10,
+            "mentions": 57,
+            "complete": 43,
+            "partial": 4
+          }
+        }
+      },
+      "latency_ms": {
+        "observations": 900,
+        "p50": 14.06315,
+        "p95": 29.1032,
+        "mean": 15.78070811111111,
+        "sum": 14202.637299999999,
+        "texts_per_second": 63.36851255083449
+      },
+      "latency_by_length": {
+        "short_lt128": {
+          "observations": 435,
+          "p50": 10.778,
+          "p95": 16.507,
+          "mean": 11.17077287356322,
+          "sum": 4859.2862000000005,
+          "texts_per_second": 89.51932075949755
+        },
+        "medium_128_511": {
+          "observations": 462,
+          "p50": 18.41805,
+          "p95": 33.9051,
+          "mean": 19.874335714285714,
+          "sum": 9181.9431,
+          "texts_per_second": 50.316147134477454
+        },
+        "long_ge512": {
+          "observations": 3,
+          "p50": 49.8541,
+          "p95": 64.9266,
+          "mean": 53.802666666666674,
+          "sum": 161.40800000000002,
+          "texts_per_second": 18.58643933386201
+        }
+      },
+      "wikiner_by_length": {
+        "short_lt128": {
+          "records": 970,
+          "gold_entities": 427,
+          "predicted_entities": 405,
+          "exact_true_positives": 392,
+          "gold_characters": 4220,
+          "predicted_characters": 4047,
+          "covered_gold_characters": 3979,
+          "negative_records": 614,
+          "negative_records_with_predictions": 4,
+          "fully_covered_entities": 394,
+          "exact_precision": 0.9679012345679012,
+          "exact_recall": 0.9180327868852459,
+          "exact_f1": 0.9423076923076923,
+          "full_entity_coverage": 0.9227166276346604,
+          "character_recall": 0.9428909952606636,
+          "character_precision": 0.9831974301952063,
+          "negative_record_false_positive_rate": 0.006514657980456026
+        },
+        "medium_128_511": {
+          "records": 1025,
+          "gold_entities": 786,
+          "predicted_entities": 759,
+          "exact_true_positives": 741,
+          "gold_characters": 8456,
+          "predicted_characters": 8300,
+          "covered_gold_characters": 8166,
+          "negative_records": 564,
+          "negative_records_with_predictions": 6,
+          "fully_covered_entities": 747,
+          "exact_precision": 0.9762845849802372,
+          "exact_recall": 0.9427480916030534,
+          "exact_f1": 0.9592233009708738,
+          "full_entity_coverage": 0.950381679389313,
+          "character_recall": 0.9657048249763481,
+          "character_precision": 0.983855421686747,
+          "negative_record_false_positive_rate": 0.010638297872340425
+        },
+        "long_ge512": {
+          "records": 5,
+          "gold_entities": 3,
+          "predicted_entities": 3,
+          "exact_true_positives": 3,
+          "gold_characters": 36,
+          "predicted_characters": 36,
+          "covered_gold_characters": 36,
+          "negative_records": 4,
+          "negative_records_with_predictions": 0,
+          "fully_covered_entities": 3,
+          "exact_precision": 1.0,
+          "exact_recall": 1.0,
+          "exact_f1": 1.0,
+          "full_entity_coverage": 1.0,
+          "character_recall": 1.0,
+          "character_precision": 1.0,
+          "negative_record_false_positive_rate": 0.0
+        }
+      },
+      "latency_by_pass": [
+        {
+          "observations": 300,
+          "p50": 12.88715,
+          "p95": 23.9199,
+          "mean": 14.036043333333334,
+          "sum": 4210.813,
+          "texts_per_second": 71.24514909591093
+        },
+        {
+          "observations": 300,
+          "p50": 14.543099999999999,
+          "p95": 30.9539,
+          "mean": 16.423213,
+          "sum": 4926.9639,
+          "texts_per_second": 60.88942523000828
+        },
+        {
+          "observations": 300,
+          "p50": 15.49915,
+          "p95": 30.6487,
+          "mean": 16.882868,
+          "sum": 5064.8604,
+          "texts_per_second": 59.23164239630376
+        }
+      ],
+      "model_load_ms_by_pass": [
+        427.15320000024803,
+        450.4957999997714,
+        450.85330000074464
+      ],
+      "peak_process_memory_bytes": 462139392,
+      "weights_bytes": 270089674,
+      "artifact_sha256": "666ce15c968ca49874d2449aa9b83164dbb1126090d012dda7c35b2ef3672e1d",
+      "timing_prediction_mismatches": 0,
+      "timing_process_cpu_seconds": 56.34375
+    },
+    "gliner_multi_pii-v1": {
+      "backend": "PyTorch CPU FP32; original upstream weights",
+      "threshold": 0.6,
+      "wikiner": {
+        "records": 2000,
+        "gold_entities": 1216,
+        "predicted_entities": 1412,
+        "exact_true_positives": 1094,
+        "gold_characters": 12712,
+        "predicted_characters": 14742,
+        "covered_gold_characters": 11938,
+        "negative_records": 1182,
+        "negative_records_with_predictions": 230,
+        "fully_covered_entities": 1121,
+        "exact_precision": 0.7747875354107648,
+        "exact_recall": 0.899671052631579,
+        "exact_f1": 0.832572298325723,
+        "full_entity_coverage": 0.921875,
+        "character_recall": 0.9391126494650723,
+        "character_precision": 0.8097951431284764,
+        "negative_record_false_positive_rate": 0.19458544839255498
+      },
+      "common_threshold_0_5": {
+        "records": 2000,
+        "gold_entities": 1216,
+        "predicted_entities": 1514,
+        "exact_true_positives": 1101,
+        "gold_characters": 12712,
+        "predicted_characters": 15667,
+        "covered_gold_characters": 12009,
+        "negative_records": 1182,
+        "negative_records_with_predictions": 301,
+        "fully_covered_entities": 1131,
+        "exact_precision": 0.7272126816380449,
+        "exact_recall": 0.9054276315789473,
+        "exact_f1": 0.8065934065934066,
+        "full_entity_coverage": 0.9300986842105263,
+        "character_recall": 0.9446979232221523,
+        "character_precision": 0.766515606050935,
+        "negative_record_false_positive_rate": 0.2546531302876481
+      },
+      "fenec": {
+        "records": 6,
+        "gold_entities": 72,
+        "predicted_entities": 62,
+        "exact_true_positives": 39,
+        "gold_characters": 813,
+        "predicted_characters": 671,
+        "covered_gold_characters": 486,
+        "negative_records": 0,
+        "negative_records_with_predictions": 0,
+        "fully_covered_entities": 45,
+        "exact_precision": 0.6290322580645161,
+        "exact_recall": 0.5416666666666666,
+        "exact_f1": 0.582089552238806,
+        "full_entity_coverage": 0.625,
+        "character_recall": 0.5977859778597786,
+        "character_precision": 0.7242921013412816,
+        "negative_record_false_positive_rate": null
+      },
+      "fenec_by_dataset": {
+        "fenec-gsd": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 9,
+            "predicted_entities": 10,
+            "exact_true_positives": 6,
+            "gold_characters": 107,
+            "predicted_characters": 143,
+            "covered_gold_characters": 95,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 7,
+            "exact_precision": 0.6,
+            "exact_recall": 0.6666666666666666,
+            "exact_f1": 0.631578947368421,
+            "full_entity_coverage": 0.7777777777777778,
+            "character_recall": 0.8878504672897196,
+            "character_precision": 0.6643356643356644,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-republicain": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 12,
+            "predicted_entities": 9,
+            "exact_true_positives": 7,
+            "gold_characters": 173,
+            "predicted_characters": 119,
+            "covered_gold_characters": 110,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 9,
+            "exact_precision": 0.7777777777777778,
+            "exact_recall": 0.5833333333333334,
+            "exact_f1": 0.6666666666666666,
+            "full_entity_coverage": 0.75,
+            "character_recall": 0.6358381502890174,
+            "character_precision": 0.9243697478991597,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-rhapsodie": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 3,
+            "gold_entities": 41,
+            "predicted_entities": 37,
+            "exact_true_positives": 22,
+            "gold_characters": 399,
+            "predicted_characters": 348,
+            "covered_gold_characters": 239,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 25,
+            "exact_precision": 0.5945945945945946,
+            "exact_recall": 0.5365853658536586,
+            "exact_f1": 0.5641025641025641,
+            "full_entity_coverage": 0.6097560975609756,
+            "character_recall": 0.5989974937343359,
+            "character_precision": 0.6867816091954023,
+            "negative_record_false_positive_rate": null
+          }
+        },
+        "fenec-wikinews": {
+          "split": "test",
+          "kind": "PERSON",
+          "quality": {
+            "records": 1,
+            "gold_entities": 10,
+            "predicted_entities": 6,
+            "exact_true_positives": 4,
+            "gold_characters": 134,
+            "predicted_characters": 61,
+            "covered_gold_characters": 42,
+            "negative_records": 0,
+            "negative_records_with_predictions": 0,
+            "fully_covered_entities": 4,
+            "exact_precision": 0.6666666666666666,
+            "exact_recall": 0.4,
+            "exact_f1": 0.5,
+            "full_entity_coverage": 0.4,
+            "character_recall": 0.31343283582089554,
+            "character_precision": 0.6885245901639344,
+            "negative_record_false_positive_rate": null
+          }
+        }
+      },
+      "fenec_individual_person_only": {
+        "records": 6,
+        "gold_entities": 57,
+        "predicted_entities": 62,
+        "exact_true_positives": 39,
+        "gold_characters": 586,
+        "predicted_characters": 671,
+        "covered_gold_characters": 482,
+        "negative_records": 0,
+        "negative_records_with_predictions": 0,
+        "fully_covered_entities": 45,
+        "exact_precision": 0.6290322580645161,
+        "exact_recall": 0.6842105263157895,
+        "exact_f1": 0.6554621848739496,
+        "full_entity_coverage": 0.7894736842105263,
+        "character_recall": 0.8225255972696246,
+        "character_precision": 0.7183308494783904,
+        "negative_record_false_positive_rate": null
+      },
+      "confidence_95": {
+        "wikiner": {
+          "exact_f1": [
+            0.8123233201326507,
+            0.8511948575989459
+          ],
+          "full_entity_coverage": [
+            0.9052562820352544,
+            0.9367088607594937
+          ]
+        },
+        "fenec": {
+          "exact_f1": [
+            0.5271317829457365,
+            0.6486486486486487
+          ],
+          "full_entity_coverage": [
+            0.5134961884961885,
+            0.7647058823529411
+          ]
+        }
+      },
+      "coverage_errors": {
+        "wikiner": {
+          "PERSON": {
+            "complete": 1121,
+            "mentions": 1216,
+            "missed_entirely": 93,
+            "partial": 2
+          }
+        },
+        "fenec": {
+          "pers.coll": {
+            "missed_entirely": 14,
+            "mentions": 15,
+            "partial": 1
+          },
+          "pers.ind": {
+            "missed_entirely": 12,
+            "mentions": 57,
+            "complete": 45
+          }
+        }
+      },
+      "latency_ms": {
+        "observations": 900,
+        "p50": 176.09605,
+        "p95": 252.9642,
+        "mean": 182.6279687777778,
+        "sum": 164365.17190000002,
+        "texts_per_second": 5.475612561933505
+      },
+      "latency_by_length": {
+        "short_lt128": {
+          "observations": 435,
+          "p50": 154.862,
+          "p95": 192.8008,
+          "mean": 157.84051402298851,
+          "sum": 68660.6236,
+          "texts_per_second": 6.335509018010142
+        },
+        "medium_128_511": {
+          "observations": 462,
+          "p50": 198.11785,
+          "p95": 267.9939,
+          "mean": 204.3507119047619,
+          "sum": 94410.0289,
+          "texts_per_second": 4.893547914166564
+        },
+        "long_ge512": {
+          "observations": 3,
+          "p50": 416.3604,
+          "p95": 475.581,
+          "mean": 431.5064666666667,
+          "sum": 1294.5194000000001,
+          "texts_per_second": 2.317462372522188
+        }
+      },
+      "wikiner_by_length": {
+        "short_lt128": {
+          "records": 970,
+          "gold_entities": 427,
+          "predicted_entities": 546,
+          "exact_true_positives": 380,
+          "gold_characters": 4220,
+          "predicted_characters": 5197,
+          "covered_gold_characters": 3932,
+          "negative_records": 614,
+          "negative_records_with_predictions": 130,
+          "fully_covered_entities": 390,
+          "exact_precision": 0.6959706959706959,
+          "exact_recall": 0.8899297423887588,
+          "exact_f1": 0.7810894141829393,
+          "full_entity_coverage": 0.9133489461358314,
+          "character_recall": 0.9317535545023696,
+          "character_precision": 0.7565903405811045,
+          "negative_record_false_positive_rate": 0.21172638436482086
+        },
+        "medium_128_511": {
+          "records": 1025,
+          "gold_entities": 786,
+          "predicted_entities": 863,
+          "exact_true_positives": 711,
+          "gold_characters": 8456,
+          "predicted_characters": 9509,
+          "covered_gold_characters": 7970,
+          "negative_records": 564,
+          "negative_records_with_predictions": 100,
+          "fully_covered_entities": 728,
+          "exact_precision": 0.8238702201622248,
+          "exact_recall": 0.9045801526717557,
+          "exact_f1": 0.8623408126137053,
+          "full_entity_coverage": 0.926208651399491,
+          "character_recall": 0.9425260170293283,
+          "character_precision": 0.838153328425702,
+          "negative_record_false_positive_rate": 0.1773049645390071
+        },
+        "long_ge512": {
+          "records": 5,
+          "gold_entities": 3,
+          "predicted_entities": 3,
+          "exact_true_positives": 3,
+          "gold_characters": 36,
+          "predicted_characters": 36,
+          "covered_gold_characters": 36,
+          "negative_records": 4,
+          "negative_records_with_predictions": 0,
+          "fully_covered_entities": 3,
+          "exact_precision": 1.0,
+          "exact_recall": 1.0,
+          "exact_f1": 1.0,
+          "full_entity_coverage": 1.0,
+          "character_recall": 1.0,
+          "character_precision": 1.0,
+          "negative_record_false_positive_rate": 0.0
+        }
+      },
+      "latency_by_pass": [
+        {
+          "observations": 300,
+          "p50": 164.4903,
+          "p95": 242.7294,
+          "mean": 170.57758800000002,
+          "sum": 51173.2764,
+          "texts_per_second": 5.862434870400441
+        },
+        {
+          "observations": 300,
+          "p50": 186.73555,
+          "p95": 253.0941,
+          "mean": 191.33662433333336,
+          "sum": 57400.98730000001,
+          "texts_per_second": 5.226390940491714
+        },
+        {
+          "observations": 300,
+          "p50": 179.60174999999998,
+          "p95": 260.7156,
+          "mean": 185.969694,
+          "sum": 55790.908200000005,
+          "texts_per_second": 5.37722022600091
+        }
+      ],
+      "model_load_ms_by_pass": [
+        11177.242199999455,
+        11798.5819000005,
+        12433.257100001356
+      ],
+      "peak_process_memory_bytes": 2906161152,
+      "weights_bytes": 1155900362,
+      "artifact_sha256": "3003753fba99e40645cf088c7367a2c6211fc174897dc64f1f9c147c29d18d2d",
+      "timing_prediction_mismatches": 0,
+      "timing_process_cpu_seconds": 652.265625
+    }
+  },
+  "paired_bootstrap": {
+    "reference": "masker-mini",
+    "resamples": 1000,
+    "unit": "WikiNER sentence or FENEC document",
+    "difference_confidence_95": {
+      "gliner2-privacy-filter-PII-multi": {
+        "wikiner": {
+          "exact_f1": [
+            -0.18467083240127066,
+            -0.14037413358059794
+          ],
+          "full_entity_coverage": [
+            -0.018968613741572365,
+            0.005376827570201897
+          ]
+        },
+        "fenec": {
+          "exact_f1": [
+            -0.07051992282526633,
+            0.0978609443108844
+          ],
+          "full_entity_coverage": [
+            -0.12746238030095758,
+            0.185216572504708
+          ]
+        }
+      },
+      "nym-pii-multilingual-small": {
+        "wikiner": {
+          "exact_f1": [
+            -0.29550928886528055,
+            -0.23862571950796943
+          ],
+          "full_entity_coverage": [
+            -0.30902378378378387,
+            -0.24479786060626413
+          ]
+        },
+        "fenec": {
+          "exact_f1": [
+            -0.20856409374094462,
+            0.06474029115538549
+          ],
+          "full_entity_coverage": [
+            -0.2647955523672884,
+            0.0357142857142857
+          ]
+        }
+      },
+      "distilcamembert-base-ner": {
+        "wikiner": {
+          "exact_f1": [
+            -0.003420110213542279,
+            0.025346617316576232
+          ],
+          "full_entity_coverage": [
+            -0.042906951985521205,
+            -0.008726808905380357
+          ]
+        },
+        "fenec": {
+          "exact_f1": [
+            -0.10685579196217493,
+            0.0747822964359458
+          ],
+          "full_entity_coverage": [
+            -0.1691365584813227,
+            0.08211101524302544
+          ]
+        }
+      },
+      "gliner_multi_pii-v1": {
+        "wikiner": {
+          "exact_f1": [
+            -0.1299122518273295,
+            -0.0911743258467599
+          ],
+          "full_entity_coverage": [
+            -0.06103840829155131,
+            -0.027522362385321048
+          ]
+        },
+        "fenec": {
+          "exact_f1": [
+            -0.12,
+            0.06315449593614779
+          ],
+          "full_entity_coverage": [
+            -0.15493564837299661,
+            0.18333333333333335
+          ]
+        }
+      }
+    }
+  },
+  "limitations": [
+    "PERSON only; not comprehensive PII",
+    "WikiNER exposure disclosed by Masker and DistilCamemBERT",
+    "FENEC is a six-document subset, not the full corpus; pretraining overlap remains possible",
+    "FENEC includes collective person labels with different conventions",
+    "Timing is local inference, not the full hook workflow",
+    "Different deployable backends and precision; not intrinsic architecture speed",
+    "Only one unique long WikiNER timing input"
+  ]
+}

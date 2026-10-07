@@ -1,6 +1,6 @@
 # Product brief
 
-Status: local foundation, 2026-10-05. This document defines the intended delivery scope, not a certification of the prototype.
+Status: published research prototype under MIT, 2026-10-05. This document defines the intended delivery scope, not a certification of the prototype. The [project assessment](project-assessment.md) records current evidence and proposes the next validation work.
 
 ## Problem and intended outcome
 

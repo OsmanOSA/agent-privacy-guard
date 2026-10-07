@@ -16,9 +16,11 @@ from pathlib import Path
 
 from privacy_guard.service.model_environment import ModelEnvironment, ModelEnvironmentError
 from privacy_guard.service.model_files import ModelFiles, ModelFilesError
+from privacy_guard.service.distil_files import DISTIL_DIRECTORY, MANIFEST
+from privacy_guard.service.ner_policy import record_model, remove_model
 
-# Where the converted model is published. None until it is hosted: until then,
-# install with --model-source pointing to a local build (tools/build_name_model.py).
+# Prepared bundle source, including the pinned upstream card and tokenizer.
+# No hosted converted bundle is configured; use tools/prepare_distil_bundle.py.
 DEFAULT_MODEL_SOURCE: str | None = None
 
 
@@ -30,8 +32,9 @@ class NameModelSetup:
     """Installs, checks and removes everything the name model needs."""
 
     def __init__(self, guard_home: Path) -> None:
+        self._home = guard_home
         self._environment = ModelEnvironment(guard_home / "model-env")
-        self._files = ModelFiles(guard_home / "models" / "person-ner")
+        self._files = ModelFiles(guard_home / "models" / DISTIL_DIRECTORY, MANIFEST)
 
     def install(self, source: str | None = DEFAULT_MODEL_SOURCE) -> None:
         """Brings the environment and the files to the validated state. Idempotent and cheap when ready."""
@@ -42,6 +45,7 @@ class NameModelSetup:
                 if source is None:
                     raise ModelFilesError("model files missing: install with --model-source DIRECTORY_OR_HTTPS_URL")
                 self._files.fetch(source)
+            record_model(self._home)
         except (ModelEnvironmentError, ModelFilesError, OSError) as error:
             raise NameModelSetupError(str(error)) from error
 
@@ -51,3 +55,4 @@ class NameModelSetup:
     def uninstall(self) -> None:
         self._environment.remove()
         self._files.remove()
+        remove_model(self._home)

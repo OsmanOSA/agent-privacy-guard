@@ -1,0 +1,17 @@
+{
+  "method": "Whitespace and token-boundary canonicalization using unchanged legacy splitter regex; exact WikiNER sentence hashes and FENEC substring checks. Does not establish absence from other training sources.",
+  "datasets": {
+    "deep-sequoia-nonwiki": {
+      "wikiner_exact_canonical_matches": [],
+      "fenec_canonical_substring_matches_min20chars": []
+    },
+    "europeana-newspapers-fr": {
+      "wikiner_exact_canonical_matches": [],
+      "fenec_canonical_substring_matches_min20chars": []
+    },
+    "soduco-nested-ner": {
+      "wikiner_exact_canonical_matches": [],
+      "fenec_canonical_substring_matches_min20chars": []
+    }
+  }
+}

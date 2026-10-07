@@ -10,6 +10,7 @@ from pathlib import Path
 from privacy_guard.claude_code import registration
 from privacy_guard.claude_code.installer import ClaudeCodeInstaller, ClaudeCodeNotFoundError
 from tests.fakes import STRIPE_KEY
+from tests.native_shell import native_bash
 
 ORIGINAL_SETTINGS = {"model": "opus", "enabledPlugins": {"some-plugin": True}}
 
@@ -67,6 +68,32 @@ class InstallerTest(unittest.TestCase):
         self.assertNotIn("sk_live_", result.stdout)
         self.assertIn("⟦STRIPE_SECRET_KEY:", result.stdout)
 
+    def test_installed_hook_keeps_tokens_even_with_export_configuration(self):
+        export_root = self.home / "exports"
+        export_root.mkdir()
+        guard_home = self.home / ".privacy-guard"
+        guard_home.mkdir()
+        (guard_home / "export-policy.json").write_text(
+            json.dumps({"version": 1, "root": str(export_root.resolve())}), encoding="utf-8"
+        )
+        self.installer.install()
+        email = "jean.dupont@example.com"
+        protected = self._run_installed_hook(
+            {"hook_event_name": "PostToolUse", "tool_name": "Bash", "tool_response": email}
+        )
+        self.assertEqual(protected.returncode, 0, protected.stderr)
+        token = json.loads(protected.stdout)["hookSpecificOutput"]["updatedToolOutput"]
+
+        restored = self._run_installed_hook(
+            {"hook_event_name": "PreToolUse", "tool_name": "Write",
+             "tool_input": {"file_path": str((export_root / "clients.csv").resolve()), "content": f"email\n{token}\n"}}
+        )
+
+        self.assertEqual(restored.returncode, 0, restored.stderr)
+        self.assertEqual(restored.stdout, "")
+        self.assertNotIn(email, restored.stdout + restored.stderr)
+        self.assertFalse((export_root / "clients.csv").exists(), "a hook transforms arguments; it does not write the CSV")
+
     def test_uninstall_restores_original_settings(self):
         self.installer.install()
 
@@ -75,16 +102,16 @@ class InstallerTest(unittest.TestCase):
         self.assertEqual(json.loads(self.settings_path.read_text(encoding="utf-8")), ORIGINAL_SETTINGS)
         self.assertFalse((self.home / ".privacy-guard" / "app").exists())
 
-    def test_install_and_uninstall_purge_vaults(self):
+    def test_install_keeps_empty_vault_directories_and_uninstall_purges_them(self):
         stale_vault = self.home / ".privacy-guard" / "vault" / "old-session"
         stale_vault.mkdir(parents=True)
 
         self.installer.install()
-        self.assertFalse(stale_vault.exists())
+        self.assertTrue(stale_vault.exists())
 
-        stale_vault.mkdir(parents=True)
         self.installer.uninstall()
         self.assertFalse(stale_vault.exists())
+        self.assertFalse((self.home / ".privacy-guard" / "vault-format.json").exists())
 
     def test_consecutive_changes_keep_every_backup(self):
         first = self.installer.install()
@@ -107,7 +134,7 @@ class InstallerTest(unittest.TestCase):
         env = {**os.environ, "HOME": str(self.home), "USERPROFILE": str(self.home)}
         # Claude Code runs hooks through bash; on Windows that is Git's bash, found via PATH.
         return subprocess.run(
-            [shutil.which("bash"), "-c", command],
+            [native_bash(), "-c", command],
             input=json.dumps({"session_id": "test-session", **payload}),
             capture_output=True,
             text=True,

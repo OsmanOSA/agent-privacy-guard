@@ -1,0 +1,8 @@
+{
+  "problem": "Generic Windows icon and operation-first text make protection banners hard to recognize at a glance.",
+  "reference": "Driftlight harden-mvp: optional visual assets, clear message hierarchy and independent rendering. Inspect only; do not change Driftlight or borrow its permission controls.",
+  "scope": "User selected the dark Driftlight-inspired card. Own shield glyph, document-first count summaries, shared synthetic preview, timed close without focus activation and native fallback. Renderer remains in the detached worker.",
+  "reproducer": "A synthetic document summary should show the document, 3 names and 4 emails, then grouped-operation metadata when applicable.",
+  "invariants": ["No protected values, full paths or command lines in UI", "UI styling does not change detection or enforcement", "Optional icon failure retains the notification", "Owned native icons are released", "Do not redeploy global hooks at this step"],
+  "checks": ["Existing notification failure, foreground and installed-hook regressions", "Native icon ownership and optional fallback", "Native text length with long multilingual basenames", "Synthetic visual preview"]
+}

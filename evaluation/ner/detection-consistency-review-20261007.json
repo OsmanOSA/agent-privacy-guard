@@ -1,0 +1,290 @@
+{
+  "date": "2026-10-07",
+  "source_only": true,
+  "global_deployment": false,
+  "unrelated_project_modified": false,
+  "new_regressions": 16,
+  "suite": {
+    "run": 312,
+    "failures": 0,
+    "skipped": 2
+  },
+  "initial_reproducer": {
+    "tests": 12,
+    "failure_entries": 9
+  },
+  "benchmark": {
+    "metric": "annotated span overlap coverage, not exact-span F1",
+    "corpus": "benchmark/corpus",
+    "before": {
+      "rules_only": {
+        "name_expected": 35,
+        "name_hidden": 19,
+        "name_found": 19,
+        "name_justified": 19,
+        "false_alarms": 0,
+        "other_categories": {
+          "address": {
+            "expected": 4,
+            "hidden": 4,
+            "found": 4,
+            "justified": 4
+          },
+          "banking": {
+            "expected": 6,
+            "hidden": 6,
+            "found": 6,
+            "justified": 6
+          },
+          "birth_date": {
+            "expected": 4,
+            "hidden": 4,
+            "found": 4,
+            "justified": 4
+          },
+          "email": {
+            "expected": 21,
+            "hidden": 21,
+            "found": 21,
+            "justified": 21
+          },
+          "identifier": {
+            "expected": 2,
+            "hidden": 2,
+            "found": 2,
+            "justified": 2
+          },
+          "phone": {
+            "expected": 8,
+            "hidden": 8,
+            "found": 8,
+            "justified": 8
+          },
+          "secret": {
+            "expected": 7,
+            "hidden": 7,
+            "found": 7,
+            "justified": 7
+          }
+        }
+      },
+      "model_enabled": {
+        "name_expected": 35,
+        "name_hidden": 34,
+        "name_found": 33,
+        "name_justified": 33,
+        "false_alarms": 0,
+        "other_categories": {
+          "address": {
+            "expected": 4,
+            "hidden": 4,
+            "found": 4,
+            "justified": 4
+          },
+          "banking": {
+            "expected": 6,
+            "hidden": 6,
+            "found": 6,
+            "justified": 6
+          },
+          "birth_date": {
+            "expected": 4,
+            "hidden": 4,
+            "found": 4,
+            "justified": 4
+          },
+          "email": {
+            "expected": 21,
+            "hidden": 21,
+            "found": 21,
+            "justified": 21
+          },
+          "identifier": {
+            "expected": 2,
+            "hidden": 2,
+            "found": 2,
+            "justified": 2
+          },
+          "phone": {
+            "expected": 8,
+            "hidden": 8,
+            "found": 8,
+            "justified": 8
+          },
+          "secret": {
+            "expected": 7,
+            "hidden": 7,
+            "found": 7,
+            "justified": 7
+          }
+        }
+      }
+    },
+    "after": {
+      "rules_only": {
+        "name_expected": 35,
+        "name_hidden": 19,
+        "name_found": 19,
+        "name_justified": 19,
+        "false_alarms": 0,
+        "other_categories": {
+          "address": {
+            "expected": 4,
+            "hidden": 4,
+            "found": 4,
+            "justified": 4
+          },
+          "banking": {
+            "expected": 6,
+            "hidden": 6,
+            "found": 6,
+            "justified": 6
+          },
+          "birth_date": {
+            "expected": 4,
+            "hidden": 4,
+            "found": 4,
+            "justified": 4
+          },
+          "email": {
+            "expected": 21,
+            "hidden": 21,
+            "found": 21,
+            "justified": 21
+          },
+          "identifier": {
+            "expected": 2,
+            "hidden": 2,
+            "found": 2,
+            "justified": 2
+          },
+          "phone": {
+            "expected": 8,
+            "hidden": 8,
+            "found": 8,
+            "justified": 8
+          },
+          "secret": {
+            "expected": 7,
+            "hidden": 7,
+            "found": 7,
+            "justified": 7
+          }
+        }
+      },
+      "model_enabled": {
+        "name_expected": 35,
+        "name_hidden": 34,
+        "name_found": 33,
+        "name_justified": 33,
+        "false_alarms": 0,
+        "other_categories": {
+          "address": {
+            "expected": 4,
+            "hidden": 4,
+            "found": 4,
+            "justified": 4
+          },
+          "banking": {
+            "expected": 6,
+            "hidden": 6,
+            "found": 6,
+            "justified": 6
+          },
+          "birth_date": {
+            "expected": 4,
+            "hidden": 4,
+            "found": 4,
+            "justified": 4
+          },
+          "email": {
+            "expected": 21,
+            "hidden": 21,
+            "found": 21,
+            "justified": 21
+          },
+          "identifier": {
+            "expected": 2,
+            "hidden": 2,
+            "found": 2,
+            "justified": 2
+          },
+          "phone": {
+            "expected": 8,
+            "hidden": 8,
+            "found": 8,
+            "justified": 8
+          },
+          "secret": {
+            "expected": 7,
+            "hidden": 7,
+            "found": 7,
+            "justified": 7
+          }
+        }
+      }
+    },
+    "unchanged": true
+  },
+  "timing": {
+    "before": {
+      "scope": "Warm in-process protection with cached findings and real DPAPI; no hook or network",
+      "tokens": 3997,
+      "text_sha256": "9f6246cfd0b06f487921535b253f7d771f2f548421bfe8c1f6469166d110e904",
+      "observations_ms": [
+        32.146699999429984,
+        31.805700000404613,
+        32.05559999696561,
+        31.94660000008298,
+        31.874799999059178
+      ],
+      "median_ms": 31.94660000008298,
+      "exact_restoration": true,
+      "stable_reread": true,
+      "model_calls_during_measurement": 0,
+      "limitation": "Sequential runs, uncontrolled system load; not a latency guarantee"
+    },
+    "after": {
+      "scope": "Warm in-process protection with cached findings and real DPAPI; no hook or network",
+      "tokens": 3997,
+      "text_sha256": "9f6246cfd0b06f487921535b253f7d771f2f548421bfe8c1f6469166d110e904",
+      "observations_ms": [
+        44.9655000011262,
+        44.408199999452336,
+        44.76480000084848,
+        44.035800001438474,
+        44.18299999815645
+      ],
+      "median_ms": 44.408199999452336,
+      "exact_restoration": true,
+      "stable_reread": true,
+      "model_calls_during_measurement": 0,
+      "limitation": "Sequential runs, uncontrolled system load; not a latency guarantee"
+    },
+    "median_difference_ms": 12.461599999369355
+  },
+  "source_sha256": {
+    "privacy_guard/core/name_spans.py": "e80344c7d3247e8a6ed59c907b9a6261b4cbfa5c5b58af87a525a8876baf766d",
+    "privacy_guard/core/detector.py": "87ba67bbf19316acfa1f1bde8956a5a364eae5eb25afbc9fb2b74cd133a71f5b",
+    "privacy_guard/core/privacy_core.py": "1f3507970d504f40a614ef3c6f6c7558e7ad676dd6ddad00f65a234f1a4ee8b6",
+    "privacy_guard/core/secret_detector.py": "e5bd843c5d7f031eb5d59f6abac69c5d106c8cb333e565d48011f47d6347b1ea",
+    "privacy_guard/core/personal_data_detector.py": "c988ebdc1feaa77f6c627c835c0e54284beac3c2929d70b1c9e799e46cf4b03d",
+    "privacy_guard/claude_code/protection.py": "6b7483770740cad1febddcd815d37ea7b2699944fb1c0788b7cff971f058aa9c",
+    "tests/test_detection_consistency.py": "a7af437a400a7f34b7a3b857700fa365e89019263b9b524d45cf6482e1f3a46b"
+  },
+  "unchanged_contracts": [
+    "session HMAC key and token derivation",
+    "DPAPI and vault format",
+    "model weights, threshold and window policy",
+    "handled failure stop policy"
+  ],
+  "remaining": [
+    "cross-call known-name propagation",
+    "first-name/surname aliases and unknown lone names",
+    "structured dictionary keys and arbitrary encodings",
+    "model false positives after word completion",
+    "diagnosis of missing live failure payloads",
+    "images/OCR",
+    "agent outbound model-boundary evidence"
+  ]
+}

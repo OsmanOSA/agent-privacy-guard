@@ -19,3 +19,66 @@ condition = "AND"
 paths = ['''(^|/)privacy_guard/service/model_files\.py$''']
 regexTarget = "secret"
 regexes = ['''^f6df10ec83bea993035b2dd7c39345a3d4fcf23421c2adb6cb4ffc1e6d1bc4b5$''']
+
+[[rules.allowlists]]
+description = "Reviewed SHA-256 artifact/source digests in evaluation/ner/detection-consistency-review-20261007.json"
+condition = "AND"
+paths = ['''(^|/)evaluation/ner/detection\-consistency\-review\-20261007\.json$''']
+regexTarget = "secret"
+regexes = ['''^(e5bd843c5d7f031eb5d59f6abac69c5d106c8cb333e565d48011f47d6347b1ea)$''']
+
+[[rules.allowlists]]
+description = "Reviewed SHA-256 artifact/source digests in evaluation/ner/distil-deployment-20261006.json"
+condition = "AND"
+paths = ['''(^|/)evaluation/ner/distil\-deployment\-20261006\.json$''']
+regexTarget = "secret"
+regexes = ['''^(87d51d8e30bfe0b07f9042dd67ca7ee52510c0f8f91d103980e9112e83beced1)$''']
+
+[[rules.allowlists]]
+description = "Reviewed SHA-256 artifact/source digests in evaluation/ner/latency-length-20261006.json"
+condition = "AND"
+paths = ['''(^|/)evaluation/ner/latency\-length\-20261006\.json$''']
+regexTarget = "secret"
+regexes = ['''^(59f0f9013b9f5044df5cfa66a22a90c461dc127c7758e3abed7a6c01ef023071|87d51d8e30bfe0b07f9042dd67ca7ee52510c0f8f91d103980e9112e83beced1)$''']
+
+[[rules.allowlists]]
+description = "Reviewed SHA-256 artifact/source digests in evaluation/ner/mit-normalization-audit.json"
+condition = "AND"
+paths = ['''(^|/)evaluation/ner/mit\-normalization\-audit\.json$''']
+regexTarget = "secret"
+regexes = ['''^(79eddc8645e51a0e7524832a38ae7d606154fb935b5f78f6aae0adaa069c8ed0)$''']
+
+[[rules.allowlists]]
+description = "Reviewed SHA-256 artifact/source digests in evaluation/ner/summary-20261005.json"
+condition = "AND"
+paths = ['''(^|/)evaluation/ner/summary\-20261005\.json$''']
+regexTarget = "secret"
+regexes = ['''^(3f3978e0c036f2c2588cac34a6047cbb0af0b0dc1814254e291028529805496d|94640c61ded6aa3437d13bf907d002be6bfea27cbd28efeb93c4246f5e772e42)$''']
+
+[[rules.allowlists]]
+description = "Reviewed SHA-256 artifact/source digests in evaluation/ner/summary-additional-20261006.json"
+condition = "AND"
+paths = ['''(^|/)evaluation/ner/summary\-additional\-20261006\.json$''']
+regexTarget = "secret"
+regexes = ['''^(59f0f9013b9f5044df5cfa66a22a90c461dc127c7758e3abed7a6c01ef023071|94640c61ded6aa3437d13bf907d002be6bfea27cbd28efeb93c4246f5e772e42)$''']
+
+[[rules.allowlists]]
+description = "Reviewed SHA-256 artifact/source digests in evaluation/ner/summary-mit-20261006.json"
+condition = "AND"
+paths = ['''(^|/)evaluation/ner/summary\-mit\-20261006\.json$''']
+regexTarget = "secret"
+regexes = ['''^(225c01d1c6b85b2abc954b37a6117ab88a9bee3717126aa3eabb2d59bc942bbc|59f0f9013b9f5044df5cfa66a22a90c461dc127c7758e3abed7a6c01ef023071|79eddc8645e51a0e7524832a38ae7d606154fb935b5f78f6aae0adaa069c8ed0)$''']
+
+[[rules.allowlists]]
+description = "Reviewed SHA-256 artifact/source digests in evaluation/ner/window-batches-20261006.json"
+condition = "AND"
+paths = ['''(^|/)evaluation/ner/window\-batches\-20261006\.json$''']
+regexTarget = "secret"
+regexes = ['''^(87d51d8e30bfe0b07f9042dd67ca7ee52510c0f8f91d103980e9112e83beced1|b677a32f52a3a6101f5a33ff27bcf25c015241ce463e62e098248d4bb382c022)$''']
+
+[[rules.allowlists]]
+description = "Reviewed SHA-256 artifact/source digests in privacy_guard/service/distil_files.py"
+condition = "AND"
+paths = ['''(^|/)privacy_guard/service/distil_files\.py$''']
+regexTarget = "secret"
+regexes = ['''^(87d51d8e30bfe0b07f9042dd67ca7ee52510c0f8f91d103980e9112e83beced1)$''']

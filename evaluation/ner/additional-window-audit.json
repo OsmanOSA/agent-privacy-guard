@@ -1,0 +1,23 @@
+{
+  "deep-sequoia-nonwiki": {
+    "records": 2084,
+    "max_legacy_window_words": 126,
+    "legacy_word_limit": 384,
+    "uncovered_inputs": 0,
+    "max_characters": 707
+  },
+  "europeana-newspapers-fr": {
+    "records": 512,
+    "max_legacy_window_words": 264,
+    "legacy_word_limit": 384,
+    "uncovered_inputs": 0,
+    "max_characters": 817
+  },
+  "soduco-nested-ner": {
+    "records": 512,
+    "max_legacy_window_words": 84,
+    "legacy_word_limit": 384,
+    "uncovered_inputs": 0,
+    "max_characters": 343
+  }
+}

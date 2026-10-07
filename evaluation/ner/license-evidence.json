@@ -1,0 +1,205 @@
+{
+  "checked_at": "2026-10-05",
+  "weight_declarations": [
+    {
+      "model": "gliner2-privacy-filter-PII-multi",
+      "file": "README.md",
+      "url": "https://huggingface.co/fastino/gliner2-privacy-filter-PII-multi/resolve/1cb4166094dc58fa8d836429f060d6c95f62b495/README.md",
+      "sha256": "e932bd007f5b386ecf88f28058c6a96ef001c4fc8ba8175f10671db2539f51a1",
+      "scope": "published licensing declaration and notices; not a warranty of upstream rights"
+    },
+    {
+      "model": "masker-mini",
+      "file": "README.md",
+      "url": "https://huggingface.co/divergentlabs/masker-mini/resolve/beb7235d454aa4488b6ee1cd47f417caa12a6d15/README.md",
+      "sha256": "cc19d789430f0c3ccfd08f11f00267b6d70f5616745749f3c5ee6cff17957307",
+      "scope": "published licensing declaration and notices; not a warranty of upstream rights"
+    },
+    {
+      "model": "masker-mini",
+      "file": "LICENSE",
+      "url": "https://huggingface.co/divergentlabs/masker-mini/resolve/beb7235d454aa4488b6ee1cd47f417caa12a6d15/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "scope": "published licensing declaration and notices; not a warranty of upstream rights"
+    },
+    {
+      "model": "masker-mini",
+      "file": "NOTICE",
+      "url": "https://huggingface.co/divergentlabs/masker-mini/resolve/beb7235d454aa4488b6ee1cd47f417caa12a6d15/NOTICE",
+      "sha256": "16ad21c93dc0ad95405d32772ce58e2e02930004517f801d79a13e6ec2abb89c",
+      "scope": "published licensing declaration and notices; not a warranty of upstream rights"
+    },
+    {
+      "model": "nym-pii-multilingual-small",
+      "file": "README.md",
+      "url": "https://huggingface.co/Wismut/nym-pii-multilingual-small/resolve/4348999cd3c2e20c49615e9af7c6bbb45b64cd85/README.md",
+      "sha256": "74c55f42afcad1e5c1ea9b059f37d9d48e5641e04628642a12444721c57f3d9e",
+      "scope": "published licensing declaration and notices; not a warranty of upstream rights"
+    },
+    {
+      "model": "distilcamembert-base-ner",
+      "file": "README.md",
+      "url": "https://huggingface.co/cmarkea/distilcamembert-base-ner/resolve/e539d952f70088b450c300c28ba455da87f2dc4b/README.md",
+      "sha256": "e115be795fa5af7ff5db3da46db0352d6f71724197a1b263be890d7d2a131ec3",
+      "scope": "published licensing declaration and notices; not a warranty of upstream rights"
+    },
+    {
+      "model": "gliner_multi_pii-v1",
+      "file": "README.md",
+      "url": "https://huggingface.co/urchade/gliner_multi_pii-v1/resolve/1fcf13e85f4eef5394e1fcd406cf2ca9ea82351d/README.md",
+      "sha256": "5922e242558f1608f734dd23bb4a26fd2986254202131aa1d86153692181953e",
+      "scope": "published licensing declaration and notices; not a warranty of upstream rights"
+    }
+  ],
+  "runtime_inventory": [
+    {
+      "package": "onnxruntime",
+      "installed_version": "1.30.0",
+      "primary_license": "MIT",
+      "license_expression": null,
+      "bundled_notices": [
+        {
+          "file": "onnxruntime/LICENSE",
+          "sha256": "c250d6278f0b47a6439fb7592b08b58a55eb9f535aa49a1db63211c3f982b674"
+        },
+        {
+          "file": "onnxruntime/ThirdPartyNotices.txt",
+          "sha256": "c53a76501ef60db6f865f20599f220761201ac4057683acefdab37d861b86622"
+        }
+      ],
+      "redistribution_status": "Retain bundled third-party licenses; installed wheel audit is not the complete future product dependency inventory.",
+      "upstream_license_reference": "https://github.com/microsoft/onnxruntime/blob/main/LICENSE"
+    },
+    {
+      "package": "tokenizers",
+      "installed_version": "0.22.2",
+      "primary_license": "Apache-2.0",
+      "license_expression": null,
+      "bundled_notices": [],
+      "redistribution_status": "Retain bundled third-party licenses; installed wheel audit is not the complete future product dependency inventory.",
+      "upstream_license_reference": "https://github.com/huggingface/tokenizers/blob/main/LICENSE"
+    },
+    {
+      "package": "numpy",
+      "installed_version": "2.5.3",
+      "primary_license": "BSD-3-Clause and bundled permissive licenses",
+      "license_expression": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "bundled_notices": [
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/LICENSE.txt",
+          "sha256": "a804dff0ead9fadc5293456410bcbfc32bf024be9c4513459663fb7b442d2341"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt",
+          "sha256": "d544761558b510866c21f7e8a2d5716fca76e0b98117e3b6b86314db7244d150"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING",
+          "sha256": "aea41976c720f91bd19725c16916a1ace40eb1ea42620d340e587a5de4bbcea0"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/highway/LICENSE",
+          "sha256": "d208152e2777ffd0126eacc1bd21c0320d69e4e6b622d21a2a12a47e8ef73763"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt",
+          "sha256": "b0fd592d4ead563148e3977e7b589169d46a5ef2ff133c755a81af880a3fc919"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+          "sha256": "a732977853530066790c42817087f4829b518dd98d340c916acbfd227e39d3cb"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE",
+          "sha256": "585483905b13d4b42f800c55ba99e89d6e2e33ccd5f503e201c07531d148ff41"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+          "sha256": "8db000e158c162e7249787852d8c69764706502ccee725c06641b31c1e95c8af"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt",
+          "sha256": "19060ef465e1797d682ee0fc3081bd25ab1395e995e43d25c9d13c95d9a3cd6b"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/ma/LICENSE",
+          "sha256": "d78dbb208b80d92b4d333e41a4baae50d12444f46e53199fa7726a91de6e2da7"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/random/LICENSE.md",
+          "sha256": "b4bc2f4fa1c95778f1ed3dd8f14706bece399475b978f9f34b5d3cd72521b48a"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+          "sha256": "cf5619f25b112d5ce7c896efffc8e610bcb345dfadcc19f2c1460aa48fff2c9e"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+          "sha256": "92c10699884321f1c2947fe2a70ab23b0fbf1507f756d89dd08f38c61fc3d4fa"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+          "sha256": "41190663b77bee5302386495a07b7eabfbfa571aa0ae2f11da6764162062fc4f"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
+          "sha256": "322ac46d870c8aeead6c53adcccc839296fb3c8e456eae155081297daf7f8013"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+          "sha256": "28cad82ce1379dc529df30da78ec012d7d0d1d576b03ddcb93388aee53659f59"
+        },
+        {
+          "file": "numpy-2.5.3.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
+          "sha256": "454ec7350e478e037061850b67395753b425b1cb0a34bbc26290b020bf89d763"
+        },
+        {
+          "file": "numpy/_core/include/numpy/random/LICENSE.txt",
+          "sha256": "d544761558b510866c21f7e8a2d5716fca76e0b98117e3b6b86314db7244d150"
+        },
+        {
+          "file": "numpy/ma/LICENSE",
+          "sha256": "d78dbb208b80d92b4d333e41a4baae50d12444f46e53199fa7726a91de6e2da7"
+        },
+        {
+          "file": "numpy/random/LICENSE.md",
+          "sha256": "b4bc2f4fa1c95778f1ed3dd8f14706bece399475b978f9f34b5d3cd72521b48a"
+        }
+      ],
+      "redistribution_status": "Retain bundled third-party licenses; installed wheel audit is not the complete future product dependency inventory.",
+      "upstream_license_reference": "https://numpy.org/doc/stable/license.html"
+    }
+  ],
+  "base_model_declarations": [
+    {
+      "source": "https://huggingface.co/jhu-clsp/mmBERT-small",
+      "revision": "abc32620dd4f6ab06f5fbe905dc25f310618e09f",
+      "license_from_card": "mit",
+      "relationship": "Nym Small declared base"
+    },
+    {
+      "source": "https://huggingface.co/cmarkea/distilcamembert-base",
+      "revision": "82fb7671777bb680416031dcced25c7bfa6e859b",
+      "license_from_card": "mit",
+      "relationship": "DistilCamemBERT NER declared base"
+    },
+    {
+      "source": "https://huggingface.co/almanach/camembert-base",
+      "revision": "a75967561c78f2aa81cc41045378d3b4ee25af9e",
+      "license_from_card": "mit",
+      "relationship": "DistilCamemBERT teacher"
+    },
+    {
+      "source": "https://huggingface.co/microsoft/mdeberta-v3-base",
+      "revision": "a0484667b22365f84929a935b5e50a51f71f159d",
+      "license_from_card": "mit",
+      "relationship": "Masker Mini tokenizer origin named in NOTICE"
+    },
+    {
+      "source": "https://huggingface.co/microsoft/Multilingual-MiniLM-L12-H384",
+      "revision": "6e8c1ec6b4ec4e3fc6eb7d2cd834fcd582b61daf",
+      "license_from_card": "mit",
+      "relationship": "Masker Mini initialization origin named in NOTICE"
+    }
+  ]
+}

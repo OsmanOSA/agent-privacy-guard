@@ -1,0 +1,33 @@
+{
+  "deployed": true,
+  "completed_at": "2026-10-06T08:50:40.760446+00:00",
+  "existing_vault_files": 0,
+  "vault_bytes_unchanged": true,
+  "unrelated_settings_unchanged": true,
+  "settings_backup_created": true,
+  "export_policy_unchanged": true,
+  "model_configuration_unchanged": true,
+  "vault_format_unchanged": true,
+  "source_matches_deployment": true,
+  "hooks_registered": {
+    "PreToolUse": true,
+    "PostToolUse": true,
+    "PostToolUseFailure": true,
+    "SessionStart": true,
+    "SessionEnd": true
+  },
+  "tests": {
+    "run": 285,
+    "failed": 0,
+    "skipped": 2
+  },
+  "notification_mechanism": "Claude Code native top-level systemMessage; no Notification listener or OS notification process",
+  "stopping_mechanism": "Universal continue:false, plus neutral replacements for recognized post-tool schemas",
+  "remaining_limits": [
+    "Hook absence or cancellation discards the response",
+    "Unknown schemas stop without a guessed replacement; retained original results require review before resuming",
+    "Sensitive failed-tool errors can stop but cannot be replaced on PostToolUseFailure",
+    "Visual VS Code notice display has not been observed"
+  ],
+  "network_model_boundary_verified": false
+}

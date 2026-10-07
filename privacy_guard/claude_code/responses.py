@@ -11,6 +11,7 @@ from dataclasses import dataclass
 
 PRE_TOOL_USE = "PreToolUse"
 POST_TOOL_USE = "PostToolUse"
+POST_TOOL_USE_FAILURE = "PostToolUseFailure"
 SESSION_START = "SessionStart"
 SESSION_END = "SessionEnd"
 
@@ -36,6 +37,12 @@ def allow() -> HookResult:
 def block(message: str) -> HookResult:
     """Stops the tool before it runs; the message is shown to the model."""
     return HookResult(EXIT_BLOCK, stderr=message)
+
+
+def stop(message: str, **fields: object) -> HookResult:
+    """Stop further processing, including after a tool has already completed."""
+    response = {**fields, "continue": False, "stopReason": message, "systemMessage": message}
+    return HookResult(EXIT_ALLOW, stdout=json.dumps(response, ensure_ascii=False))
 
 
 def replace_tool_input(tool_input: dict) -> HookResult:

@@ -1,0 +1,16 @@
+{
+  "problem": "Names detected in an earlier tool call can appear unmasked in a later call; handled failures currently hide their processing stage.",
+  "scope": "Reuse encrypted bound person mappings within one session and record fixed diagnostic categories without inspected values.",
+  "invariants": [
+    "Existing category-bound encrypted records, token identifiers and vault format stay compatible",
+    "Session names are decrypted only transiently; no extra plaintext index",
+    "No cross-session learning or inferred first-name/surname aliases",
+    "Secrets, existing tokens and identifier word boundaries retain priority",
+    "Mappings commit before output; failure responses remain fail closed",
+    "Diagnostics never include exception text, values, paths, session ids or token ids",
+    "No global installation or AgenticRAG modifications"
+  ],
+  "validation": "Reopened vault and hook regressions; corrupt/locked storage and content-free diagnostics; same corpus scores; DPAPI latency compared on frozen public excerpt",
+  "status": "implemented and locally validated; deployment pending",
+  "evidence": "evaluation/ner/session-names-diagnostics-review-20261007.json"
+}

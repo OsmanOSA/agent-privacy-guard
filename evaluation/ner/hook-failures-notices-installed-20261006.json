@@ -1,0 +1,16 @@
+{
+  "installed_native_git_bash_cycle": true,
+  "local_restoration_exact": true,
+  "reread_tokens_stable": true,
+  "python_lines": 1000,
+  "python_read_ms": 307.20490000385325,
+  "published_excerpt_tokens": 3997,
+  "document_first_read_ms": 2197.9033000025083,
+  "document_identical_reread_ms": 298.5068999987561,
+  "native_user_notices_emitted": true,
+  "native_stop_on_inspection_error": true,
+  "native_stop_on_sensitive_tool_failure": true,
+  "clean_tool_failure_continues": true,
+  "visual_notification_display_verified": false,
+  "scope": "Installed hook subprocess and real service; no Claude model-network observation"
+}

@@ -1,0 +1,52 @@
+{
+  "calibration_records": 32,
+  "native_tokenizer_id_agreements": 20,
+  "threshold": 0.5,
+  "graphs": {
+    "model.onnx": {
+      "sha256": "770067d0fef15f0bee29bfcc04509f6e63e0451b15c958d6b3472ad4a845fd96",
+      "quality": {
+        "records": 32,
+        "gold_entities": 19,
+        "predicted_entities": 0,
+        "exact_true_positives": 0,
+        "gold_characters": 207,
+        "predicted_characters": 0,
+        "covered_gold_characters": 0,
+        "negative_records": 18,
+        "negative_records_with_predictions": 0,
+        "exact_precision": null,
+        "exact_recall": 0.0,
+        "exact_f1": 0.0,
+        "full_entity_coverage": 0.0,
+        "character_recall": 0.0,
+        "character_precision": null,
+        "negative_record_false_positive_rate": 0.0
+      }
+    },
+    "model_fp32.onnx": {
+      "sha256": "666ce15c968ca49874d2449aa9b83164dbb1126090d012dda7c35b2ef3672e1d",
+      "quality": {
+        "records": 32,
+        "gold_entities": 19,
+        "predicted_entities": 18,
+        "exact_true_positives": 18,
+        "gold_characters": 207,
+        "predicted_characters": 198,
+        "covered_gold_characters": 198,
+        "negative_records": 18,
+        "negative_records_with_predictions": 0,
+        "fully_covered_entities": 18,
+        "exact_precision": 1.0,
+        "exact_recall": 0.9473684210526315,
+        "exact_f1": 0.972972972972973,
+        "full_entity_coverage": 0.9473684210526315,
+        "character_recall": 0.9565217391304348,
+        "character_precision": 1.0,
+        "negative_record_false_positive_rate": 0.0
+      }
+    }
+  },
+  "selection": "Use FP32; reject this published quantized graph for the comparison",
+  "interpretation": "Artifact quality differs; the root cause of the quantized graph failure is not established"
+}

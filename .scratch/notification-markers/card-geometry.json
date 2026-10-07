@@ -1,0 +1,26 @@
+{
+  "outcome": "rendered",
+  "windows": [
+    {
+      "visible": false,
+      "width": 412,
+      "height": 242,
+      "x": 154,
+      "y": 154
+    },
+    {
+      "visible": true,
+      "width": 412,
+      "height": 242,
+      "x": 1114,
+      "y": 564
+    },
+    {
+      "visible": true,
+      "width": 412,
+      "height": 242,
+      "x": 1114,
+      "y": 564
+    }
+  ]
+}

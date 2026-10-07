@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-07",
+  "change": "Explicit WPF button template replaces system hover chrome",
+  "targeted_checks": {"tests": 9, "failures": 0, "errors": 0},
+  "actual_wpf_trigger_renders": ["normal", "hover", "pressed", "keyboard focus"],
+  "hover_colors": {"foreground": "#F3FBFF", "background": "#293E48"},
+  "pressed_colors": {"foreground": "#FFFFFF", "background": "#204D4C"},
+  "keyboard_focus_outline": "#68DCCA",
+  "hover_png_visually_checked": true,
+  "deployment_receipt": "deployment.json"
+}

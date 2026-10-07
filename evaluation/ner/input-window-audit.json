@@ -1,0 +1,7 @@
+{
+  "records": 2518,
+  "covered_source_characters": "all",
+  "maximum_legacy_words_per_window": 169,
+  "legacy_word_limit": 384,
+  "note": "Native whitespace splitter pattern; native library subtoken truncation is disabled for this tokenizer"
+}
