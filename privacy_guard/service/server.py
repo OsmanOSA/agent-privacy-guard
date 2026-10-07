@@ -74,7 +74,10 @@ def _find_names(detector: _BackgroundLoad,
             names = detector.get()
         with stage('model_inference'):
             findings = names.find_names(text)
-        return {"findings": [[f.kind, f.start, f.end] for f in findings]}
+        answer = {"findings": [[f.kind, f.start, f.end] for f in findings]}
+        if getattr(names, "reduced", None):
+            answer["reduced"] = names.reduced
+        return answer
     except Exception as error:
         # One bad request must not bring the service down; the hook will fail closed.
         at, category = failure_details(error)

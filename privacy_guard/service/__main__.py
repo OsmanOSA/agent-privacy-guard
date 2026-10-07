@@ -18,7 +18,9 @@ from privacy_guard.core.name_detector import (
 from privacy_guard.core.insee_names import local_name_detector
 from privacy_guard.service.channel import DEFAULT_RUN_DIR, ServiceChannel
 from privacy_guard.service.distil_files import DEFAULT_DISTIL_DIR, DISTIL_DIRECTORY
+from privacy_guard.service.model_files import ModelFilesError
 from privacy_guard.service.ner_policy import requires_model
+from privacy_guard.service.reduced_names import ReducedNameDetector
 from privacy_guard.service.server import serve
 
 # Release model memory after an hour without requests. SessionStart warms it up.
@@ -54,8 +56,11 @@ def _load_detector(log_file: Path, model_dir: Path = DEFAULT_DISTIL_DIR,
 
         detector = CombinedNameDetector([heuristic, DistilNameDetector(model_dir)])
     except Exception as error:
-        _log(log_file, f"Installed DistilCamemBERT unavailable ({type(error).__name__}): document detection blocked")
-        raise
+        # Reduced, never silent: every answer carries the reason (reduced_names.py).
+        reason = "model_files" if isinstance(error, ModelFilesError) else "model_runtime"
+        _log(log_file, f"Installed DistilCamemBERT unavailable ({type(error).__name__}): "
+                       f"names found by the heuristic only, reported as reduced ({reason})")
+        return ReducedNameDetector(heuristic, reason)
     _log(log_file, "DistilCamemBERT FP32 loaded; threshold=0.5; CPU threads=4")
     return detector
 

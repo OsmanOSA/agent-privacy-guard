@@ -30,8 +30,21 @@ _GROUPS = {
 }
 
 
+# Why document name detection runs on the heuristic only (service/reduced_names.py).
+REDUCED_TEXT = {
+    "model_runtime": "détection des noms réduite, le modèle n’a pas pu démarrer : "
+                     "certains noms peuvent rester visibles",
+    "model_files": "détection des noms réduite, fichiers du modèle absents ou modifiés "
+                   "(réinstallez Privacy Guard) : certains noms peuvent rester visibles",
+}
+REDUCED_REASONS = frozenset(REDUCED_TEXT)
+
+
 class ProtectionSummary:
-    def __init__(self, counts: dict[str, int], document: str | None = None):
+    def __init__(self, counts: dict[str, int], document: str | None = None, reduced: str | None = None):
+        if reduced is not None and reduced not in REDUCED_REASONS:
+            raise ValueError("Unknown reduced-detection reason")
+        self._reduced = reduced
         self._document = _basename(document)
         self._groups = {"pseudonymized": {}, "redacted": {}}
         for kind, count in counts.items():
@@ -44,11 +57,14 @@ class ProtectionSummary:
 
     def record(self) -> dict:
         return {"document": self._document, "count_unit": "occurrences_in_tool_result",
-                **{action: dict(group) for action, group in self._groups.items()}}
+                **{action: dict(group) for action, group in self._groups.items()},
+                "reduced": self._reduced}
 
     def message(self) -> str:
         parts = [describe_counts(self._groups[action], verb) for action, verb in (
             ("pseudonymized", "pseudonymisé"), ("redacted", "masqué")) if self._groups[action]]
+        if self._reduced:
+            parts.append(REDUCED_TEXT[self._reduced])
         source = f" — {self._document}" if self._document else ""
         return f"Privacy Guard{source} : {' ; '.join(parts)}."
 

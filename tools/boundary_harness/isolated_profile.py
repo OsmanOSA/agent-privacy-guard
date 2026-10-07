@@ -3,8 +3,10 @@
 Interface:
     profile = IsolatedProfile.install(setup_exe, root)
     profile.env                    environment where HOME/USERPROFILE/CLAUDE_CONFIG_DIR point inside root
-    profile.use_hooks(mode)        installed | absent | timeout | launch_error
+    profile.use_hooks(mode)        installed | absent | powershell | timeout | launch_error
+    with profile.hooks(mode):      the same, plus stalled_service for one scenario
     profile.use_engine(package, launcher)   test a source tree with the bundled runtime and model
+    profile.use_handlers(handlers) register the source tree's hook handlers instead of the setup's
     profile.uninstall()
 
 USERPROFILE redirects every ~/.privacy-guard and ~/.claude path of the hook, the
@@ -20,7 +22,10 @@ import shutil
 import subprocess
 import tempfile
 import time
+from contextlib import contextmanager
 from pathlib import Path
+
+from boundary_harness.service_control import resume, service_pids, suspend
 
 FAULT_TIMEOUT_SECONDS = 3
 
@@ -45,6 +50,7 @@ class IsolatedProfile:
         notifications = home / ".privacy-guard/notifications/settings.json"
         notifications.write_text('{"version":1,"mode":"off","style":"card"}')
         profile._installed = json.loads(profile.settings.read_text(encoding="utf-8"))
+        profile._setup_settings = json.loads(json.dumps(profile._installed))
         profile._run([profile.python, "-m", "privacy_guard.setup", "status"])  # Loads the model once.
         return profile
 
@@ -72,23 +78,87 @@ class IsolatedProfile:
                 "ServiceClient(ServiceChannel(DEFAULT_RUN_DIR)).stop()")
         subprocess.run([str(self.python), "-c", stop], cwd=app, env=self.env, capture_output=True, timeout=60)
 
+    def use_handlers(self, handlers: dict) -> None:
+        """Register source handlers in place of the setup's own entries (fresh profile: all ours)."""
+        for event, groups in self._installed.get("hooks", {}).items():
+            for group in groups:
+                group["hooks"] = [dict(handlers[event]) for _ in group["hooks"]]
+
+    @contextmanager
+    def hooks(self, mode: str):
+        """Hook mode for one scenario; `stalled_service` suspends a running name service,
+        `model_unavailable` damages the model file so the service starts in reduced mode."""
+        if mode == "model_unavailable":
+            with self._damaged_model():
+                yield
+            return
+        if mode != "stalled_service":
+            self.use_hooks(mode)
+            yield
+            return
+        self.use_hooks("installed")
+        self._run([self.python, "-m", "privacy_guard.setup", "status"])  # Starts the service.
+        pids = service_pids(self.home)
+        if not pids:
+            raise RuntimeError("No name service to stall")
+        suspend(pids)
+        try:
+            yield
+        finally:
+            resume(pids)
+
+    @contextmanager
+    def _damaged_model(self):
+        model = self.home / ".privacy-guard/models/distilcamembert-ner/model.onnx"
+        if not model.is_file():
+            raise RuntimeError("No installed model to damage")
+        self.use_hooks("installed")
+        self._stop_service()
+        original = model.read_bytes()
+        model.write_bytes(original[:1024])  # Fails the SHA-256 check: ModelFilesError.
+        try:
+            yield
+        finally:
+            self._stop_service()
+            model.write_bytes(original)
+
+    def _stop_service(self) -> None:
+        stop = ("from privacy_guard.service.channel import DEFAULT_RUN_DIR, ServiceChannel; "
+                "from privacy_guard.service.client import ServiceClient; "
+                "ServiceClient(ServiceChannel(DEFAULT_RUN_DIR)).stop()")
+        subprocess.run([str(self.python), "-c", stop], cwd=self.home / ".privacy-guard/app", env=self.env,
+                       capture_output=True, timeout=60)
+
     def use_hooks(self, mode: str) -> None:
         settings = json.loads(json.dumps(self._installed))
+        handlers = [hook for groups in settings.get("hooks", {}).values() for group in groups for hook in group["hooks"]]
         if mode == "absent":
             settings.pop("hooks", None)
-        elif mode in {"timeout", "launch_error"}:
-            command = (f'"{self.python.as_posix()}" -c "import time; time.sleep(60)"' if mode == "timeout"
-                       else f'"{(self.root / "missing/python.exe").as_posix()}" app')
-            for groups in settings.get("hooks", {}).values():
-                for group in groups:
-                    for hook in group["hooks"]:
-                        hook.update(command=command, timeout=FAULT_TIMEOUT_SECONDS)
+        elif mode == "powershell":
+            # Without Git Bash, Claude Code runs hooks in PowerShell.
+            for hook in handlers:
+                hook["shell"] = "powershell"
+        elif mode == "timeout":
+            # A stall before our code runs: the handler is a sleeping process.
+            for hook in handlers:
+                hook.pop("shell", None)
+                hook.update(command=self.python.as_posix(), args=["-c", "import time; time.sleep(60)"],
+                            timeout=FAULT_TIMEOUT_SECONDS)
+        elif mode == "launch_error":
+            # The runtime was removed: every form of handler points to a missing interpreter.
+            missing = (self.root / "missing/python.exe").as_posix()
+            for hook in handlers:
+                hook["command"] = hook["command"].replace(self.python.as_posix(), missing)
+                # An `args` key, even empty, turns a shell handler into exec form: keep it absent.
+                if "args" in hook:
+                    hook["args"] = [arg.replace(self.python.as_posix(), missing) for arg in hook["args"]]
         elif mode != "installed":
             raise ValueError(f"Unknown hook mode: {mode}")
         self.settings.write_text(json.dumps(settings, indent=2), encoding="utf-8")
 
     def uninstall(self) -> None:
-        self.use_hooks("installed")
+        # The setup under test removes only the entries it wrote itself.
+        self.settings.write_text(json.dumps(self._setup_settings, indent=2), encoding="utf-8")
         self._setup(self._app / "Uninstall.exe", "/S", f"_?={self._app}")
         receipt = self.home / ".privacy-guard/windows-setup.json"
         deadline = time.monotonic() + 15

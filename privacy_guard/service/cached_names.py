@@ -28,6 +28,11 @@ class CachedNameDetector:
         self._cache: OrderedDict[bytes, tuple[Finding, ...]] = OrderedDict()
         self._finding_count = 0
 
+    @property
+    def reduced(self) -> str | None:
+        """Why detection is reduced (reduced_names.py), or None with the full model."""
+        return getattr(self._detector, "reduced", None)
+
     def find_names(self, text: str) -> list[Finding]:
         """Exact UTF-8 text is the key; exceptions never enter the cache."""
         key = sha256(text.encode("utf-8")).digest()

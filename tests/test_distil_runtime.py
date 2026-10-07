@@ -29,14 +29,17 @@ class DistilRuntimeTest(unittest.TestCase):
             with self.assertRaises(ModelFilesError):
                 DistilNameDetector(Path(directory))
 
-    def test_document_model_failure_is_not_silently_downgraded(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            with patch("privacy_guard.service.distil_name_detector.DistilNameDetector",
-                       side_effect=ModelFilesError("Tampered bundle")):
-                with self.assertRaises(ModelFilesError):
-                    _load_detector(root / "service.log", root)
-            self.assertIn("document detection blocked", (root / "service.log").read_text())
+    def test_document_model_failure_is_reduced_with_its_reason(self):
+        # Founder's choice (V1 readiness item 06): continue with the heuristic, never silently.
+        for error, reason in ((ModelFilesError("Tampered bundle"), "model_files"),
+                              (RuntimeError("bad allocation"), "model_runtime")):
+            with self.subTest(reason=reason), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                with patch("privacy_guard.service.distil_name_detector.DistilNameDetector", side_effect=error):
+                    detector = _load_detector(root / "service.log", root)
+                self.assertEqual(detector.reduced, reason)
+                self.assertEqual(len(detector.find_names("Nom : Sophie Martin")), 1)
+                self.assertIn(f"reported as reduced ({reason})", (root / "service.log").read_text())
 
     def test_service_uses_heuristic_plus_distil_without_legacy_filter(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -55,11 +58,11 @@ class DistilRuntimeTest(unittest.TestCase):
             self.assertEqual(len(detector.find_names("Nom : Jean Dupont")), 1)
             self.assertIn("heuristic only", (root / "service.log").read_text())
 
-    def test_required_model_missing_is_an_error(self):
+    def test_required_model_missing_is_reduced_detection(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            with self.assertRaises(ModelFilesError):
-                _load_detector(root / "service.log", root / "absent", required=True)
+            detector = _load_detector(root / "service.log", root / "absent", required=True)
+            self.assertEqual(detector.reduced, "model_files")
 
     def test_successful_installation_requirement_survives_missing_weights(self):
         with tempfile.TemporaryDirectory() as directory:

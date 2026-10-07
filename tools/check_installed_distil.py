@@ -24,13 +24,12 @@ def main():
     session = "distil-probe-" + uuid.uuid4().hex
     session_dir = (guard / "vault" / session).resolve()
     assert session_dir.is_relative_to(guard / "vault") and session_dir.name == session
-    git = Path(shutil.which("git")).resolve()
-    shell = git.parents[1] / "bin/bash.exe"
-    assert shell.is_file()
-    command = f'"{Path(sys.executable).as_posix()}" "{(guard / "app").as_posix()}"'
+    # Exec form, as registered: Claude Code starts the interpreter without a shell.
+    command = [Path(sys.executable).as_posix(), (guard / "app").as_posix()]
     settings = json.loads((Path.home() / ".claude/settings.json").read_text(encoding="utf-8"))
-    assert any(h["command"] == command for g in settings["hooks"]["PostToolUse"] for h in g["hooks"])
-    assert any(h["command"] == command for g in settings["hooks"]["PostToolUseFailure"] for h in g["hooks"])
+    for event in ("PostToolUse", "PostToolUseFailure"):
+        assert any([h.get("command"), *(h.get("args") or [])] == command
+                   for g in settings["hooks"][event] for h in g["hooks"]), f"{event} hook not registered"
     if args.restart_service:
         sys.path.insert(0, str(PROJECT))
         from privacy_guard.service.channel import ServiceChannel
@@ -47,7 +46,7 @@ def main():
         if error is not None:
             payload["error"] = error
         started = time.perf_counter()
-        completed = subprocess.run([str(shell), "-c", command], input=json.dumps(payload),
+        completed = subprocess.run(command, input=json.dumps(payload),
                                    capture_output=True, text=True, encoding="utf-8", timeout=30)
         elapsed = (time.perf_counter() - started) * 1000
         assert completed.returncode == 0 and not completed.stderr, "Installed hook failed"
