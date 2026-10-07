@@ -22,3 +22,5 @@ Requires maintainer and independent security review before closing the release b
 ## Comments
 
 Initial task is design plus evidence; no fix has been implemented by the groundwork.
+
+2026-10-07: first model-boundary evidence in `docs/security/boundary-checks-2026-10-07.md` (Claude Code 2.1.280, fake Messages API). Success paths for Read, Bash, parallel reads, secrets and Write restoration hold. Three paths release originals: `PostToolUseFailure` despite `continue: false`, hook timeout and hook launch failure. Still open.

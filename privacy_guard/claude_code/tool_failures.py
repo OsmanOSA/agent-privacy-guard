@@ -23,7 +23,7 @@ def inspection_failed(event: str, payload: object) -> HookResult:
 
 
 def masked_result(tool: object, original: object) -> object:
-    if tool == "Bash":
+    if tool in {"Bash", "PowerShell"}:  # PowerShell returns the same shape (2.1.292).
         # The documented Bash output schema; never copy original stdout/stderr.
         return {"stdout": MASKED, "stderr": "", "interrupted": False, "isImage": False}
     if not isinstance(tool, str):
@@ -46,11 +46,13 @@ def masked_result(tool: object, original: object) -> object:
                     k: MASKED if k == "content" else "[masked]" if k == "filePath" else v
                     for k, v in file.items()}}
     if tool in {"Grep", "Glob"}:
-        allowed = {"mode", "content", "filenames", "numFiles", "numLines", "durationMs", "appliedLimit", "appliedOffset"}
-        if (set(original) <= allowed and isinstance(original.get("filenames"), list)
+        # Claude Code adds counters and flags across versions (2.1.292: totalLines,
+        # numMatches, truncated...). Numbers and booleans carry no document content,
+        # so new ones are kept; any other unknown value still refuses the replacement.
+        if (isinstance(original.get("filenames"), list)
                 and ("mode" not in original or isinstance(original["mode"], str)
                      and original["mode"] in {"content", "files_with_matches", "count"})
-                and all(type(v) is int for k, v in original.items() if k not in {"mode", "content", "filenames"})
+                and all(type(v) in (int, bool) for k, v in original.items() if k not in {"mode", "content", "filenames"})
                 and ("content" not in original or isinstance(original["content"], str))):
             return {k: [] if k == "filenames" else MASKED if k == "content" else v
                     for k, v in original.items()}

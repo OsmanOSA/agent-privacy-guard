@@ -6,7 +6,7 @@ import numpy as np
 import onnxruntime as ort
 from tokenizers import Tokenizer
 
-from .ner_unicode import complete_compositions
+from .ner_unicode import complete_compositions, must_be_covered, tokenizable
 
 
 class TokenModel:
@@ -25,7 +25,7 @@ class TokenModel:
         self.backend = "ONNX Runtime CPU"
 
     def raw(self, text):
-        encoded = self.tokenizer.encode(text)
+        encoded = self.tokenizer.encode(tokenizable(text))
         windows = []
         covered = set()
         for window in [encoded, *encoded.overflowing]:
@@ -44,7 +44,7 @@ class TokenModel:
                              "end": end, "score": float(scores[index])})
                 covered.update(range(start, end))
             windows.append(rows)
-        required = {index for index, char in enumerate(text) if not char.isspace()}
+        required = {index for index, char in enumerate(text) if must_be_covered(char)}
         if required - covered:
             complete_compositions(text, windows, self.tokenizer.normalizer, required - covered)
             covered = {index for window in windows for row in window for index in range(row["start"], row["end"])}

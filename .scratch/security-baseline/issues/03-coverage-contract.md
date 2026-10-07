@@ -19,3 +19,5 @@ Four event types are registered. Transformation covers nested string values, but
 ## Comments
 
 No universal support claim is implied by this task.
+
+2026-10-07: `Grep` content output reaches the model without name detection (document scope covers Read and shell reads of document files only). Evidence and the list of paths not yet observed: `docs/security/boundary-checks-2026-10-07.md`.
