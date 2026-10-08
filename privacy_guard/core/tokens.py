@@ -20,6 +20,7 @@ TOKEN_KIND = "token"
 TOKEN_ID_LENGTH = 8
 TOKEN_PATTERN = re.compile(rf"⟦([A-Z0-9_]+):([0-9A-F]{{{TOKEN_ID_LENGTH}}})⟧")
 PLACEHOLDER_PATTERN = re.compile(rf"⟦[A-Z0-9_]+:(?:[0-9A-F]{{{TOKEN_ID_LENGTH}}}|REDACTED)⟧")
+REDACTION_PATTERN = re.compile(r"⟦[A-Z0-9_]+:REDACTED⟧")
 
 
 def token_id(session_key: bytes,

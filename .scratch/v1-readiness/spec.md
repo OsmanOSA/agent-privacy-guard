@@ -36,7 +36,22 @@ Get the unit suite green before any redeploy.
 | 09 | [Public distribution prerequisites](issues/09-public-distribution.md) | P2 | open |
 | 11 | [Hook refusals disclose the local user path](issues/11-refusal-path-disclosure.md) | P1 | done |
 | 12 | [Technical file names masked as person names](issues/12-file-name-false-positives.md) | P1 | done |
+| 13 | [Rewriting code and configuration files damages them](issues/13-code-file-writes.md) | P1 | done |
+| 14 | [SQL files](issues/14-sql-files.md) | P1 | done |
+| 15 | [Excel workbooks](issues/15-excel-workbooks.md) | P1 | done |
 | 10 | [End-of-work summary notification](issues/10-end-of-work-summary.md) | later | blocked |
+
+## Code freeze (founder, 2026-10-07)
+
+`0.1.0-preview.5` (commit `263cd41`, receipt `docs/windows-setup-checks-2026-10-07-preview-5.md`;
+preview.4 plus the founder's SQL and Excel requests, items 14 and 15) is frozen for real-use tests ([real-use-tests.md](real-use-tests.md)). From now on, only
+blocking findings are fixed before the V1:
+
+- a value reaching the model unmasked;
+- a user file damaged;
+- work prevented (a tool refused or blinded for no reason).
+
+Everything else goes to the [V1.1 backlog](v1.1-backlog.md) without a fix.
 
 ## Already fixed (branch `fix/model-boundary-leaks`, commit 8018c89)
 

@@ -35,6 +35,12 @@ class CsvExportPolicyTest(unittest.TestCase):
         self.assertEqual(result["file_path"], self.args["file_path"])
         self.assertEqual(list(csv.reader(io.StringIO(result["content"]))), [["email"], [EMAIL]])
 
+    def test_sql_export_restores_literals_only(self):
+        args = {"file_path": str(self.root / "seed.sql"),
+                "content": f"INSERT INTO t VALUES ('{self.token}'); -- {self.token}\nSELECT {self.token};\n"}
+        result = self.policy.restore_input(args, self.core.restore)
+        self.assertEqual(result["content"], f"INSERT INTO t VALUES ('{EMAIL}'); -- {EMAIL}\nSELECT {self.token};\n")
+
     def test_default_policy_does_not_lookup_values(self):
         restore = Mock()
         self.assertIsNone(CsvExportPolicy().restore_input(self.args, restore))

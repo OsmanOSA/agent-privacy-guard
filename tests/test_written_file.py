@@ -30,6 +30,20 @@ class WrittenFileTest(WrittenFileTestCase):
                 self.assertEqual(path.read_text(encoding="utf-8"), ORIGINAL)
         self.assertFalse((self.home / "export-policy.json").exists())
 
+    def test_source_code_and_configuration_files_get_their_values_back(self):
+        token = self.core.protect(EMAIL)
+        for name in ("fixtures/user_service.py", "config/settings.yaml", "app/.env.local"):
+            with self.subTest(name=name):
+                path, args = self.written(f'CONTACT = "{token}"\n', name)
+                self.assertTrue(self.restorer.restore(args, self.core.restore))
+                self.assertEqual(path.read_text(encoding="utf-8"), f'CONTACT = "{EMAIL}"\n')
+
+    def test_sql_literals_are_restored_with_sql_escaping(self):
+        token = self.core.protect(EMAIL)
+        path, args = self.written(f"INSERT INTO t VALUES ('{token}');\n", "seed.sql")
+        self.assertTrue(self.restorer.restore(args, lambda value: value.replace(token, "O'Brien")))
+        self.assertEqual(path.read_text(encoding="utf-8"), "INSERT INTO t VALUES ('O''Brien');\n")
+
     def test_csv_quotes_restored_values_and_keeps_header_tokens(self):
         token = self.core.protect(EMAIL)
         content = f"{token}\n{token}\n"
@@ -71,7 +85,7 @@ class WrittenFileTest(WrittenFileTestCase):
         restore = Mock()
         for filename in ("relative.txt", r"\\server\share\result.txt", r"\\?\C:\result.txt",
                          str(path) + ":stream", str(self.home / "../result.txt"),
-                         str(self.home / "result.json"), str(self.home / "result.txt ")):
+                         str(self.home / "result.xlsx"), str(self.home / "result.txt ")):
             with self.subTest(filename=filename):
                 self.assertFalse(self.restorer.restore({**args, "file_path": filename}, restore))
         self.assertFalse(self.restorer.restore({**args, "content": self.masked + "\x00"}, restore))

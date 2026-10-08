@@ -52,9 +52,9 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
     parser.add_argument("--guard-home", type=Path, default=Path.home() / ".privacy-guard")
     parser.add_argument("--model-source", default=DEFAULT_MODEL_SOURCE,
                         help="directory or https:// URL holding the converted name model")
-    parser.add_argument("--source", type=Path, help="masked CSV to export")
+    parser.add_argument("--source", type=Path, help="masked CSV or SQL file to export")
     parser.add_argument("--session", help="session that issued the CSV tokens")
-    parser.add_argument("--filename", help="unused CSV filename inside the configured export root")
+    parser.add_argument("--filename", help="unused CSV or SQL filename inside the configured export root")
     parser.add_argument("--notification-mode", choices=["off", "background", "always"])
     parser.add_argument("--notification-style", choices=["card", "native"])
     parser.add_argument("--notification-test", action="store_true", help="send one synthetic Windows banner")

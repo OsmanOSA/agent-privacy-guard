@@ -13,13 +13,13 @@ from pathlib import Path
 from typing import Callable
 
 from privacy_guard.core.category_policy import Mode, mode_for
+from privacy_guard.core.restorable_files import is_restorable
 from privacy_guard.core.tokens import TOKEN_PATTERN
-from privacy_guard.exports.csv_content import restore_csv
+from privacy_guard.exports.file_content import restore_text
 from privacy_guard.exports.policy import _local_absolute_path, _validated_root
 from privacy_guard.exports.written_file_handles import WrittenFileHandles
 
 MAX_BYTES = 2 * 1024 * 1024
-_TEXT_EXTENSIONS = frozenset({".txt", ".md", ".markdown", ".csv"})
 
 
 class WrittenFileRestorer:
@@ -55,9 +55,9 @@ class WrittenFileRestorer:
                 changed = changed or result != value
                 return result
 
-            restored = restore_csv(text, restore_value) if target.suffix.lower() == ".csv" else restore_value(text)
+            restored = restore_text(target.name, text, restore_value)
             if restored is None:
-                raise ValueError("Local CSV content is not eligible for restoration")
+                raise ValueError("Local CSV or SQL content is not eligible for restoration")
             if not changed:
                 return False
             data = (codecs.BOM_UTF8 if original.startswith(codecs.BOM_UTF8) else b"") + restored.encode("utf-8")
@@ -79,7 +79,7 @@ def _target(tool_input: object) -> Path | None:
             or "\x00" in tool_input["content"]):
         return None
     target = _local_absolute_path(tool_input["file_path"])
-    if (target is None or target.suffix.lower() not in _TEXT_EXTENSIONS
+    if (target is None or not is_restorable(target)
             or any(part.endswith((".", " ")) for part in target.parts)
             or _validated_root(target.parent) != target.parent):
         return None

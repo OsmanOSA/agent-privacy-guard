@@ -1,6 +1,9 @@
 """Restore a successful local Write on disk and keep its model-facing result protected.
 
-Interface: process_write_result(payload, core, restorer=None) -> HookResult.
+Interface:
+    process_write_result(payload, core, restorer=None) -> HookResult
+    with_restoration_notice(result, failed) -> HookResult   status feedback, shared with
+                                                            workbook restoration
 Normal tool permissions have already run. No original content or updatedInput is
 returned; generic status feedback accompanies the protected tool result.
 """
@@ -32,11 +35,16 @@ def process_write_result(payload: dict, core: PrivacyCore,
             changed = writer.restore(payload.get("tool_input"), core.restore)
     except (OSError, ValueError, RuntimeError) as error:
         record_failure(failures, payload.get('hook_event_name'), 'Write', error)
+        return with_restoration_notice(result, failed=True)
+    return with_restoration_notice(result, failed=False) if changed else result
+
+
+def with_restoration_notice(result: HookResult, failed: bool) -> HookResult:
+    """Tell the agent and the user, without any value, whether a local file was restored."""
+    if failed:
         notice = "Privacy Guard: local restoration failed. Verify the file locally before using it."
         user_notice = RESTORE_FAILED_NOTICE
     else:
-        if not changed:
-            return result
         notice = "Privacy Guard: personal values restored in the local file. Continue using session tokens."
         user_notice = RESTORED_NOTICE
     response = json.loads(result.stdout) if result.stdout else {"hookSpecificOutput": {"hookEventName": POST_TOOL_USE}}

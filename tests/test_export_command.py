@@ -44,7 +44,7 @@ class ExportCommandTest(unittest.TestCase):
         return code, stdout.getvalue(), stderr.getvalue()
 
     def test_success_receipt_contains_no_originals(self):
-        self.assertEqual(self.command(), (0, "CSV export completed.\n", ""))
+        self.assertEqual(self.command(), (0, "Export completed.\n", ""))
         self.assertIn(EMAIL, (self.root / "clients.csv").read_text(encoding="utf-8"))
         self.assertEqual(self.source.read_text(encoding="utf-8"), f"email\n{self.token}\n")
 
@@ -54,7 +54,7 @@ class ExportCommandTest(unittest.TestCase):
              "--session", "a", "--filename", "clients.csv", "--guard-home", str(self.guard)],
             capture_output=True, text=True, encoding="utf-8"
         )
-        self.assertEqual((result.returncode, result.stdout, result.stderr), (0, "CSV export completed.\n", ""))
+        self.assertEqual((result.returncode, result.stdout, result.stderr), (0, "Export completed.\n", ""))
         self.assertIn(EMAIL, (self.root / "clients.csv").read_text(encoding="utf-8"))
 
     def test_missing_policy_fails_without_creating_an_output(self):

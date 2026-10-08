@@ -1,7 +1,8 @@
-"""Authorize personal-value restoration into one new local CSV export.
+"""Authorize personal-value restoration into one new local CSV or SQL export.
 
 Interface: destination(path) -> Path | None; restore_input(data, restore) -> dict | None.
-Only data cells are prepared for restoration; paths and headers are unchanged.
+Only data is prepared for restoration (CSV body cells, SQL literals and comments);
+paths and headers are unchanged.
 The local writer owns the actual write. This policy alone does not enforce egress.
 """
 
@@ -17,9 +18,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-from privacy_guard.exports.csv_content import restore_csv
+from privacy_guard.exports.file_content import restore_text
 
-_CSV_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]*\.csv", re.IGNORECASE)
+_EXPORT_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]*\.(?:csv|sql)", re.IGNORECASE)
 _DEVICES = frozenset({"CON", "PRN", "AUX", "NUL"} | {f"{prefix}{i}" for prefix in ("COM", "LPT") for i in range(1, 10)})
 
 
@@ -49,13 +50,13 @@ class CsvExportPolicy:
         return cls(root)
 
     def restore_input(self, tool_input: object, restore: Callable[[str], str]) -> dict | None:
-        """Prepare CSV data for the local writer, or None when ineligible."""
+        """Prepare CSV or SQL data for the local writer, or None when ineligible."""
         if not isinstance(tool_input, dict) or set(tool_input) != {"file_path", "content"}:
             return None
         target = self.destination(tool_input["file_path"])
         if target is None or not isinstance(tool_input["content"], str):
             return None
-        content = restore_csv(tool_input["content"], restore)
+        content = restore_text(target.name, tool_input["content"], restore)
         return None if content is None else {"file_path": str(target), "content": content}
 
     def destination(self, filename: object) -> Path | None:
@@ -65,7 +66,7 @@ class CsvExportPolicy:
         target = _local_absolute_path(filename)
         if root is None or target is None or target.parent != root:
             return None
-        if not _CSV_NAME.fullmatch(target.name) or target.name.split(".")[0].upper() in _DEVICES:
+        if not _EXPORT_NAME.fullmatch(target.name) or target.name.split(".")[0].upper() in _DEVICES:
             return None
         try:
             target.lstat()

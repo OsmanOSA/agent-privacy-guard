@@ -56,9 +56,13 @@ class ReadGuidanceTest(unittest.TestCase):
 
     def test_plain_document_reads_and_unsupported_formats_receive_no_guidance(self):
         self.assertEqual(self.call({"content": "Amount: 1200 EUR"}), {})
-        result = self.call({"content": EMAIL}, path="C:/fictional/billing.json")
+        result = self.call({"content": EMAIL}, path="C:/fictional/billing.docx")
         self.assertIn("updatedToolOutput", result)
         self.assertNotIn("additionalContext", result)
+
+    def test_source_code_reads_are_guided_like_documents(self):
+        result = self.call({"content": EMAIL}, path="C:/fictional/user_service.py")
+        self.assertIn("additionalContext", result)
 
     def test_write_and_shell_outputs_keep_their_existing_behavior(self):
         for tool in ("Bash", "Write"):

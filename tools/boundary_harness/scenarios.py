@@ -17,6 +17,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from boundary_harness.fake_model import MAIN
+from boundary_harness.workbook import workbook
 
 # Pseudonyms carry an id; secrets are masked without one.
 TOKEN = re.compile(r"⟦[A-Z_]+:(?:[0-9A-F]{8}|REDACTED)⟧")
@@ -53,12 +54,30 @@ FILES = {
     "notes.md": "# Suivi client\n\n"
                 f"Rendez-vous avec {CANARIES['name-3']} mardi. Contact : {CANARIES['email-2']}.\n",
     ".env": f"APP_ENV=staging\nGITHUB_TOKEN={CANARIES['secret-1']}\n",
+    "contacts.py": f'OWNER = "{CANARIES["name-3"]}"\nSUPPORT_EMAIL = "{CANARIES["email-2"]}"\n',
+    "seed.sql": "INSERT INTO notes (body, email) VALUES\n"
+                f"  ('Rappeler {CANARIES['name-3']} jeudi pour le devis.', '{CANARIES['email-2']}');\n",
     f"cv_{CANARIES['name-file']}.md": "# CV\n\nExpérience : développement Python.\n",
 }
 
 
 # Windows tools often emit cp1252 bytes; one undecodable byte used to fail the name model.
 LEGACY_FILE = "legacy.txt", f"Réunion avec {CANARIES['name-1']} à Lyon.\n".encode("cp1252")
+# A workbook as Excel saves it, and the stdlib script an agent writes to print one.
+WORKBOOK_FILE = "clients.xlsx", workbook([["Nom", "Email", "Note"],
+                                          [CANARIES["name-1"], CANARIES["email-1"], "Client fidèle"],
+                                          [CANARIES["name-2"], CANARIES["email-2"],
+                                           f"Rappeler {CANARIES['name-3']} lundi"]])
+READ_WORKBOOK = "read_xlsx.py", (
+    "import re, sys, zipfile\n"
+    "with zipfile.ZipFile(sys.argv[1]) as book:\n"
+    "    shared = re.findall(r'<t[^>]*>([^<]*)</t>', book.read('xl/sharedStrings.xml').decode())\n"
+    "    for row in re.findall(r'<row[^>]*>(.*?)</row>', book.read('xl/worksheets/sheet1.xml').decode()):\n"
+    "        print(' | '.join(shared[int(v)] for v in re.findall(r'<v>(\\d+)</v>', row)))\n")
+# The script an agent runs to save values in a new workbook: make_xlsx.py OUT VALUE...
+MAKE_WORKBOOK = "make_xlsx.py", ((Path(__file__).parent / "workbook.py").read_text(encoding="utf-8")
+                                 + "\n\nif __name__ == '__main__':\n    import sys\n"
+                                 + "    open(sys.argv[1], 'wb').write(workbook([[v] for v in sys.argv[2:]]))\n")
 
 
 def write_workspace(path: Path) -> None:
@@ -66,16 +85,32 @@ def write_workspace(path: Path) -> None:
     for name, content in FILES.items():
         (path / name).write_text(content, encoding="utf-8")
     (path / LEGACY_FILE[0]).write_bytes(LEGACY_FILE[1])
+    (path / WORKBOOK_FILE[0]).write_bytes(WORKBOOK_FILE[1])
+    (path / READ_WORKBOOK[0]).write_text(READ_WORKBOOK[1], encoding="utf-8")
+    (path / MAKE_WORKBOOK[0]).write_text(MAKE_WORKBOOK[1], encoding="utf-8")
 
 
 def _report_from_last_result(workspace: Path):
     """Step that writes the tokens the agent received into a new local document."""
+    return _write_received_tokens(workspace / "report.md", lambda tokens: "Contacts : " + ", ".join(tokens) + "\n")
+
+
+def _make_workbook_from_last_result(name: str):
+    """Step that saves the tokens of the last result in a new workbook through a script."""
+    def step(messages: list) -> list:
+        results = [text for message in messages for text in _tool_results(message)]
+        tokens = list(dict.fromkeys(TOKEN.findall(results[-1] if results else "")))
+        return [("Bash", {"command": f"python make_xlsx.py {name} " + " ".join(f'"{t}"' for t in tokens)})]
+    return step
+
+
+def _write_received_tokens(path: Path, render):
+    """Step that writes `render(tokens)`, the tokens of the last tool result, to `path`."""
     def step(messages: list) -> list:
         results = [text for message in messages for text in _tool_results(message)]
         received = results[-1] if results else ""
         tokens = list(dict.fromkeys(TOKEN.findall(received)))
-        content = "Contacts : " + ", ".join(tokens) + "\n"
-        return [("Write", {"file_path": str(workspace / "report.md"), "content": content})]
+        return [("Write", {"file_path": str(path), "content": render(tokens)})]
     return step
 
 
@@ -116,6 +151,7 @@ class Scenario:
     expect_leak: bool    # True for the sensitivity control and known platform limits
     script: list
     restored_file: str | None = None
+    preserved_file: str | None = None  # must still hold its original canaries after the session
     notes: str = ""
     mcp: bool = False                 # connect the fixture MCP server (mcp_fixture.py)
     resume: list | None = None        # script of a second session resuming the first
@@ -124,7 +160,8 @@ class Scenario:
 
 
 def scenarios(workspace: Path) -> list[Scenario]:
-    csv, notes, env = (str(workspace / name) for name in ("customers.csv", "notes.md", ".env"))
+    csv, notes, env, contacts, seed = (str(workspace / name)
+                                       for name in ("customers.csv", "notes.md", ".env", "contacts.py", "seed.sql"))
     return [
         Scenario("control-unprotected-read", "absent", True, [[("Read", {"file_path": csv})]],
                  notes="Harness sensitivity: without hooks the canaries must be observed."),
@@ -162,6 +199,36 @@ def scenarios(workspace: Path) -> list[Scenario]:
                   [("Read", {"file_path": str(workspace / "report.md")})]],
                  restored_file="report.md",
                  notes="Restored originals on disk; agent context must still hold tokens only."),
+        Scenario("write-python", "installed", False,
+                 [[("Read", {"file_path": contacts})],
+                  _write_received_tokens(Path(contacts), lambda tokens: "".join(
+                      f'VALUE_{index} = "{token}"\n' for index, token in enumerate(tokens))),
+                  [("Read", {"file_path": contacts})]],
+                 restored_file="contacts.py",
+                 notes="Rewriting source code: the values come back on disk, the model keeps tokens."),
+        Scenario("write-sql", "installed", False,
+                 [[("Read", {"file_path": seed})],
+                  _write_received_tokens(Path(seed), lambda tokens: "INSERT INTO notes (body, email) VALUES\n"
+                                         + f"  ('Rappeler {tokens[0]} jeudi.', '{tokens[-1]}');\n"),
+                  [("Bash", {"command": "cat seed.sql"})]],
+                 restored_file="seed.sql",
+                 notes="A free-text name in a SQL note needs the name model; values come back escaped."),
+        Scenario("read-xlsx", "installed", False, [[("Read", {"file_path": str(workspace / "clients.xlsx")})]],
+                 notes="Claude Code refuses binary files: expected inconclusive, nothing reaches the model."),
+        Scenario("shell-xlsx", "installed", False, [[("Bash", {"command": "python read_xlsx.py clients.xlsx"})]],
+                 notes="How agents read workbooks: a script prints the cells."),
+        Scenario("write-xlsx", "installed", False,
+                 [[("Bash", {"command": "python read_xlsx.py clients.xlsx"})],
+                  _make_workbook_from_last_result("report.xlsx"),
+                  [("Bash", {"command": "python read_xlsx.py report.xlsx"})]],
+                 restored_file="report.xlsx",
+                 notes="A script saves token values in a workbook it names: the cells get the values back."),
+        Scenario("write-redacted-secret", "installed", False,
+                 [[("Read", {"file_path": env})],
+                  _write_received_tokens(Path(env), lambda tokens: "APP_ENV=production\n" + "".join(
+                      f"GITHUB_TOKEN={token}\n" for token in tokens))],
+                 preserved_file=".env",
+                 notes="Rewriting a .env would replace the real secret with its marker: refused."),
         Scenario("subagent-read", "installed", False,
                  {MAIN: [[("Agent", {"description": "Read the notes", "subagent_type": "general-purpose",
                                      "prompt": "SUBAGENT-TASK: read notes.md and report."})]],

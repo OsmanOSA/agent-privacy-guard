@@ -1,4 +1,4 @@
-"""Run a user-requested local CSV export without printing personal content.
+"""Run a user-requested local CSV or SQL export without printing personal content.
 
 Interface: export_csv(source, session, filename, guard_home) -> exit code.
 Run while the source session's mappings still exist. No installation is performed.
@@ -20,13 +20,13 @@ def export_csv(source: Path, session: str, filename: str, guard_home: Path) -> i
     try:
         policy = CsvExportPolicy.from_file(guard_home / "export-policy.json")
         if policy.root is None:
-            raise ValueError("CSV export is disabled")
+            raise ValueError("Export is disabled")
         vault = VaultStore(guard_home / "vault", default_cipher()).session(session)
         core = PrivacyCore(vault, HeuristicNameDetector())
         content = source.read_text(encoding="utf-8-sig")
         CsvWriter(policy).write(filename, content, core.restore)
     except (OSError, ValueError, RuntimeError):
-        print("CSV export failed. Check the policy, session, source and unused output filename.")
+        print("Export failed. Check the policy, session, source and unused output filename.")
         return 1
-    print("CSV export completed.")
+    print("Export completed.")
     return 0

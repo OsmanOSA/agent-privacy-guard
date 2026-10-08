@@ -102,7 +102,7 @@ class WriteHookTest(WrittenFileTestCase):
                 writer.restore.assert_not_called()
 
     def test_unsupported_write_remains_masked_without_an_egress_side_effect(self):
-        path, args = self.written(name="result.json")
+        path, args = self.written(name="result.xlsx")
         result = self.call("PostToolUse", "Write", args, {"filePath": str(path), "type": "create"})
         self.assertEqual(result, {})
         self.assertEqual(path.read_text(encoding="utf-8"), self.masked)
